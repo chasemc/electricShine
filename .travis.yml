@@ -1,0 +1,11 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: R
+cache: packages
+os:
+  - linux
+  - osx
+  
+  
+repos:
+  CRAN: https://cran.microsoft.com/snapshot/2019-01-12

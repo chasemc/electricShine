@@ -1,0 +1,20 @@
+Package: electricShine
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Chase",
+           family = "Clark",
+           role = c("aut", "cre"),
+           email = "chasec288@gmail.com")
+Description: What the package does (one paragraph).
+License: CC0
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    installr,
+    glue,
+    remotes,
+    stringr,
+    withr,
+    openssl
+RoxygenNote: 6.1.1
