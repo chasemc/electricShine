@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/chasemc/electricShine.svg?branch=master)](https://travis-ci.org/chasemc/electricShine)
 
 ### Introduction
 The purpose of this package is to make local shiny apps. It uses electron for creating the application and for repeatability it installs both R and R packages from a single MRAN date.
