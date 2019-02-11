@@ -115,22 +115,23 @@ getNodejs <- function(nodeUrl = "https://nodejs.org/dist",
 #'
 getElectron <- function(nodePath = NULL,
                         npmPath = NULL,
-                        installTo = file.path(system.file(package = "electricShine"), "nodejs")){
+                        installTo = file.path(system.file(package = "electricShine"), "nodejs"),
+                        force = FALSE){
 
-  if (is.null(nodePath) || is.null(npmPath)) {
+  if (is.null(nodePath) || is.null(nodePath)) {
 
-    findNode <- list.files(installTo,
+    nodePath <- list.files(installTo,
                            recursive = TRUE,
                            full.names = TRUE,
                            pattern = "node.exe")
 
-    findNPM <- list.files(installTo,
+    npmPath <- list.files(installTo,
                           recursive = TRUE,
                           full.names = TRUE,
                           pattern = "npm-cli.js")
     if (is.null(nodePath) || is.null(npmPath)) {
 
-      stop("Try running electricShine::getNodejs(ffocre = TRUE)")
+      stop("Try running electricShine::getNodejs(focre = TRUE)")
 
     }
 
