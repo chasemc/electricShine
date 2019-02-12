@@ -49,11 +49,11 @@ electricShine::getElectron() first")
   # npm start --prefix path/to/your/app
 
 
-  message(system(glue::glue("cd {appPath} && {nodePath} {npmPath} install"),
+  message(shell(glue::glue("cd {appPath} && {nodePath} {npmPath} install"),
                  intern = FALSE,
                  invisible = FALSE))
 
-  message(system(glue::glue("cd {appPath} && {nodePath} {npmPath} run package-win --scripts-prepend-node-path"),
+  message(shell(glue::glue("cd {appPath} && {nodePath} {npmPath} run package-win --scripts-prepend-node-path"),
                  intern = FALSE,
                  invisible = FALSE))
 
