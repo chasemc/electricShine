@@ -17,11 +17,18 @@ install_user_app <- function(package,
 
   library_path <- base::file.path(path, "r_win", "library")
 
+
+
+  withr::with_libpaths(library_path,
+                       utils::install.packages("remotes", repos = repo, destdir = NULL)
+  )
+
   withr::with_libpaths(library_path,
                        remotes::install_github(package,
                                                dependencies = NA,
                                                repos = repo,
                                                force = TRUE,
-                                               destdir = base::tempdir())
+                                               destdir = NULL,
+                                               lib = library_path)
   )
 }

@@ -1,8 +1,21 @@
+#' Main wrapper function to create a shiny app electron package
+#'
+#' @param nodePath option to specifiy the path to the node.js directory if already installed
+#' @param npmPath option to specifiy the path to the npm module directory if already installed
+#' @param path path where the app will be created
+#' @param node folder where electricShine installs/looks for node an npm if not given in nodePath/npmPath
+#'
+#' @return
+#' @export
+#'
+#' @examples
 runBuild <- function(nodePath = NULL,
-                        npmPath = NULL,
-                        path,
-                        node = file.path(system.file(package = "electricShine"), "nodejs"),
-                        force = FALSE){
+                     npmPath = NULL,
+                     appPath,
+                     node = file.path(system.file(package = "electricShine"), "nodejs")){
+
+
+
 
   if (is.null(nodePath) || is.null(nodePath)) {
 
@@ -15,9 +28,11 @@ runBuild <- function(nodePath = NULL,
                           recursive = TRUE,
                           full.names = TRUE,
                           pattern = "npm-cli.js")
-    if (is.null(nodePath) || is.null(npmPath)) {
 
-      stop("Try running electricShine::getNodejs(focre = TRUE)")
+    if (length(nodePath) == 0 || length(npmPath) == 0) {
+
+      stop("Try running electricShine::getNodejs()
+electricShine::getElectron() first")
 
     }
 
@@ -26,7 +41,7 @@ runBuild <- function(nodePath = NULL,
 
   nodePath <- shQuote(nodePath)
   npmPath <- shQuote(npmPath)
-  path <- shQuote(path)
+  appPath <- shQuote(appPath)
   message("Creating app...")
 
 
@@ -34,7 +49,11 @@ runBuild <- function(nodePath = NULL,
   # npm start --prefix path/to/your/app
 
 
-  message(system(glue::glue("{nodePath} {npmPath} start --prefix {path} --scripts-prepend-node-path"),
+  message(system(glue::glue("cd {appPath} && {nodePath} {npmPath} install"),
+                 intern = FALSE,
+                 invisible = FALSE))
+
+  message(system(glue::glue("cd {appPath} && {nodePath} {npmPath} run package-win --scripts-prepend-node-path"),
                  intern = FALSE,
                  invisible = FALSE))
 

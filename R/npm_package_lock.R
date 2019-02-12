@@ -1227,7 +1227,7 @@ file <-
 
 
 electricShine::write_text(text = file,
-                          name = "main.js",
+                          name = "package-lock.json",
                           path = path)
 
 

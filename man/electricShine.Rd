@@ -4,7 +4,9 @@
 \alias{electricShine}
 \title{Meta-function}
 \usage{
-electricShine(path, date = "2019-01-01", package)
+electricShine(name = "My_Package",
+  description = "My Electron application", productName = "productName",
+  version = NULL, path = NULL, date = "2019-01-01", package = NULL)
 }
 \arguments{
 \item{path}{path to create installer}

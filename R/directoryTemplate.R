@@ -9,10 +9,10 @@
 #' @return  nothing, creates a directory
 #' @export
 #'
-setup_directory <- function(name = "electron-quick-start",
-                            description  = "A minimal Electron application",
-                            productName = "hello",
-                            version = NULL,
+setup_directory <- function(name,
+                            description,
+                            productName,
+                            version,
                             appPath){
 
   electricShine::create_package_json(name = name,

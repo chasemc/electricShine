@@ -131,7 +131,7 @@ getElectron <- function(nodePath = NULL,
                           pattern = "npm-cli.js")
     if (is.null(nodePath) || is.null(npmPath)) {
 
-      stop("Try running electricShine::getNodejs(focre = TRUE)")
+      stop("Try running electricShine::getNodejs(force = TRUE)")
 
     }
 
