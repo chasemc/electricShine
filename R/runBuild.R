@@ -1,4 +1,4 @@
-getElectron <- function(nodePath = NULL,
+runBuild <- function(nodePath = NULL,
                         npmPath = NULL,
                         path,
                         node = file.path(system.file(package = "electricShine"), "nodejs"),
@@ -28,9 +28,17 @@ getElectron <- function(nodePath = NULL,
   npmPath <- shQuote(npmPath)
   path <- shQuote(path)
   message("Creating app...")
-  # Use npm to get electron packager
-  message(system(glue::glue("cd {path} {nodePath} {npmPath} run package-win"),
+
+
+  # electron-packager <sourcedir> <appname> --platform=<platform> --arch=<arch> [optional flags...]
+  # npm start --prefix path/to/your/app
+
+
+  message(system(glue::glue("{nodePath} {npmPath} start --prefix {path} --scripts-prepend-node-path"),
                  intern = FALSE,
                  invisible = FALSE))
 
 }
+
+
+
