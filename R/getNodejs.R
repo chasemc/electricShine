@@ -115,8 +115,8 @@ getNodejs <- function(nodeUrl = "https://nodejs.org/dist",
 #'
 getElectron <- function(nodePath = NULL,
                         npmPath = NULL,
-                        installTo = file.path(system.file(package = "electricShine"), "nodejs"),
-                        force = FALSE){
+                        installTo = file.path(system.file(package = "electricShine"), "nodejs")
+                        ){
 
   if (is.null(nodePath) || is.null(nodePath)) {
 
