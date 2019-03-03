@@ -1,3 +1,11 @@
+---
+title: "README"
+author: "Chase Clark"
+date: "February 11, 2019"
+output: html_document
+---
+
+
 [![Build Status](https://travis-ci.org/chasemc/electricShine.svg?branch=master)](https://travis-ci.org/chasemc/electricShine)
 
 ### Introduction
@@ -11,8 +19,11 @@ A template for desgining a shiny app as a package may be found here: https://git
 
 
 ### Example
-```
-path <- "C:/Users/CMC/Desktop/temp")
+```{r}
+electricShine::getNodejs()
+electricShine::getElectron()
+
+path <- "C:/Users/CMC/Desktop/temp"
 
 date <- "2019-01-01"
 
@@ -24,10 +35,22 @@ github_package_repo <- "chasemc/IDBacApp"
 # The date from which to download R and R packages from MRAN
 # Your github username and repository name in the format  "usernam/repo"  eg "tidyverse/ggplot2"
 
+electricShine::buildPackage(name = "IDBacApp",
+                             description = "My Electron application",
+                             productName = "productName",
+                             version = "1.0.0",
+                             path = path,
+                             date = date,
+                             package = github_package_repo)
 
-electricShine::electricShine(path = path,
-                       date = date,
-                       package = github_package_repo)
+
+
+electricShine::runBuild(nodePath = NULL,
+                     npmPath = NULL,
+                     appPath = "C:/Users/CMC/Desktop/temp/IDBacAp" ,
+                     node = NULL)
+
+  
 
 ```
 
