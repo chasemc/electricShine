@@ -1,3 +1,5 @@
+Note that this package is in no-way ready for delivry/stable use. It is a first pass of ideas. 
+
 ---
 title: "README"
 author: "Chase Clark"
