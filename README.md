@@ -1,4 +1,4 @@
-Note that this package is in no-way ready for delivry/stable use. It is a first pass of ideas. 
+Note that this package is in no-way ready for delivery/stable use. It is a first pass of ideas. 
 
 ---
 title: "README"
