@@ -1,5 +1,5 @@
 
-#' Install electron-packager
+#' Install electron-packager and electron via npm
 #'
 #' @param nodePath path to node.exe
 #' @param npmPath path to npm-cli.js
@@ -8,9 +8,10 @@
 #' @return nothing
 #' @export
 #'
-getElectronPackager <- function(nodePath = NULL,
-                                npmPath = NULL,
-                                installTo = file.path(system.file(package = "electricShine"), "nodejs")
+buildElectronDependencies <- function(appPath,
+                                      nodePath = NULL,
+                                      npmPath = NULL,
+                                      installTo = file.path(system.file(package = "electricShine"), "nodejs")
 ){
 
   if (is.null(nodePath) || is.null(nodePath)) {
@@ -32,13 +33,15 @@ getElectronPackager <- function(nodePath = NULL,
 
   }
 
-
+  appPath <- (normalizePath(appPath))
   nodePath <- shQuote(nodePath)
   npmPath <- shQuote(npmPath)
   message("Downloading Electron packager...")
   # Use npm to get electron packager
-  message(system(glue::glue("{nodePath} {npmPath} install electron-packager -g"),
-                 intern = FALSE,
-                 invisible = FALSE))
+  message(system("cmd.exe",
+                 input = glue::glue("cd {appPath} && {nodePath} {npmPath} install --scripts-prepend-node-path"),
+                 invisible = FALSE,
+                 minimized = F,
+                 wait = T))
 
 }
