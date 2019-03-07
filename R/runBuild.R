@@ -48,9 +48,11 @@ electricShine::getElectron() first")
   # electron-packager <sourcedir> <appname> --platform=<platform> --arch=<arch> [optional flags...]
   # npm start --prefix path/to/your/app
 
-  message(shell(glue::glue("cd {appPath} && {nodePath} {npmPath} run package-win --scripts-prepend-node-path"),
-                 intern = FALSE,
-                 invisible = FALSE))
+  message(system("cmd.exe",
+                 glue::glue("cd {appPath} && {nodePath} {npmPath} run package-win --scripts-prepend-node-path"),
+                 invisible = FALSE,
+                 minimized = F,
+                 wait = T))
 
 }
 
