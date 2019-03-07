@@ -29,6 +29,7 @@ install_user_app <- function(package,
                                                repos = repo,
                                                force = TRUE,
                                                destdir = NULL,
-                                               lib = library_path)
+                                               lib = library_path,
+                                               type = "binary")
   )
 }
