@@ -1,0 +1,25 @@
+---
+title: "Example"
+author: "Chase Clark"
+date: "March 6, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+
+dir <- tempdir()
+
+electricShine::buildPackage(name = "ExampleApp",
+                            description = "Example Electron application",
+                            productName = "productName",
+                            version = "1.0.0",
+                            path = dir,
+                            date = "2019-03-06",
+                            package = "chasemc/demoApp")
+```
+
