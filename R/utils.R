@@ -8,10 +8,10 @@
 #' @export
 #'
 write_text <- function(text,
-                       name,
+                       filename,
                        path){
 
-  path <- base::file.path(path, name)
+  path <- base::file.path(path, filename)
 
   base::writeLines(text,
                    path)
