@@ -9,9 +9,9 @@
 create_renderer_js <- function(path){
 
   file <-
-    '// This file is required by the index.html file and will
-  // be executed in the renderer process for that window.
-  // All of the Node.js APIs are available in this process.
+'// This file is required by the index.html file and will
+// be executed in the renderer process for that window.
+// All of the Node.js APIs are available in this process.
   '
   electricShine::write_text(text = file,
                             filename = "renderer.js",
