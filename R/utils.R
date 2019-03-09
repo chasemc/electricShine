@@ -24,3 +24,29 @@ write_text <- function(text,
 
   }
 }
+
+
+#' Title  Create an output folder
+#'
+#' @param path path where output folder gonna be
+#' @param name name of the output folder about to be created
+#'
+#' @return if folder name already exists, show error and do nothing;
+#'         if folder name doesn't exist, create a new file
+#' @export
+#'
+#' @examples
+#'
+Create_Folder <- function(path, name){
+  appPath <- file.path(path, name)
+
+  if (file.exists(appPath)) {
+    #print("stop")
+    stop(glue::glue("{appPath} already exists, choose a path that doesn't already contain a directory named '{name}'"))
+  } else {
+    #print("create")
+    dir.create(appPath)
+  }
+}
+
+
