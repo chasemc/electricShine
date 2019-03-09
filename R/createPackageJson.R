@@ -26,6 +26,9 @@ create_package_json <- function(name,
                                 repository = "",
                                 author = "",
                                 license = "",
+                                companyName,
+                                keywords = "",
+                                productName = '\\"Shiny Electron App\\"',
                                 electronVersion = "^4.0.7",
                                 electronPackagerVersion = "^13.1.1"){
 
@@ -35,7 +38,7 @@ create_package_json <- function(name,
 
 
 
-  file <- glue::glue('{{
+file <- glue::glue('{{
 "name": "{name}",
 "version": "{version}",
 "description": "{description}",
@@ -43,10 +46,11 @@ create_package_json <- function(name,
 "scripts": {{
 "start": "electron .",
 "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon={iconPath} --out=ElectronShinyAppMac",
-"package-win": "electron-packager . --overwrite --platform=win32 --arch=ia32 --icon={iconPath} --out=ElectronShinyAppWindows --version-string.FileDescription=CE --version-string.ProductName={productName}",
+"package-win": "electron-packager . --overwrite --platform=win32 --arch=ia32 --icon={iconPath} --out=ElectronShinyAppWindows --version-string.CompanyName={companyName} --version-string.FileDescription=CE --version-string.ProductName={productName}",
 "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon={iconPath} --prune=true --out=release-builds"
 }},
 "repository": "{repository}",
+"keywords": "{keywords}",
 "author": "{author}",
 "license": "{license}",
 "devDependencies": {{
