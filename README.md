@@ -1,14 +1,11 @@
 Note that this package is in no-way ready for delivery/stable use. It is a first pass of ideas. 
 
----
-title: "README"
-author: "Chase Clark"
-date: "February 11, 2019"
-output: html_document
----
 
+Windows CI:
+- [![Build status](https://ci.appveyor.com/api/projects/status/1l973ho8q4y03fnd/branch/master?svg=true)](https://ci.appveyor.com/project/chasemc/electricshine/branch/master)
 
-[![Build Status](https://travis-ci.org/chasemc/electricShine.svg?branch=master)](https://travis-ci.org/chasemc/electricShine)
+Mac and Linux CI
+- [![Build Status](https://travis-ci.org/chasemc/electricShine.svg?branch=master)](https://travis-ci.org/chasemc/electricShine)
 
 ### Introduction
 The purpose of this package is to make local shiny apps. It uses electron for creating the application and for repeatability it installs both R and R packages from a single MRAN date.
