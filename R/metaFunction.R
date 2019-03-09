@@ -35,13 +35,9 @@ buildPackage <- function(name = "My_Package",
   electricShine::getNodejs()
 
 
-  appPath <- file.path(path, name)
+  electricShine::Create_Folder(path = path,
+                               name = name)
 
-  if (file.exists(appPath)) {
-    stop(glue::glue("{appPath} already exists, choose a path that doesn't already contain a directory named '{name}'"))
-  }
-
-  dir.create(appPath)
 
   electricShine::setup_directory(name = name,
                                  description = description,
