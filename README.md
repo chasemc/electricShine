@@ -1,4 +1,5 @@
-Note that this package is in no-way ready for delivery/stable use. It is a first pass of ideas. 
+
+  [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 
 Windows CI:
