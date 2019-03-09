@@ -1,5 +1,10 @@
-
-
+#' TODO: Install user app on machine
+#'
+#' @param repo use repo or package with electron installer
+#'
+#' @return NA
+#' @export
+#'
 appInstallR <- function(repo){
 
 

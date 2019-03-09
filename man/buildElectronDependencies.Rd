@@ -9,6 +9,8 @@ buildElectronDependencies(appPath, nodePath = NULL, npmPath = NULL,
   "nodejs"))
 }
 \arguments{
+\item{appPath}{path of new electron app}
+
 \item{nodePath}{path to node.exe}
 
 \item{npmPath}{path to npm-cli.js}

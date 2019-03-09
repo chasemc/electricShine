@@ -4,10 +4,12 @@
 \alias{write_text}
 \title{Write to a file}
 \usage{
-write_text(text, name, path)
+write_text(text, filename, path)
 }
 \arguments{
-\item{name}{name of file to be created, including extension}
+\item{text}{text to write}
+
+\item{filename}{name of file to write to}
 
 \item{path}{path where file should be written to}
 }

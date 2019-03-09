@@ -15,7 +15,7 @@ setup_directory(name, description, productName, version, appPath)
 
 \item{version}{version number: see https://semver.org/ for details on how to use version numbers}
 
-\item{path}{path to create the new app}
+\item{appPath}{path to new electron app top directory}
 }
 \value{
 nothing, creates a directory

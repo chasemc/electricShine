@@ -1,8 +1,9 @@
 
 #' Write to a file
 #'
-#' @param name name of file to be created, including extension
 #' @param path path where file should be written to
+#' @param text text to write
+#' @param filename name of file to write to
 #'
 #' @return message saying whether file was created or not
 #' @export

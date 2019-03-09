@@ -9,6 +9,14 @@ buildPackage(name = "My_Package",
   version = NULL, path = NULL, date = "2019-01-01", package = NULL)
 }
 \arguments{
+\item{name}{electron app name}
+
+\item{description}{electron app description}
+
+\item{productName}{necessary?}
+
+\item{version}{semantic version of your app, as character (not numeric!)}
+
 \item{path}{path to create installer}
 
 \item{date}{date for MRAN}

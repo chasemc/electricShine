@@ -3,6 +3,10 @@
 #' @param path path to create installer
 #' @param date date for MRAN
 #' @param package github username/repo
+#' @param name electron app name
+#' @param description electron app description
+#' @param productName necessary?
+#' @param version semantic version of your app, as character (not numeric!)
 #'
 #' @return Nothing
 #' @export

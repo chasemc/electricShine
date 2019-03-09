@@ -1,10 +1,10 @@
 #' Create a directory for creating the new app and copy template of files
 #'
-#' @param path path to create the new app
 #' @param name  name of app
 #' @param description short description of app
 #' @param productName product name
 #' @param version version number: see https://semver.org/ for details on how to use version numbers
+#' @param appPath path to new electron app top directory
 #'
 #' @return  nothing, creates a directory
 #' @export

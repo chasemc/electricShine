@@ -11,6 +11,7 @@
 #' @param author author of the app
 #' @param license license of the App. Not the full license, only the title (e.g. MIT, or GPLv3)
 #' @param electronVersion version of electron that should be downloaded from npm and used to create app
+#' @param electronPackagerVersion version of electronPackager that should be downloaded from npm and used to create app
 #'
 #' @return
 #' @export

@@ -12,9 +12,12 @@ runBuild(nodePath = NULL, npmPath = NULL, appPath,
 
 \item{npmPath}{option to specifiy the path to the npm module directory if already installed}
 
-\item{node}{folder where electricShine installs/looks for node an npm if not given in nodePath/npmPath}
+\item{appPath}{path to new electron app top directory}
 
-\item{path}{path where the app will be created}
+\item{node}{folder where electricShine installs/looks for node an npm if not given in nodePath/npmPath}
+}
+\value{
+nothing, used for side-effects
 }
 \description{
 Main wrapper function to create a shiny app electron package

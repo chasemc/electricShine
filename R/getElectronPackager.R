@@ -4,6 +4,7 @@
 #' @param nodePath path to node.exe
 #' @param npmPath path to npm-cli.js
 #' @param installTo path of nodejs folder
+#' @param appPath path of new electron app
 #'
 #' @return nothing
 #' @export

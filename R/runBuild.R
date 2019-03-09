@@ -2,13 +2,12 @@
 #'
 #' @param nodePath option to specifiy the path to the node.js directory if already installed
 #' @param npmPath option to specifiy the path to the npm module directory if already installed
-#' @param path path where the app will be created
 #' @param node folder where electricShine installs/looks for node an npm if not given in nodePath/npmPath
+#' @param appPath path to new electron app top directory
 #'
-#' @return
+#' @return nothing, used for side-effects
 #' @export
 #'
-#' @examples
 runBuild <- function(nodePath = NULL,
                      npmPath = NULL,
                      appPath,
