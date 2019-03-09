@@ -28,8 +28,6 @@ setup_directory <- function(name,
 
   electricShine::create_renderer_js(path = appPath)
 
-  electricShine::create_package_lock_json(path = appPath)
-
 }
 
 
