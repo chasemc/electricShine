@@ -5,6 +5,8 @@
 #' @param productName product name
 #' @param version version number: see https://semver.org/ for details on how to use version numbers
 #' @param appPath path to new electron app top directory
+#' @param ... pass optional arguments to electricShine::create_package_json()
+#' @param functionName the function name in your package that starts the shiny app
 #'
 #' @return  nothing, creates a directory
 #' @export
@@ -13,18 +15,22 @@ setup_directory <- function(name,
                             description,
                             productName,
                             version,
-                            appPath){
+                            appPath,
+                            functionName,
+                            ...){
 
   electricShine::create_package_json(name = name,
                                      description = description,
                                      productName = productName,
                                      version = version,
-                                     path = appPath)
+                                     path = appPath,
+                                     ...)
 
-  electricShine::create_app_R(packageName = name,
-                              path = appPath)
+  electricShine::run_shiny(packageName = name,
+                           path = appPath,
+                           functionName = functionName)
 
-  electricShine::create_main_js(path = appPath)
+  electricShine::create_background_js(path = appPath)
 
   electricShine::create_renderer_js(path = appPath)
 
@@ -33,15 +39,7 @@ setup_directory <- function(name,
 
 
 
-
-
-
-
-
-
-
-
-#
+functionName#
 #
 #
 # create_random_port <- function(){

@@ -7,6 +7,8 @@
 #' @param description electron app description
 #' @param productName necessary?
 #' @param version semantic version of your app, as character (not numeric!)
+#' @param functionName the function name in your package that starts the shiny app
+#'
 #'
 #' @return Nothing
 #' @export
@@ -17,7 +19,9 @@ buildPackage <- function(name = "My_Package",
                          version = NULL,
                          path = NULL,
                          date = "2019-01-01",
-                         package = NULL){
+                         package = NULL,
+                         functionName = NULL,
+                         ...){
   if (is.null(package)) {
     stop("electricShine() requires you to specify a 'package' argument.
 (e.g. electricShine::electricShine(package = 'tidyverse/ggplot2') )")
@@ -30,6 +34,16 @@ buildPackage <- function(name = "My_Package",
     stop("electricShine() requires you to specify a 'version' argument.
            (e.g. electricShine::electricShine(version = '1.0.0') )")
   }
+  if (is.null(functionName)) {
+    stop("electricShine() requires you to specify a 'functionName' argument.
+         functionName should be the name of the function that starts your package's shiny app.
+         e.g. is you have the function myPackage::start_shiny(), provide 'start_shiny'")
+  }
+
+
+
+
+
 
 
   electricShine::getNodejs()
@@ -43,7 +57,8 @@ buildPackage <- function(name = "My_Package",
                                  description = description,
                                  productName = productName,
                                  version = version,
-                                 appPath = appPath)
+                                 appPath = appPath,
+                                 ...)
 
   electricShine::installR(date = date,
                           path = appPath)
@@ -60,3 +75,4 @@ buildPackage <- function(name = "My_Package",
                                   date = date)
 
 }
+functionName
