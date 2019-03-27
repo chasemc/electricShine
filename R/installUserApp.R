@@ -11,8 +11,7 @@
 install_user_app <- function(appPath = NULL,
                              MRANdate = NULL,
                              githubRepo = NULL,
-                             localPath  = NULL,
-                             ...){
+                             localPath  = NULL){
 
   if(is.null(MRANdate)){
     base::stop("electricShine::install_user_app() requires an MRANdate value, in the format 'YYYY-MM-DD'")

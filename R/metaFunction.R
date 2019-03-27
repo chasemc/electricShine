@@ -1,7 +1,7 @@
 #' Meta-function
 #'
 #' @param installTo path to create installer, preferably points to an empty directory
-#' @param name electron app name
+#' @param appName electron app name
 #' @param description electron app description
 #' @param productName necessary?
 #' @param version semantic version of your app, as character (not numeric!)
@@ -13,7 +13,7 @@
 #' @return Nothing
 #' @export
 #'
-buildPackage <- function(name = "My_Package",
+buildPackage <- function(appName = "My_Package",
                          description = "My Electron application",
                          productName = "productName",
                          version = NULL,
@@ -21,8 +21,7 @@ buildPackage <- function(name = "My_Package",
                          MRANdate = Sys.Date() - 3,
                          functionName = NULL,
                          githubRepo = NULL,
-                         localPath  = NULL,
-                         ...){
+                         localPath  = NULL){
 
   if (is.null(githubRepo) && is.null(localPath)) {
     stop("electricShine::buildPackage() requires you to specify either a 'githubRepo' or 'localPath' argument specifying
@@ -43,33 +42,68 @@ buildPackage <- function(name = "My_Package",
   }
 
 
-  electricShine::getNodejs()
+
+  electricShine::get_nodejs()
 
 
-  electricShine::Create_Folder(path = path,
-                               name = name)
+  electricShine::create_folder(path = installTo,
+                               name = appName)
+
+  appPath <- file.path(installTo,
+                       appName)
+
+  appPath <-  normalizePath(appPath,
+                            mustWork = FALSE)
 
 
-  electricShine::create_build_directory(name = name,
+
+# Create build directory structure ----------------------------------------
+
+  electricShine::create_build_directory(name = appName,
                                         description = description,
                                         productName = productName,
                                         version = version,
                                         appPath = appPath,
-                                        ...)
+                                        functionName = functionName)
+
+
+
+
+
+# Download and Install R --------------------------------------------------
 
   electricShine::installR(date = MRANdate,
                           path = appPath)
 
+# Trim R's size -----------------------------------------------------------
+
   electricShine::trim_r(pathToR = file.path(appPath,
                                             "r_win"))
+
+
+
+# Install shiny app/package and dependencies ------------------------------
+
+
+  electricShine::install_user_app(appPath = appPath,
+                                  MRANdate = MRANdate,
+                                  MRANdate = MRANdate)
+
+
+# Download npm dependencies -----------------------------------------------
 
   try(
     electricShine::buildElectronDependencies(appPath = appPath)
   )
 
-  electricShine::install_user_app(appPath = appPath,
-                                  MRANdate = MRANdate,
-                                  MRANdate = MRANdate,
-                                  ...)
+
+# Build the electron app --------------------------------------------------
+
+  electricShine::runBuild(nodePath = NULL,
+                          npmPath = NULL,
+                          appPath = appPath,
+                          node = file.path(system.file(package = "electricShine"), "nodejs"))
+
+  message("You should now have both a transferable and distributable installer Electron app.")
 
 }

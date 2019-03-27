@@ -1,30 +1,27 @@
 #' Create a directory for creating the new app and copy template of files
 #'
-#' @param name  name of app
+#' @param appName  name of app
 #' @param description short description of app
 #' @param productName product name
 #' @param version version number: see https://semver.org/ for details on how to use version numbers
 #' @param appPath path to new electron app top directory
-#' @param ... pass optional arguments to electricShine::create_package_json()
 #' @param functionName the function name in your package that starts the shiny app
 #'
 #' @return  nothing, creates a directory
 #' @export
 #'
-create_build_directory <- function(name,
-                            description,
-                            productName,
-                            version,
-                            appPath,
-                            functionName,
-                            ...){
+create_build_directory <- function(appName,
+                                   description,
+                                   productName,
+                                   version,
+                                   appPath,
+                                   functionName){
 
   electricShine::create_package_json(name = name,
                                      description = description,
                                      productName = productName,
                                      version = version,
-                                     path = appPath,
-                                     ...)
+                                     path = appPath)
 
   electricShine::run_shiny(packageName = name,
                            path = appPath,

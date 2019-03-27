@@ -30,6 +30,15 @@ installTo <- tempdir()
 
 MRANdate <- Sys.Date() - 3
 
+name = "ExampleApp"
+description = "My demo application"
+productName = "productName"
+version = "1.0.0"
+installTo = installTo
+MRANdate = MRANdate
+functionName = "run_app"
+githubRepo = "chasemc/IDBacApp"
+localPath  = NULL
 
 
 
