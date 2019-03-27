@@ -6,8 +6,8 @@
 \usage{
 buildPackage(name = "My_Package",
   description = "My Electron application", productName = "productName",
-  version = NULL, path = NULL, date = "2019-01-01", package = NULL,
-  functionName = NULL, ...)
+  version = NULL, installTo = NULL, MRANdate = Sys.Date() - 3,
+  functionName = NULL, githubRepo = NULL, localPath = NULL, ...)
 }
 \arguments{
 \item{name}{electron app name}
@@ -18,13 +18,15 @@ buildPackage(name = "My_Package",
 
 \item{version}{semantic version of your app, as character (not numeric!)}
 
-\item{path}{path to create installer}
+\item{installTo}{path to create installer, preferably points to an empty directory}
 
-\item{date}{date for MRAN}
-
-\item{package}{github username/repo}
+\item{MRANdate}{MRAN snapshot date, formatted as 'YYYY-MM-DD'}
 
 \item{functionName}{the function name in your package that starts the shiny app}
+
+\item{githubRepo}{GitHub username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP')}
+
+\item{localPath}{path to local shiny-app package}
 }
 \value{
 Nothing

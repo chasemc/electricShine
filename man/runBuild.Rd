@@ -2,7 +2,7 @@
 % Please edit documentation in R/runBuild.R
 \name{runBuild}
 \alias{runBuild}
-\title{Main wrapper function to create a shiny app electron package}
+\title{Create an electron-builder release}
 \usage{
 runBuild(nodePath = NULL, npmPath = NULL, appPath,
   node = file.path(system.file(package = "electricShine"), "nodejs"))
@@ -20,5 +20,5 @@ runBuild(nodePath = NULL, npmPath = NULL, appPath,
 nothing, used for side-effects
 }
 \description{
-Main wrapper function to create a shiny app electron package
+Create an electron-builder release
 }

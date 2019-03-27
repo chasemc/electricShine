@@ -5,7 +5,7 @@
 \title{Install your shiny app package and its dependencies to the R installation's library}
 \usage{
 install_user_app(appPath = NULL, MRANdate = NULL, githubRepo = NULL,
-  localPath = NULL)
+  localPath = NULL, ...)
 }
 \arguments{
 \item{appPath}{path to the Electron app's build folder}
