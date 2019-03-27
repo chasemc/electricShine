@@ -4,7 +4,8 @@
 \alias{setup_directory}
 \title{Create a directory for creating the new app and copy template of files}
 \usage{
-setup_directory(name, description, productName, version, appPath)
+setup_directory(name, description, productName, version, appPath,
+  functionName, ...)
 }
 \arguments{
 \item{name}{name of app}
@@ -16,6 +17,10 @@ setup_directory(name, description, productName, version, appPath)
 \item{version}{version number: see https://semver.org/ for details on how to use version numbers}
 
 \item{appPath}{path to new electron app top directory}
+
+\item{functionName}{the function name in your package that starts the shiny app}
+
+\item{...}{pass optional arguments to electricShine::create_package_json()}
 }
 \value{
 nothing, creates a directory

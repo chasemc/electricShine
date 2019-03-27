@@ -6,7 +6,8 @@
 \usage{
 buildPackage(name = "My_Package",
   description = "My Electron application", productName = "productName",
-  version = NULL, path = NULL, date = "2019-01-01", package = NULL)
+  version = NULL, path = NULL, date = "2019-01-01", package = NULL,
+  functionName = NULL, ...)
 }
 \arguments{
 \item{name}{electron app name}
@@ -22,6 +23,8 @@ buildPackage(name = "My_Package",
 \item{date}{date for MRAN}
 
 \item{package}{github username/repo}
+
+\item{functionName}{the function name in your package that starts the shiny app}
 }
 \value{
 Nothing
