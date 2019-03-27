@@ -1,10 +1,9 @@
 
 #' Create the package.json file for npm
 #'
-#' @param name  name of app
+#' @param appName name of your app. This is what end-users will see/call an app
 #' @param description short description of app
 #' @param productName product name
-#' @param version version number (as string, not numeric): see https://semver.org/ for details on how to use version numbers
 #' @param appPath path to created app
 #' @param iconPath path to icon within created app
 #' @param repository purely for info- does the shiny app live in a repository (e.g. GitHub)
@@ -12,11 +11,14 @@
 #' @param license license of the App. Not the full license, only the title (e.g. MIT, or GPLv3)
 #' @param electronVersion version of electron that should be downloaded from npm and used to create app
 #' @param electronPackagerVersion version of electronPackager that should be downloaded from npm and used to create app
+#' @param semanticVersion semantic version of app see https://semver.org/ for more information on versioning
+#' @param copyrightYear year of copyright
+#' @param copyrightName copyright-holder's name
+#' @param website website of app or company
 #'
-#' @return
+#' @return outputs package.json file with user-input modifications
 #' @export
 #'
-#' @examples
 create_package_json <- function(appName = "MyApp",
                                 description = "description",
                                 productName = "productName",
