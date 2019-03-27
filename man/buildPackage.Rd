@@ -4,13 +4,13 @@
 \alias{buildPackage}
 \title{Meta-function}
 \usage{
-buildPackage(name = "My_Package",
+buildPackage(appName = "My_Package",
   description = "My Electron application", productName = "productName",
   version = NULL, installTo = NULL, MRANdate = Sys.Date() - 3,
-  functionName = NULL, githubRepo = NULL, localPath = NULL, ...)
+  functionName = NULL, githubRepo = NULL, localPath = NULL)
 }
 \arguments{
-\item{name}{electron app name}
+\item{appName}{electron app name}
 
 \item{description}{electron app description}
 

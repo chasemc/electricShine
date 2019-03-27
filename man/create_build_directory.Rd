@@ -4,11 +4,11 @@
 \alias{create_build_directory}
 \title{Create a directory for creating the new app and copy template of files}
 \usage{
-create_build_directory(name, description, productName, version, appPath,
-  functionName, ...)
+create_build_directory(appName, description, productName, version, appPath,
+  functionName)
 }
 \arguments{
-\item{name}{name of app}
+\item{appName}{name of app}
 
 \item{description}{short description of app}
 
@@ -19,8 +19,6 @@ create_build_directory(name, description, productName, version, appPath,
 \item{appPath}{path to new electron app top directory}
 
 \item{functionName}{the function name in your package that starts the shiny app}
-
-\item{...}{pass optional arguments to electricShine::create_package_json()}
 }
 \value{
 nothing, creates a directory
