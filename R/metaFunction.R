@@ -1,14 +1,14 @@
 #' Meta-function
 #'
-#' @param path path to create installer
-#' @param date date for MRAN
-#' @param package github username/repo
+#' @param installTo path to create installer, preferably points to an empty directory
 #' @param name electron app name
 #' @param description electron app description
 #' @param productName necessary?
 #' @param version semantic version of your app, as character (not numeric!)
+#' @param MRANdate MRAN snapshot date, formatted as 'YYYY-MM-DD'
+#' @param githubRepo GitHub username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP')
+#' @param localPath path to local shiny-app package
 #' @param functionName the function name in your package that starts the shiny app
-#'
 #'
 #' @return Nothing
 #' @export
@@ -17,33 +17,30 @@ buildPackage <- function(name = "My_Package",
                          description = "My Electron application",
                          productName = "productName",
                          version = NULL,
-                         path = NULL,
-                         date = "2019-01-01",
-                         package = NULL,
+                         installTo = NULL,
+                         MRANdate = Sys.Date() - 3,
                          functionName = NULL,
+                         githubRepo = NULL,
+                         localPath  = NULL,
                          ...){
-  if (is.null(package)) {
-    stop("electricShine() requires you to specify a 'package' argument.
-(e.g. electricShine::electricShine(package = 'tidyverse/ggplot2') )")
+
+  if (is.null(githubRepo) && is.null(localPath)) {
+    stop("electricShine::buildPackage() requires you to specify either a 'githubRepo' or 'localPath' argument specifying
+         the shiny app/package to be turned into an Electron app")
   }
-  if (is.null(path)) {
-    stop("electricShine() requires you to specify a 'path' argument.
+  if (is.null(installTo)) {
+    stop("electricShine::buildPackage() requires you to specify a 'path' argument.
 (e.g. electricShine::electricShine(path = 'C:/Users/me/Desktop/my_app') )")
   }
   if (is.null(version)) {
-    stop("electricShine() requires you to specify a 'version' argument.
+    stop("electricShine::buildPackage() requires you to specify a 'version' argument.
            (e.g. electricShine::electricShine(version = '1.0.0') )")
   }
   if (is.null(functionName)) {
-    stop("electricShine() requires you to specify a 'functionName' argument.
+    stop("electricShine::buildPackage() requires you to specify a 'functionName' argument.
          functionName should be the name of the function that starts your package's shiny app.
          e.g. is you have the function myPackage::start_shiny(), provide 'start_shiny'")
   }
-
-
-
-
-
 
 
   electricShine::getNodejs()
@@ -53,14 +50,14 @@ buildPackage <- function(name = "My_Package",
                                name = name)
 
 
-  electricShine::setup_directory(name = name,
-                                 description = description,
-                                 productName = productName,
-                                 version = version,
-                                 appPath = appPath,
-                                 ...)
+  electricShine::create_build_directory(name = name,
+                                        description = description,
+                                        productName = productName,
+                                        version = version,
+                                        appPath = appPath,
+                                        ...)
 
-  electricShine::installR(date = date,
+  electricShine::installR(date = MRANdate,
                           path = appPath)
 
   electricShine::trim_r(pathToR = file.path(appPath,
@@ -71,10 +68,8 @@ buildPackage <- function(name = "My_Package",
   )
 
   electricShine::install_user_app(appPath = appPath,
-                                  MRANdate = NULL,
-                                  githubRepo = NULL,
-                                  localPath  = NULL,
-                                  date = date)
+                                  MRANdate = MRANdate,
+                                  MRANdate = MRANdate,
+                                  ...)
 
 }
-functionName

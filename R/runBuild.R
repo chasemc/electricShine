@@ -1,4 +1,4 @@
-#' Main wrapper function to create a shiny app electron package
+#' Create an electron-builder release
 #'
 #' @param nodePath option to specifiy the path to the node.js directory if already installed
 #' @param npmPath option to specifiy the path to the npm module directory if already installed
@@ -12,8 +12,6 @@ runBuild <- function(nodePath = NULL,
                      npmPath = NULL,
                      appPath,
                      node = file.path(system.file(package = "electricShine"), "nodejs")){
-
-
 
 
   if (is.null(nodePath) || is.null(nodePath)) {
@@ -48,11 +46,10 @@ electricShine::getElectron() first")
   # npm start --prefix path/to/your/app
 
   message(system("cmd.exe",
-                 glue::glue("cd {appPath} && {nodePath} {npmPath} run package-win --scripts-prepend-node-path"),
+                 glue::glue("cd {appPath} && {nodePath} {npmPath} run release --scripts-prepend-node-path"),
                  invisible = FALSE,
                  minimized = F,
                  wait = T))
-
 }
 
 

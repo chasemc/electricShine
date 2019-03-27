@@ -11,7 +11,7 @@
 #' @return  nothing, creates a directory
 #' @export
 #'
-setup_directory <- function(name,
+create_build_directory <- function(name,
                             description,
                             productName,
                             version,
@@ -39,7 +39,6 @@ setup_directory <- function(name,
 
 
 
-functionName#
 #
 #
 # create_random_port <- function(){
