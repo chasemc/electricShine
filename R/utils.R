@@ -37,7 +37,7 @@ write_text <- function(text,
 #'
 #' @examples
 #'
-Create_Folder <- function(path, name){
+create_folder <- function(path, name){
   appPath <- file.path(path, name)
 
   if (file.exists(appPath)) {
