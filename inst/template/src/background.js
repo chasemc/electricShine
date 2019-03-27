@@ -1,8 +1,9 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
+import jetpack from "fs-jetpack";
 
 
-const path = require('path')
+import path from "path";
 const url = require('url')
 const port = "9191"
 const child = require('child_process');
@@ -10,22 +11,25 @@ const MACOS = "darwin"
 const WINDOWS = "win32"
 
 var killStr = ""
-var appPath = path.join(app.getAppPath(), "app.R" )
+var appPath = path.join(__dirname, "app.R" )
 var execPath = "RScript"
+
+
+
 
 
 if(process.platform == WINDOWS){
   appPath = appPath.replace(/\\/g, "\\\\");
-  execPath = path.join(app.getAppPath(), "R_win", "bin", "RScript.exe" )
+  execPath = path.join(__dirname, "R_win", "bin", "RScript.exe" )
 } else if(process.platform == MACOS){
-  var macAbsolutePath = path.join(app.getAppPath(), "R_mac")
+  var macAbsolutePath = path.join(__dirname, "R_mac")
   var env_path = macAbsolutePath+((process.env.PATH)?":"+process.env.PATH:"");
   var env_libs_site = macAbsolutePath+"/library"+((process.env.R_LIBS_SITE)?":"+process.env.R_LIBS_SITE:"");
   process.env.PATH = env_path
   process.env.R_LIBS_SITE = env_libs_site
   process.env.NODE_R_HOME = macAbsolutePath
   
-  execPath = path.join(app.getAppPath(), "R_mac", "bin", "R" )
+  execPath = path.join(__dirname, "R_mac", "bin", "R" )
 } else {
   console.log("not on windows or macos?")
   throw new Error("not on windows or macos?")
@@ -66,7 +70,7 @@ function createWindow () {
         console.log(new Date().toISOString()+'::mainWindow loaded')
         setTimeout( () => {
           mainWindow.show()
-          if(process.platform=MACOS){
+          if(process.platform == MACOS){
             mainWindow.reload()
           }
           loading.hide()
