@@ -70,8 +70,10 @@ buildPackage <- function(name = "My_Package",
     electricShine::buildElectronDependencies(appPath = appPath)
   )
 
-  electricShine::install_user_app(package = package,
-                                  path = appPath,
+  electricShine::install_user_app(appPath = appPath,
+                                  MRANdate = NULL,
+                                  githubRepo = NULL,
+                                  localPath  = NULL,
                                   date = date)
 
 }
