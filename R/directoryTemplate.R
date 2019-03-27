@@ -33,33 +33,6 @@ setup_directory <- function(name,
 
 
 
-#' Create app.R file
-#'
-#' @param path path of where to write app.R
-#' @param packageName name of package
-#'
-#' @return nothing, writes app.R to path provided and provides feedback if succcessful or not
-#' @export
-#'
-create_app_R <- function(packageName,
-                         path){
-
-  packageName <- base::basename(packageName)
-
-  file <- glue::glue("library(shiny)
-
-shinyApp(ui = {packageName}::app_ui(),
-server = {packageName}::app_server
-)
-"
-  )
-
-electricShine::write_text(text = file,
-                          name = "app.R",
-                          path = path)
-
-
-}
 
 
 
