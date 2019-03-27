@@ -8,7 +8,7 @@
 #' @return list of 2: "nodePath": path to node.exe; "npmPath": path to npm-cli.js
 #' @export
 #'
-getNodejs <- function(nodeUrl = "https://nodejs.org/dist",
+get_nodejs <- function(nodeUrl = "https://nodejs.org/dist",
                       installTo = file.path(system.file(package = "electricShine"), "nodejs"),
                       force = FALSE,
                       nodeVersion = "v10.15.1"){
