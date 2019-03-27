@@ -2,20 +2,23 @@
 % Please edit documentation in R/installUserApp.R
 \name{install_user_app}
 \alias{install_user_app}
-\title{Title}
+\title{Install your shiny app package and its dependencies to the R installation's library}
 \usage{
-install_user_app(package, path, date)
+install_user_app(appPath = NULL, MRANdate = NULL, githubRepo = NULL,
+  localPath = NULL)
 }
 \arguments{
-\item{package}{github username/repo    eg tidyverse/ggplot2}
+\item{appPath}{path to the Electron app's build folder}
 
-\item{path}{path to electricShine folder}
+\item{MRANdate}{MRAN date from which to download packages from}
 
-\item{date}{MRAN date from which to download packages from}
+\item{githubRepo}{GitHub username/repo of your the shiny-app package  (e.g. 'chasemc/demoAPP')}
+
+\item{localPath}{path to local shiny-app package}
 }
 \value{
 nothing
 }
 \description{
-Title
+Install your shiny app package and its dependencies to the R installation's library
 }
