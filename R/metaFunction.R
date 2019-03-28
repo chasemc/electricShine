@@ -4,7 +4,7 @@
 #' @param appName electron app name
 #' @param description electron app description
 #' @param productName necessary?
-#' @param version semantic version of your app, as character (not numeric!)
+#' @param semanticVersion semantic version of your app, as character (not numeric!)
 #' @param MRANdate MRAN snapshot date, formatted as 'YYYY-MM-DD'
 #' @param githubRepo GitHub username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP')
 #' @param localPath path to local shiny-app package
@@ -16,7 +16,7 @@
 buildPackage <- function(appName = "My_Package",
                          description = "My Electron application",
                          productName = "productName",
-                         version = NULL,
+                         semanticVersion = NULL,
                          installTo = NULL,
                          MRANdate = Sys.Date() - 3,
                          functionName = NULL,
@@ -55,49 +55,54 @@ buildPackage <- function(appName = "My_Package",
   appPath <-  normalizePath(appPath,
                             mustWork = FALSE)
 
+  # Copy Electron template into appPath -------------------------------------
 
+  electricShine::copy_template(appPath)
 
-# Create build directory structure ----------------------------------------
+  # Create package.json -----------------------------------------------------
+  # package.json gets put into the src folder
+  temp <- file.path(appPath, "src")
+  electricShine::create_package_json(appName = appName,
+                                     description = description,
+                                     productName = productName,
+                                     semanticVersion = semanticVersion,
+                                     path = temp)
 
-  electricShine::create_build_directory(name = appName,
-                                        description = description,
-                                        productName = productName,
-                                        version = version,
-                                        appPath = appPath,
-                                        functionName = functionName)
+  # Create app.r ------------------------------------------------------------
+  # app.r gets put into the app folder
+  temp <- file.path(appPath, "app")
 
+  electricShine::run_shiny(packageName = appName,
+                           path = temp,
+                           functionName = functionName)
 
+  # Download and Install R --------------------------------------------------
 
-
-
-# Download and Install R --------------------------------------------------
+  # R gets put into the app folder
+  temp <- file.path(appPath, "app")
 
   electricShine::installR(date = MRANdate,
-                          path = appPath)
+                          path = temp)
 
-# Trim R's size -----------------------------------------------------------
+  # Trim R's size -----------------------------------------------------------
+  temp <- file.path(appPath, "app")
 
-  electricShine::trim_r(pathToR = file.path(appPath,
+  electricShine::trim_r(pathToR = file.path(temp,
                                             "r_win"))
 
-
-
-# Install shiny app/package and dependencies ------------------------------
-
+  # Install shiny app/package and dependencies ------------------------------
 
   electricShine::install_user_app(appPath = appPath,
-                                  MRANdate = MRANdate,
                                   MRANdate = MRANdate)
 
-
-# Download npm dependencies -----------------------------------------------
+  # Download npm dependencies -----------------------------------------------
 
   try(
     electricShine::buildElectronDependencies(appPath = appPath)
   )
 
 
-# Build the electron app --------------------------------------------------
+  # Build the electron app --------------------------------------------------
 
   electricShine::runBuild(nodePath = NULL,
                           npmPath = NULL,

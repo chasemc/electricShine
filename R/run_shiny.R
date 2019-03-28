@@ -21,9 +21,8 @@ run_shiny <- function(packageName,
                      {packageName}::{functionName}()
                      "
   )
+
   electricShine::write_text(text = file,
                             filename = "app.R",
                             path = path)
-
-
 }

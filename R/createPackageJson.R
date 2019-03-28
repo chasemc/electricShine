@@ -4,7 +4,7 @@
 #' @param appName name of your app. This is what end-users will see/call an app
 #' @param description short description of app
 #' @param productName product name
-#' @param appPath path to created app
+#' @param path path to where package.json will be written
 #' @param iconPath path to icon within created app
 #' @param repository purely for info- does the shiny app live in a repository (e.g. GitHub)
 #' @param author author of the app
@@ -23,7 +23,7 @@ create_package_json <- function(appName = "MyApp",
                                 description = "description",
                                 productName = "productName",
                                 semanticVersion = "0.0.0",
-                                appPath = NULL,
+                                path = NULL,
                                 iconPath = NULL,
                                 repository = "",
                                 author = "",
