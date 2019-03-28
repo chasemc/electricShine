@@ -4,10 +4,12 @@
 \alias{trim_r}
 \title{Remove html and pdf files from R installation}
 \usage{
-trim_r(pathToR)
+trim_r(pathToR, only64)
 }
 \arguments{
 \item{pathToR}{path to the copied R installation}
+
+\item{only64}{if TRUE, remove 32-bit dlls; if FALSE do not remove 32-bit dlls}
 }
 \value{
 nothing

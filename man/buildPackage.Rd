@@ -4,13 +4,16 @@
 \alias{buildPackage}
 \title{Meta-function}
 \usage{
-buildPackage(appName = "My_Package",
+buildPackage(appName = "My_Package", packageName = NULL,
   description = "My Electron application", productName = "productName",
   semanticVersion = NULL, installTo = NULL, MRANdate = Sys.Date() -
-  3, functionName = NULL, githubRepo = NULL, localPath = NULL)
+  3, functionName = NULL, githubRepo = NULL, localPath = NULL,
+  only64 = FALSE)
 }
 \arguments{
 \item{appName}{electron app name}
+
+\item{packageName}{packageName}
 
 \item{description}{electron app description}
 
@@ -27,6 +30,8 @@ buildPackage(appName = "My_Package",
 \item{githubRepo}{GitHub username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP')}
 
 \item{localPath}{path to local shiny-app package}
+
+\item{only64}{if TRUE, remove 32-bit dlls; if FALSE do not remove 32-bit dlls}
 }
 \value{
 Nothing

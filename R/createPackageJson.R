@@ -31,8 +31,6 @@ create_package_json <- function(appName = "MyApp",
                                 copyrightName = "",
                                 website = "",
                                 license = "",
-                                companyName = "",
-                                keywords = "",
                                 electronVersion = "^4.0.7",
                                 electronPackagerVersion = "^13.1.1"){
 

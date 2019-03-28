@@ -13,14 +13,14 @@ if(file.exists(file.path(temp, "app.R"))) {
 
 
 test_that("run_shiny returns message", {
-  expect_message(electricShine::run_Shiny(packageName = "test123",
+  expect_message(electricShine::run_shiny(packageName = "test123",
                                           path = temp,
                                           functionName = "runme"))
 })
 
 
 
-electricShine::run_Shiny(packageName = "test123",
+electricShine::run_shiny(packageName = "test123",
                                         path = temp,
                                         functionName = "runme")
 fils <- list.files(temp, pattern = "app.R")
