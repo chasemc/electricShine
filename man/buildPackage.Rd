@@ -6,8 +6,8 @@
 \usage{
 buildPackage(appName = "My_Package",
   description = "My Electron application", productName = "productName",
-  version = NULL, installTo = NULL, MRANdate = Sys.Date() - 3,
-  functionName = NULL, githubRepo = NULL, localPath = NULL)
+  semanticVersion = NULL, installTo = NULL, MRANdate = Sys.Date() -
+  3, functionName = NULL, githubRepo = NULL, localPath = NULL)
 }
 \arguments{
 \item{appName}{electron app name}
@@ -16,7 +16,7 @@ buildPackage(appName = "My_Package",
 
 \item{productName}{necessary?}
 
-\item{version}{semantic version of your app, as character (not numeric!)}
+\item{semanticVersion}{semantic version of your app, as character (not numeric!)}
 
 \item{installTo}{path to create installer, preferably points to an empty directory}
 

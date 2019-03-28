@@ -2,6 +2,7 @@
 
 export(buildElectronDependencies)
 export(buildPackage)
+export(copy_template)
 export(create_build_directory)
 export(create_folder)
 export(create_package_json)

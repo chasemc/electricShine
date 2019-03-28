@@ -4,8 +4,8 @@
 \alias{create_build_directory}
 \title{Create a directory for creating the new app and copy template of files}
 \usage{
-create_build_directory(appName, description, productName, version, appPath,
-  functionName)
+create_build_directory(appName, description, productName, semanticVersion,
+  appPath, functionName)
 }
 \arguments{
 \item{appName}{name of app}
@@ -14,7 +14,7 @@ create_build_directory(appName, description, productName, version, appPath,
 
 \item{productName}{product name}
 
-\item{version}{version number: see https://semver.org/ for details on how to use version numbers}
+\item{semanticVersion}{version number: see https://semver.org/ for details on how to use version numbers}
 
 \item{appPath}{path to new electron app top directory}
 

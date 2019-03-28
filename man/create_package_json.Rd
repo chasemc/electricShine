@@ -6,7 +6,7 @@
 \usage{
 create_package_json(appName = "MyApp", description = "description",
   productName = "productName", semanticVersion = "0.0.0",
-  appPath = NULL, iconPath = NULL, repository = "", author = "",
+  path = NULL, iconPath = NULL, repository = "", author = "",
   copyrightYear = "", copyrightName = "", website = "",
   license = "", companyName = "", keywords = "",
   electronVersion = "^4.0.7", electronPackagerVersion = "^13.1.1")
@@ -20,7 +20,7 @@ create_package_json(appName = "MyApp", description = "description",
 
 \item{semanticVersion}{semantic version of app see https://semver.org/ for more information on versioning}
 
-\item{appPath}{path to created app}
+\item{path}{path to where package.json will be written}
 
 \item{iconPath}{path to icon within created app}
 
