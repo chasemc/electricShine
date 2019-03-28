@@ -13,5 +13,6 @@ a <- list.files(a, recursive = T)
 
 
 test_that("copying boilerplate works", {
-  expect_known_hash(a, "9732cb1fc0")
+  skip_on_os(c("mac","linux"))
+    expect_known_hash(a, "9732cb1fc0")
 })
