@@ -21,25 +21,35 @@ A template for desgining a shiny app as a package may be found here: https://git
 ### Example
 ```{r}
 
-
-
-#electricShine::getNodejs()
-#electricShine::getElectron()
-
 installTo <- tempdir()
 
-MRANdate <- Sys.Date() - 3
+MRANdate <- as.character(Sys.Date() - 3)
 
-name = "ExampleApp"
+appName = "My_App"
 description = "My demo application"
-productName = "productName"
-version = "1.0.0"
+packageName = "demoApp"
+semanticVersion = "1.0.0"
 installTo = installTo
 MRANdate = MRANdate
 functionName = "run_app"
-githubRepo = "chasemc/IDBacApp"
+githubRepo = "chasemc/demoApp"
 localPath  = NULL
+only64 = TRUE
 
+
+
+electricShine::buildPackage(
+appName = "My_App",
+description = "My demo application",
+packageName = "demoApp",
+semanticVersion = "1.0.0",
+installTo = installTo,
+MRANdate = MRANdate,
+functionName = "run_app",
+githubRepo = "chasemc/demoApp",
+localPath  = NULL,
+only64 = TRUE
+)
 
 
 # electricShine::electricShine() wraps the other functions and has three arguments:
@@ -62,14 +72,5 @@ electricShine::buildPackage(name = "ExampleApp",
   
   
   
-  ```
+```
   
-  To install electricShine:
-    
-    ```
-    devtools::install_github("electricShine")
-    
-    ```
-    
-    
-    

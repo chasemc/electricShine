@@ -105,6 +105,6 @@ file <- glue::glue(
 
   electricShine::write_text(text = file,
                             filename = "package.json",
-                            path = appPath)
+                            path = path)
 
 }

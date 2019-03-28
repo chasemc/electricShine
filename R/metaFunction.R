@@ -9,11 +9,14 @@
 #' @param githubRepo GitHub username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP')
 #' @param localPath path to local shiny-app package
 #' @param functionName the function name in your package that starts the shiny app
+#' @param packageName packageName
+#' @param only64 if TRUE, remove 32-bit dlls; if FALSE do not remove 32-bit dlls
 #'
 #' @return Nothing
 #' @export
 #'
 buildPackage <- function(appName = "My_Package",
+                         packageName = NULL,
                          description = "My Electron application",
                          productName = "productName",
                          semanticVersion = NULL,
@@ -21,7 +24,8 @@ buildPackage <- function(appName = "My_Package",
                          MRANdate = Sys.Date() - 3,
                          functionName = NULL,
                          githubRepo = NULL,
-                         localPath  = NULL){
+                         localPath  = NULL,
+                         only64 = FALSE){
 
   if (is.null(githubRepo) && is.null(localPath)) {
     stop("electricShine::buildPackage() requires you to specify either a 'githubRepo' or 'localPath' argument specifying
@@ -42,7 +46,6 @@ buildPackage <- function(appName = "My_Package",
   }
 
 
-
   electricShine::get_nodejs()
 
 
@@ -60,40 +63,45 @@ buildPackage <- function(appName = "My_Package",
   electricShine::copy_template(appPath)
 
   # Create package.json -----------------------------------------------------
-  # package.json gets put into the src folder
-  temp <- file.path(appPath, "src")
   electricShine::create_package_json(appName = appName,
                                      description = description,
                                      productName = productName,
                                      semanticVersion = semanticVersion,
-                                     path = temp)
+                                     path = appPath)
 
   # Create app.r ------------------------------------------------------------
   # app.r gets put into the app folder
-  temp <- file.path(appPath, "app")
+  temp <- file.path(appPath,
+                    "app")
 
-  electricShine::run_shiny(packageName = appName,
+
+  electricShine::run_shiny(packageName = packageName,
                            path = temp,
                            functionName = functionName)
 
   # Download and Install R --------------------------------------------------
 
   # R gets put into the app folder
-  temp <- file.path(appPath, "app")
+  temp <- file.path(appPath,
+                    "app")
 
   electricShine::installR(date = MRANdate,
                           path = temp)
 
   # Trim R's size -----------------------------------------------------------
-  temp <- file.path(appPath, "app")
+  temp <- file.path(appPath,
+                    "app",
+                    "r_win")
 
-  electricShine::trim_r(pathToR = file.path(temp,
-                                            "r_win"))
+  electricShine::trim_r(pathToR = temp,
+                        only64 = only64)
 
   # Install shiny app/package and dependencies ------------------------------
 
   electricShine::install_user_app(appPath = appPath,
-                                  MRANdate = MRANdate)
+                                  MRANdate = MRANdate,
+                                  githubRepo = githubRepo,
+                                  localPath = localPath)
 
   # Download npm dependencies -----------------------------------------------
 

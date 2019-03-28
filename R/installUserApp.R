@@ -19,7 +19,7 @@ install_user_app <- function(appPath = NULL,
 
   # Not that great a check, but better than what was found on a quick stackoverflow search
   temp <- nchar(strsplit(MRANdate, "-")[[1]])
-  if(!identical(temp, c(4,2,2))){
+  if(!identical(temp, c(4L,2L,2L))){
     base::stop("electricShine::install_user_app() requires an MRANdate value, in the format 'YYYY-MM-DD'")
   }
 
@@ -42,11 +42,8 @@ install_user_app <- function(appPath = NULL,
     withr::with_libpaths(library_path,
                          remotes::install_github(githubRepo,
                                                  dependencies = NA,
-                                                 repos = repo,
                                                  force = TRUE,
-                                                 destdir = NULL,
-                                                 lib = library_path,
-                                                 type = "binary"))
+                                                 destdir = NULL))
   }
   # If local path was provided, install using install.packages::
 

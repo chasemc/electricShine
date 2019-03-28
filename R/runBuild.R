@@ -49,7 +49,10 @@ electricShine::getElectron() first")
                  glue::glue("cd {appPath} && {nodePath} {npmPath} run release --scripts-prepend-node-path"),
                  invisible = FALSE,
                  minimized = F,
-                 wait = T))
+                 wait = T,
+                 intern=F,
+                 ignore.stdout=F,
+                 ignore.stderr=F))
 }
 
 

@@ -78,12 +78,16 @@ get_nodejs <- function(nodeUrl = "https://nodejs.org/dist",
     message(glue::glue("All node.js files will be installed into: \n {installTo}"))
 
     if (base::grepl("zip$", base::basename(nodeUrl))) {
+      base::try(
       utils::unzip(zipfile = temp,
                    exdir = installTo)
+      )
     }
     if (base::grepl("gz$", base::basename(nodeUrl))) {
-      utils::untar(tarfile = temp,
+      base::try(
+        utils::untar(tarfile = temp,
                    exdir = installTo)
+      )
     }
 
 
