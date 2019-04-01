@@ -49,6 +49,7 @@ file <- glue::glue(
   "private": true,
   "author": "<<author>>",
   "copyright": "<<copyrightYear>> <<copyrightName>>",
+  "license": "<<license>>",
   "homepage": "<<website>>",
   "main": "app/background.js",
   "build": {
