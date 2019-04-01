@@ -71,6 +71,13 @@ buildPackage <- function(appName = "My_Package",
                     "app")
 
 
+  if (!is.null(githubRepo)) {
+    packageName <- basename(githubRepo)
+  }
+  if (!is.null(localPath)) {
+    packageName <- basename(localPath)
+  }
+
   electricShine::run_shiny(packageName = packageName,
                            path = temp,
                            functionName = functionName)

@@ -36,8 +36,6 @@ create_package_json(appName = "MyApp", description = "description",
 \item{electronVersion}{version of electron that should be downloaded from npm and used to create app}
 
 \item{electronPackagerVersion}{version of electronPackager that should be downloaded from npm and used to create app}
-
-\item{productName}{product name}
 }
 \value{
 outputs package.json file with user-input modifications

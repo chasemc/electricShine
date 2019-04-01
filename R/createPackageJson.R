@@ -3,7 +3,6 @@
 #'
 #' @param appName name of your app. This is what end-users will see/call an app
 #' @param description short description of app
-#' @param productName product name
 #' @param path path to where package.json will be written
 #' @param iconPath path to icon within created app
 #' @param repository purely for info- does the shiny app live in a repository (e.g. GitHub)
