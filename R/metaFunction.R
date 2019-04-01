@@ -2,22 +2,18 @@
 #'
 #' @param installTo path to create installer, preferably points to an empty directory
 #' @param appName electron app name
-#' @param description electron app description
 #' @param productName necessary?
 #' @param semanticVersion semantic version of your app, as character (not numeric!)
 #' @param MRANdate MRAN snapshot date, formatted as 'YYYY-MM-DD'
 #' @param githubRepo GitHub username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP')
 #' @param localPath path to local shiny-app package
 #' @param functionName the function name in your package that starts the shiny app
-#' @param packageName packageName
 #' @param only64 if TRUE, remove 32-bit dlls; if FALSE do not remove 32-bit dlls
 #'
 #' @return Nothing
 #' @export
 #'
 buildPackage <- function(appName = "My_Package",
-                         packageName = NULL,
-                         description = "My Electron application",
                          productName = "productName",
                          semanticVersion = NULL,
                          installTo = NULL,
