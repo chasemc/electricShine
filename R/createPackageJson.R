@@ -21,7 +21,6 @@
 #'
 create_package_json <- function(appName = "MyApp",
                                 description = "description",
-                                productName = "productName",
                                 semanticVersion = "0.0.0",
                                 path = NULL,
                                 iconPath = NULL,
