@@ -4,18 +4,13 @@
 \alias{buildPackage}
 \title{Meta-function}
 \usage{
-buildPackage(appName = "My_Package", packageName = NULL,
-  description = "My Electron application", productName = "productName",
+buildPackage(appName = "My_Package", productName = "productName",
   semanticVersion = NULL, installTo = NULL, MRANdate = Sys.Date() -
   3, functionName = NULL, githubRepo = NULL, localPath = NULL,
   only64 = FALSE)
 }
 \arguments{
 \item{appName}{electron app name}
-
-\item{packageName}{packageName}
-
-\item{description}{electron app description}
 
 \item{productName}{necessary?}
 
