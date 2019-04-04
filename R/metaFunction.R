@@ -60,8 +60,6 @@ buildPackage <- function(appName = "My_Package",
 
   # Create package.json -----------------------------------------------------
   electricShine::create_package_json(appName = appName,
-                                     description = description,
-                                     productName = productName,
                                      semanticVersion = semanticVersion,
                                      path = appPath)
 
