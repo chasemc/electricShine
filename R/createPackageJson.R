@@ -29,7 +29,6 @@ create_package_json <- function(appName = "MyApp",
                                 copyrightName = "",
                                 website = "",
                                 license = "",
-                                buildResources = "buildResources",
                                 electronVersion = "^4.0.7",
                                 electronPackagerVersion = "^13.1.1"){
 
@@ -60,7 +59,7 @@ file <- glue::glue(
   "package.json"
   ],
   "directories": {
-  "buildResources": "<<buildResources>>"
+  "buildResources": "resources"
   },
   "publish": null,
   "asar": false

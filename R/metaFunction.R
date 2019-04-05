@@ -100,17 +100,25 @@ buildPackage <- function(appName = "My_Package",
                                   githubRepo = githubRepo,
                                   localPath = localPath)
 
-  if (nchar(system.file("extdata", "icon", package = "tempRepo")) == 0) {
-    buildResources <- "buildResources"
+  # transfer icons if present
+  buildResources <- withr::with_libpaths( base::file.path(appPath,
+                                                          "app",
+                                                          "r_win",
+                                                          "library"),
+                                          system.file("extdata", "icon", package = "tempRepo"))
+
+  if (nchar(buildResources) == 0) {
   } else {
-    buildResources <- system.file("extdata", "icon", package = "tempRepo")
+    buildResources <- list.files(buildResources, full.names = TRUE)
+    resources <- file.path(appPath, "resources")
+    file.copy(buildResources, resources)
   }
+
 
   # Create package.json -----------------------------------------------------
   electricShine::create_package_json(appName = appName,
                                      semanticVersion = semanticVersion,
-                                     path = appPath,
-                                     buildResources = buildResources)
+                                     path = appPath)
 
   # Download npm dependencies -----------------------------------------------
 
