@@ -8,8 +8,7 @@ create_package_json(appName = "MyApp", description = "description",
   semanticVersion = "0.0.0", path = NULL, iconPath = NULL,
   repository = "", author = "", copyrightYear = "",
   copyrightName = "", website = "", license = "",
-  buildResources = "buildResources", electronVersion = "^4.0.7",
-  electronPackagerVersion = "^13.1.1")
+  electronVersion = "^4.0.7", electronPackagerVersion = "^13.1.1")
 }
 \arguments{
 \item{appName}{name of your app. This is what end-users will see/call an app}
