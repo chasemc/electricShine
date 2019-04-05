@@ -109,8 +109,9 @@ buildPackage <- function(appName = "My_Package",
 
   if (nchar(buildResources) == 0) {
   } else {
-    buildResources <- list.files(buildResources, full.names = TRUE)
-    resources <- file.path(appPath, "resources")
+    buildResources <- base::list.files(buildResources, full.names = TRUE)
+    resources <- base::file.path(appPath, "resources")
+    base::dir.create(resources)
     file.copy(buildResources, resources)
   }
 
