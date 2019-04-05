@@ -58,10 +58,6 @@ buildPackage <- function(appName = "My_Package",
 
   electricShine::copy_template(appPath)
 
-  # Create package.json -----------------------------------------------------
-  electricShine::create_package_json(appName = appName,
-                                     semanticVersion = semanticVersion,
-                                     path = appPath)
 
   # Create app.r ------------------------------------------------------------
   # app.r gets put into the app folder
@@ -103,6 +99,18 @@ buildPackage <- function(appName = "My_Package",
                                   MRANdate = MRANdate,
                                   githubRepo = githubRepo,
                                   localPath = localPath)
+
+  if (nchar(system.file("extdata", "icon", package = "tempRepo")) == 0) {
+    buildResources <- "buildResources"
+  } else {
+    buildResources <- system.file("extdata", "icon", package = "tempRepo")
+  }
+
+  # Create package.json -----------------------------------------------------
+  electricShine::create_package_json(appName = appName,
+                                     semanticVersion = semanticVersion,
+                                     path = appPath,
+                                     buildResources = buildResources)
 
   # Download npm dependencies -----------------------------------------------
 
