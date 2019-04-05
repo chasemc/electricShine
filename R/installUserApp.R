@@ -34,7 +34,8 @@ install_user_app <- function(appPath = NULL,
   withr::with_libpaths(library_path,
                        utils::install.packages("remotes",
                                                repos = repo,
-                                               destdir = NULL))
+                                               destdir = NULL,
+                                               type="binary"))
 
   # If github repo was provided, install using remotes::
   if (!base::is.null(githubRepo)) {
@@ -43,7 +44,8 @@ install_user_app <- function(appPath = NULL,
                          remotes::install_github(githubRepo,
                                                  dependencies = NA,
                                                  force = TRUE,
-                                                 destdir = NULL))
+                                                 destdir = NULL,
+                                                 type="binary"))
   }
   # If local path was provided, install using install.packages::
 
@@ -53,7 +55,7 @@ install_user_app <- function(appPath = NULL,
       tryCatch(
         utils::install.packages(localPath,
                                 repos = NULL,
-                                type = "source"),
+                                type = "binary"),
         error = function(e) {
           base::stop("In electricShine::install_user_app(), localPath was provided but was unable to install.")
         }
