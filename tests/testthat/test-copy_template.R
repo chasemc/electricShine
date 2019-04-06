@@ -14,5 +14,5 @@ a <- list.files(a, recursive = T)
 
 test_that("copying boilerplate works", {
   skip_on_os(c("mac","linux"))
-    expect_known_hash(a, "0b6b695d2c")
+    expect_known_hash(a, "e86f3d7e4a")
 })
