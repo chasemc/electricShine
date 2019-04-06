@@ -6,10 +6,10 @@ Authors@R: c(
            family = "Clark",
            role = c("aut", "cre"),
            email = "chasec288@gmail.com", comment = c(ORCID = "0000-0001-6439-9397")),
-    person(given = "Empty",
-           family = "Empty",
+    person(given = "Belinda",
+           family = "Chen",
            role = c("ctb"),
-           email = "Empty")
+           email = "belinda-zo@hotmail.com")
            )
 Description: A tool for turning Shiny apps (written as packages) into distributable Electron apps.
 License: MIT + file LICENSE
