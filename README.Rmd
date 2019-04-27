@@ -32,11 +32,10 @@ A template for desgining a shiny app as a package may be found here: https://git
 ```{r eval=FALSE}
 
 installTo <- tempdir()
-
 MRANdate <- as.character(Sys.Date() - 3)
 
 
-electricShine::buildPackage(
+electricShine::buildElectricApp(
 appName = "My_App",
 description = "My demo application",
 packageName = "demoApp",

@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{create_folder}
 \alias{create_folder}
-\title{Title  Create an output folder}
+\title{Create an output folder}
 \usage{
 create_folder(path, name)
 }
@@ -16,8 +16,5 @@ if folder name already exists, show error and do nothing;
         if folder name doesn't exist, create a new file
 }
 \description{
-Title  Create an output folder
-}
-\examples{
-
+Create an output folder
 }

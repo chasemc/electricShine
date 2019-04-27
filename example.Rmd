@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 dir <- tempdir()
 
-electricShine::buildPackage(name = "ExampleApp",
+electricShine::buildElectricApp(name = "ExampleApp",
                             description = "Example Electron application",
                             productName = "productName",
                             version = "1.0.0",

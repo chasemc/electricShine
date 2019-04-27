@@ -13,7 +13,9 @@
 #' @return Nothing
 #' @export
 #'
-buildPackage <- function(appName = "My_Package",
+buildElectricApp <- function(appName = "My_Package",
+                         packageName = NULL,
+                         description = "My Electron application",
                          productName = "productName",
                          semanticVersion = NULL,
                          installTo = NULL,
@@ -24,19 +26,19 @@ buildPackage <- function(appName = "My_Package",
                          only64 = FALSE){
 
   if (is.null(githubRepo) && is.null(localPath)) {
-    stop("electricShine::buildPackage() requires you to specify either a 'githubRepo' or 'localPath' argument specifying
+    stop("electricShine::buildElectricApp() requires you to specify either a 'githubRepo' or 'localPath' argument specifying
          the shiny app/package to be turned into an Electron app")
   }
   if (is.null(installTo)) {
-    stop("electricShine::buildPackage() requires you to specify a 'path' argument.
+    stop("electricShine::buildElectricApp() requires you to specify a 'path' argument.
 (e.g. electricShine::electricShine(path = 'C:/Users/me/Desktop/my_app') )")
   }
   if (is.null(version)) {
-    stop("electricShine::buildPackage() requires you to specify a 'version' argument.
+    stop("electricShine::buildElectricApp() requires you to specify a 'version' argument.
            (e.g. electricShine::electricShine(version = '1.0.0') )")
   }
   if (is.null(functionName)) {
-    stop("electricShine::buildPackage() requires you to specify a 'functionName' argument.
+    stop("electricShine::buildElectricApp() requires you to specify a 'functionName' argument.
          functionName should be the name of the function that starts your package's shiny app.
          e.g. is you have the function myPackage::start_shiny(), provide 'start_shiny'")
   }

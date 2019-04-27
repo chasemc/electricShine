@@ -1,12 +1,17 @@
 Package: electricShine
-Title: What the Package Does (One Line, Title Case)
+Title: Create distributable Shiny Electron apps
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R: c(
     person(given = "Chase",
            family = "Clark",
            role = c("aut", "cre"),
-           email = "chasec288@gmail.com")
-Description: What the package does (one paragraph).
+           email = "chasec288@gmail.com", comment = c(ORCID = "0000-0001-6439-9397")),
+    person(given = "Belinda",
+           family = "Chen",
+           role = c("ctb"),
+           email = "belinda-zo@hotmail.com")
+           )
+Description: A tool for turning Shiny apps (written as packages) into distributable Electron apps.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

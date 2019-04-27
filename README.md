@@ -35,7 +35,7 @@ installTo <- tempdir()
 MRANdate <- as.character(Sys.Date() - 3)
 
 
-electricShine::buildPackage(
+electricShine::buildElectricApp(
 appName = "My_App",
 description = "My demo application",
 packageName = "demoApp",
