@@ -2,14 +2,12 @@
 #'
 #' @param installTo path to create installer, preferably points to an empty directory
 #' @param appName electron app name
-#' @param description electron app description
 #' @param productName necessary?
 #' @param semanticVersion semantic version of your app, as character (not numeric!)
 #' @param MRANdate MRAN snapshot date, formatted as 'YYYY-MM-DD'
 #' @param githubRepo GitHub username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP')
 #' @param localPath path to local shiny-app package
 #' @param functionName the function name in your package that starts the shiny app
-#' @param packageName packageName
 #' @param only64 if TRUE, remove 32-bit dlls; if FALSE do not remove 32-bit dlls
 #'
 #' @return Nothing
@@ -62,18 +60,19 @@ buildElectricApp <- function(appName = "My_Package",
 
   electricShine::copy_template(appPath)
 
-  # Create package.json -----------------------------------------------------
-  electricShine::create_package_json(appName = appName,
-                                     description = description,
-                                     productName = productName,
-                                     semanticVersion = semanticVersion,
-                                     path = appPath)
 
   # Create app.r ------------------------------------------------------------
   # app.r gets put into the app folder
   temp <- file.path(appPath,
                     "app")
 
+
+  if (!is.null(githubRepo)) {
+    packageName <- basename(githubRepo)
+  }
+  if (!is.null(localPath)) {
+    packageName <- basename(localPath)
+  }
 
   electricShine::run_shiny(packageName = packageName,
                            path = temp,
@@ -102,6 +101,27 @@ buildElectricApp <- function(appName = "My_Package",
                                   MRANdate = MRANdate,
                                   githubRepo = githubRepo,
                                   localPath = localPath)
+
+  # transfer icons if present
+  buildResources <- withr::with_libpaths( base::file.path(appPath,
+                                                          "app",
+                                                          "r_win",
+                                                          "library"),
+                                          system.file("extdata", "icon", package = "tempRepo"))
+
+  if (nchar(buildResources) == 0) {
+  } else {
+    buildResources <- base::list.files(buildResources, full.names = TRUE)
+    resources <- base::file.path(appPath, "resources")
+    base::dir.create(resources)
+    file.copy(buildResources, resources)
+  }
+
+
+  # Create package.json -----------------------------------------------------
+  electricShine::create_package_json(appName = appName,
+                                     semanticVersion = semanticVersion,
+                                     path = appPath)
 
   # Download npm dependencies -----------------------------------------------
 

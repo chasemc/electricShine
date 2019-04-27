@@ -1,41 +1,38 @@
 ---
-title: "README"
-author: "Chase Clark"
-date: "February 11, 2019"
-output: html_document
+output: github_document
 ---
+ 
+- [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
 
-[![Build Status](https://travis-ci.org/chasemc/electricShine.svg?branch=master)](https://travis-ci.org/chasemc/electricShine)
+
+Windows CI:
+
+- [![Build status](https://ci.appveyor.com/api/projects/status/1l973ho8q4y03fnd/branch/master?svg=true)](https://ci.appveyor.com/project/chasemc/electricshine/branch/master)
+
+
+Mac and Linux CI
+
+- [![Build Status](https://travis-ci.org/chasemc/electricShine.svg?branch=master)](https://travis-ci.org/chasemc/electricShine)
+
+
 
 ### Introduction
+
 The purpose of this package is to make local shiny apps. It uses electron for creating the application and for repeatability it installs both R and R packages from a single MRAN date.
 
-It currently only builds windows apps, but support is being aded for Mac and Linux as well.
+It currently only builds windows apps, but support is being added for Mac and Linux as well.
 
-Your shiny app should be built as an R package and should list all dependencies as an R package would. It should be put on GitHub and have its own repository.
+Your shiny app should be built as an R package and should list all dependencies, as an R package would. 
 
 A template for desgining a shiny app as a package may be found here: https://github.com/ThinkR-open/shinytemplate
 
 
 ### Example
-```{r}
+```{r eval=FALSE}
 
 installTo <- tempdir()
-
 MRANdate <- as.character(Sys.Date() - 3)
-
-appName = "My_App"
-description = "My demo application"
-packageName = "demoApp"
-semanticVersion = "1.0.0"
-installTo = installTo
-MRANdate = MRANdate
-functionName = "run_app"
-githubRepo = "chasemc/demoApp"
-localPath  = NULL
-only64 = TRUE
-
 
 
 electricShine::buildElectricApp(
@@ -51,26 +48,6 @@ localPath  = NULL,
 only64 = TRUE
 )
 
-
-# electricShine::electricShine() wraps the other functions and has three arguments:
-# A path to a directory that does not contain a folder named "electricShine"
-# The date from which to download R and R packages from MRAN
-# Your github username and repository name in the format  "usernam/repo"  eg "tidyverse/ggplot2"
-
-
-electricShine::buildElectricApp(name = "ExampleApp",
-                            description = "My demo application",
-                            productName = "productName",
-                            version = "1.0.0",
-                            installTo = installTo,
-                            MRANdate = MRANdate,
-                            functionName = "run_app",
-                            githubRepo = "chasemc/IDBacApp", 
-                            localPath  = NULL)
-  
-  
-  
-  
   
 ```
   

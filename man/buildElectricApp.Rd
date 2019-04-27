@@ -13,10 +13,6 @@ buildElectricApp(appName = "My_Package", packageName = NULL,
 \arguments{
 \item{appName}{electron app name}
 
-\item{packageName}{packageName}
-
-\item{description}{electron app description}
-
 \item{productName}{necessary?}
 
 \item{semanticVersion}{semantic version of your app, as character (not numeric!)}

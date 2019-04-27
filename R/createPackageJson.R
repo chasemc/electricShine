@@ -3,7 +3,6 @@
 #'
 #' @param appName name of your app. This is what end-users will see/call an app
 #' @param description short description of app
-#' @param productName product name
 #' @param path path to where package.json will be written
 #' @param iconPath path to icon within created app
 #' @param repository purely for info- does the shiny app live in a repository (e.g. GitHub)
@@ -21,7 +20,6 @@
 #'
 create_package_json <- function(appName = "MyApp",
                                 description = "description",
-                                productName = "productName",
                                 semanticVersion = "0.0.0",
                                 path = NULL,
                                 iconPath = NULL,
@@ -50,6 +48,7 @@ file <- glue::glue(
   "private": true,
   "author": "<<author>>",
   "copyright": "<<copyrightYear>> <<copyrightName>>",
+  "license": "<<license>>",
   "homepage": "<<website>>",
   "main": "app/background.js",
   "build": {

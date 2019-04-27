@@ -14,8 +14,6 @@ if(file.exists(file.path(temp, "package.json"))) {
 
 test_that("run_shiny returns message", {
   expect_message(electricShine::create_package_json(appName = "MyApp",
-                                                    description = "description",
-                                                    productName = "productName",
                                                     semanticVersion = "0.0.0",
                                                     path = temp,
                                                     iconPath = NULL,
@@ -34,7 +32,7 @@ test_that("run_shiny returns message", {
 
 test_that("package.json was written as expected",{
 
-  expect_known_hash(readLines(file.path(temp, "package.json")), "737c67cd8d")
+  expect_known_hash(readLines(file.path(temp, "package.json")), "d673f5ea8c")
 
 
 })
