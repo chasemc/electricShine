@@ -38,7 +38,7 @@ only64 = TRUE
 
 
 
-electricShine::buildPackage(
+electricShine::buildElectricApp(
 appName = "My_App",
 description = "My demo application",
 packageName = "demoApp",
@@ -58,7 +58,7 @@ only64 = TRUE
 # Your github username and repository name in the format  "usernam/repo"  eg "tidyverse/ggplot2"
 
 
-electricShine::buildPackage(name = "ExampleApp",
+electricShine::buildElectricApp(name = "ExampleApp",
                             description = "My demo application",
                             productName = "productName",
                             version = "1.0.0",

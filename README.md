@@ -35,7 +35,7 @@ github_package_repo <- "chasemc/IDBacApp"
 # The date from which to download R and R packages from MRAN
 # Your github username and repository name in the format  "usernam/repo"  eg "tidyverse/ggplot2"
 
-electricShine::buildPackage(name = "IDBacApp",
+electricShine::buildElectricApp(name = "IDBacApp",
                              description = "My Electron application",
                              productName = "productName",
                              version = "1.0.0",
