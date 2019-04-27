@@ -26,7 +26,7 @@ write_text <- function(text,
 }
 
 
-#' Title  Create an output folder
+#' Create an output folder
 #'
 #' @param path path where output folder gonna be
 #' @param name name of the output folder about to be created
@@ -34,8 +34,6 @@ write_text <- function(text,
 #' @return if folder name already exists, show error and do nothing;
 #'         if folder name doesn't exist, create a new file
 #' @export
-#'
-#' @examples
 #'
 create_folder <- function(path, name){
   appPath <- file.path(path, name)
