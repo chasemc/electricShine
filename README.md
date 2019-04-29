@@ -37,7 +37,6 @@ MRANdate <- as.character(Sys.Date() - 3)
 
 electricShine::buildElectricApp(
 appName = "My_App",
-description = "My demo application",
 packageName = "demoApp",
 semanticVersion = "1.0.0",
 installTo = installTo,
