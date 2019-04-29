@@ -9,21 +9,21 @@
 #' @param localPath path to local shiny-app package
 #' @param functionName the function name in your package that starts the shiny app
 #' @param only64 if TRUE, remove 32-bit dlls; if FALSE do not remove 32-bit dlls
+#' @param packageName can be empty if Github repo/base path is same as your shiny package name
 #'
 #' @return Nothing
 #' @export
 #'
 buildElectricApp <- function(appName = "My_Package",
-                         packageName = NULL,
-                         description = "My Electron application",
-                         productName = "productName",
-                         semanticVersion = NULL,
-                         installTo = NULL,
-                         MRANdate = Sys.Date() - 3,
-                         functionName = NULL,
-                         githubRepo = NULL,
-                         localPath  = NULL,
-                         only64 = FALSE){
+                             productName = "productName",
+                             semanticVersion = NULL,
+                             installTo = NULL,
+                             MRANdate = Sys.Date() - 3,
+                             functionName = NULL,
+                             githubRepo = NULL,
+                             localPath  = NULL,
+                             only64 = FALSE,
+                             packageName = NULL){
 
   if (is.null(githubRepo) && is.null(localPath)) {
     stop("electricShine::buildElectricApp() requires you to specify either a 'githubRepo' or 'localPath' argument specifying
@@ -66,14 +66,14 @@ buildElectricApp <- function(appName = "My_Package",
   temp <- file.path(appPath,
                     "app")
 
-
-  if (!is.null(githubRepo)) {
-    packageName <- basename(githubRepo)
+  if (!is.null(packageName)) {
+    if (!is.null(githubRepo)) {
+      packageName <- basename(githubRepo)
+    }
+    if (!is.null(localPath)) {
+      packageName <- basename(localPath)
+    }
   }
-  if (!is.null(localPath)) {
-    packageName <- basename(localPath)
-  }
-
   electricShine::run_shiny(packageName = packageName,
                            path = temp,
                            functionName = functionName)
