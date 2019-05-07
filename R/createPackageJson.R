@@ -30,9 +30,7 @@ create_package_json <- function(appName = "MyApp",
                                 license = "",
                                 deps = NULL){
 
-  if (is.null(version)) {
-    stop("The package_json() function requires a \"version\" input")
-  }
+
 
   # null is to allow for testing
   if (is.null(deps)) {
