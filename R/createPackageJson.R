@@ -28,14 +28,15 @@ create_package_json <- function(appName = "MyApp",
                                 copyrightYear = "",
                                 copyrightName = "",
                                 website = "",
-                                license = "",
-                                electronVersion = "^4.0.7",
-                                electronPackagerVersion = "^13.1.1"){
+                                license = ""){
 
   if (is.null(version)) {
     stop("The package_json() function requires a \"version\" input")
   }
 
+  # get package.json dependencies
+  deps <- readLines(system.file("template/package.json", package = "electricShine"))
+  deps <- paste0(deps, collapse = "\n")
 
 
 file <- glue::glue(
@@ -74,29 +75,7 @@ file <- glue::glue(
   "start": "node build/start.js",
   "release": "npm test && webpack --config=build/webpack.app.config.js --env=production && electron-builder"
   },
-  "dependencies": {
-  "fs-jetpack": "^2.1.0"
-  },
-  "devDependencies": {
-  "@babel/core": "^7.4.0",
-  "@babel/preset-env": "^7.4.2",
-  "babel-loader": "^8.0.5",
-  "babel-plugin-transform-object-rest-spread": "^6.26.0",
-  "chai": "^4.2.0",
-  "css-loader": "^2.1.1",
-  "electron": "^4.1.1",
-  "electron-builder": "^20.39.0",
-  "electron-mocha": "^6.0.4",
-  "friendly-errors-webpack-plugin": "^1.7.0",
-  "mocha": "^6.0.2",
-  "source-map-support": "^0.5.11",
-  "spectron": "^5.0.0",
-  "style-loader": "^0.23.1",
-  "webpack": "^4.29.6",
-  "webpack-cli": "^3.3.0",
-  "webpack-merge": "^4.2.1",
-  "webpack-node-externals": "^1.7.2"
-  }
+ <<deps>>
 }
 ',  .open = "<<", .close = ">>")
 
