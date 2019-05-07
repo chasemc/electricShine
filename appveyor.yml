@@ -18,7 +18,7 @@ environment:
     PKGTYPE: win.binary 
   
   matrix:
-  - R_VERSION: 3.5.2
+  - R_VERSION: 3.6.0
     R_ARCH: x64
     GCC_PATH: mingw_64
 
