@@ -16,7 +16,7 @@
 #'
 buildElectricApp <- function(appName = "My_Package",
                              productName = "productName",
-                             semanticVersion = NULL,
+                             semanticVersion = "0.0.0",
                              installTo = NULL,
                              MRANdate = Sys.Date() - 3,
                              functionName = NULL,
@@ -53,8 +53,7 @@ buildElectricApp <- function(appName = "My_Package",
   appPath <- file.path(installTo,
                        appName)
 
-  appPath <-  normalizePath(appPath,
-                            mustWork = FALSE)
+
 
   # Copy Electron template into appPath -------------------------------------
 
@@ -125,9 +124,8 @@ buildElectricApp <- function(appName = "My_Package",
 
   # Download npm dependencies -----------------------------------------------
 
-  try(
+
     electricShine::buildElectronDependencies(appPath = appPath)
-  )
 
 
   # Build the electron app --------------------------------------------------
