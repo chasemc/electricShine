@@ -7,8 +7,7 @@
 create_package_json(appName = "MyApp", description = "description",
   semanticVersion = "0.0.0", path = NULL, iconPath = NULL,
   repository = "", author = "", copyrightYear = "",
-  copyrightName = "", website = "", license = "",
-  electronVersion = "^4.0.7", electronPackagerVersion = "^13.1.1")
+  copyrightName = "", website = "", license = "", deps = NULL)
 }
 \arguments{
 \item{appName}{name of your app. This is what end-users will see/call an app}
@@ -33,9 +32,7 @@ create_package_json(appName = "MyApp", description = "description",
 
 \item{license}{license of the App. Not the full license, only the title (e.g. MIT, or GPLv3)}
 
-\item{electronVersion}{version of electron that should be downloaded from npm and used to create app}
-
-\item{electronPackagerVersion}{version of electronPackager that should be downloaded from npm and used to create app}
+\item{deps}{is to allow testing with testthat}
 }
 \value{
 outputs package.json file with user-input modifications
