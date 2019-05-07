@@ -31,7 +31,7 @@ test_that("run_shiny returns message", {
 
 test_that("package.json was written as expected",{
 
-  expect_known_hash(readLines(file.path(temp, "package.json")), "b82312780a")
+  expect_known_hash(readLines(file.path(temp, "package.json")), "7016753dff")
 
 
 })
