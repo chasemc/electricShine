@@ -1,8 +1,0 @@
----
-title: "Creating a Basic App"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Creating a Basic App}
-  %\VignetteEncoding{UTF-8}
----

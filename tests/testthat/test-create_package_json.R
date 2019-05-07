@@ -23,8 +23,7 @@ test_that("run_shiny returns message", {
                                                     copyrightName = "",
                                                     website = "",
                                                     license = "",
-                                                    electronVersion = "^4.0.7",
-                                                    electronPackagerVersion = "^13.1.1"))
+                                                    deps = NULL))
 
 })
 
@@ -32,7 +31,7 @@ test_that("run_shiny returns message", {
 
 test_that("package.json was written as expected",{
 
-  expect_known_hash(readLines(file.path(temp, "package.json")), "d673f5ea8c")
+  expect_known_hash(readLines(file.path(temp, "package.json")), "b82312780a")
 
 
 })

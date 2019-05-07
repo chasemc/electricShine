@@ -8,7 +8,7 @@
 #'
 copy_template <- function(appPath){
 
-  dirs <- file.path(system.file(package = "electricShine"), "template")
+  dirs <- system.file("template", package = "electricShine")
   dirs <- list.dirs(dirs)
   dirs <- dirs[-1]
 
