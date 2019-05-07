@@ -5,8 +5,8 @@
 \title{Meta-function}
 \usage{
 buildElectricApp(appName = "My_Package", productName = "productName",
-  semanticVersion = NULL, installTo = NULL, MRANdate = Sys.Date() -
-  3, functionName = NULL, githubRepo = NULL, localPath = NULL,
+  semanticVersion = "0.0.0", installTo = NULL, MRANdate = Sys.Date()
+  - 3, functionName = NULL, githubRepo = NULL, localPath = NULL,
   only64 = FALSE, packageName = NULL)
 }
 \arguments{
