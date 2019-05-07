@@ -70,7 +70,7 @@ function createWindow () {
         console.log(new Date().toISOString()+'::mainWindow loaded')
         setTimeout( () => {
           mainWindow.show()
-          if(process.platform == MACOS){
+          if(process.platform == WINDOWS){
             mainWindow.reload()
           }
           loading.hide()
@@ -79,6 +79,8 @@ function createWindow () {
         }, 2000)
 
       })
+	  
+	  
       console.log(port)
       // long loading html
       mainWindow.loadURL('http://127.0.0.1:'+port)
