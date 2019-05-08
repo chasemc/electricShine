@@ -37,7 +37,7 @@ if(process.platform == WINDOWS){
 
 console.log(process.env)
 
-const childProcess = child.spawn(execPath, ["-e", "shiny::runApp(file.path('"+appPath+"'), port="+port+")"])
+const childProcess = child.spawn(execPath, ["-e", "<?<R_SHINY_FUNCTION>?>(port="+port+")"])
 childProcess.stdout.on('data', (data) => {
   console.log(`stdout:${data}`)
 })
