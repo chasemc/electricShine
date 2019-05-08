@@ -127,7 +127,8 @@ buildElectricApp <- function(appName = "My_Package",
 # Add function that runs the shiny app to description.js ------------------
 
   electricShine::addFunctionToBackgroundJs(backgroundjsPath = file.path(appPath,
-                                                                        "src"),
+                                                                        "src", 
+                                                                        "background.js"),
                                            packageName = packageName,
                                            functionName = functionName)
   
