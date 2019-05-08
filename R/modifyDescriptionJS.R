@@ -11,7 +11,7 @@
 addFunctionToBackgroundJs <- function(backgroundjsPath,
                                       packageName,
                                       functionName){
-  if (!file.exists(descriptionjsPath)) {
+  if (!file.exists(backgroundjsPath)) {
     stop("addFunctionToBackgroundJs() failed because backgroundjsPath didn't point to an existing file.")
   }
   
