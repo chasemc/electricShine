@@ -45,7 +45,7 @@ if(process.platform == WINDOWS){
 
 console.log(process.env)
 
-const childProcess = child.spawn(execPath, ["-e", "<?<R_SHINY_FUNCTION>?>(port="+srv.address().port+")"])
+const childProcess = child.spawn(execPath, ["--vanilla -e", "<?<R_SHINY_FUNCTION>?>(port="+srv.address().port+")"])
 childProcess.stdout.on('data', (data) => {
   console.log(`stdout:${data}`)
 })
