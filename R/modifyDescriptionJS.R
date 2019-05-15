@@ -19,9 +19,11 @@ addFunctionToBackgroundJs <- function(backgroundjsPath,
   
   R_SHINY_FUNCTION <- paste0(packageName, "::", functionName)
   
-  b[[40]] <- glue::glue(b[[40]], 
-                        .open = "<?<",
-                        .close = ">?>")
+  
+  b <- sapply(b, function(x) glue::glue(x, 
+                                        .open = "<?<",
+                                        .close = ">?>")
+              )
   
   writeLines(b, backgroundjsPath)
   
