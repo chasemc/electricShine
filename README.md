@@ -21,15 +21,18 @@ It currently only builds windows apps, but support is being added for Mac and Li
 
 Your shiny app should be built as an R package and should list all dependencies, as an R package would. 
 
-A template for desgining a shiny app as a package may be found here: https://github.com/ThinkR-open/shinytemplate
+A template for designing a shiny app as a package may be found here: https://github.com/ThinkR-open/shinytemplate
 
 
+### Instructions
 
 
 Please see the "Basic Use" vignette for instructions.
 
+An example app structured for use with electricShine can be found at https://github.com/chasemc/demoApp; includes continuous deployment using AppVeyor.
 
-### Example
+
+### Main Function
 ```{r}
 installTo <- tempdir()
 MRANdate <- as.character(Sys.Date() - 3)

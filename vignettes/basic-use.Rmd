@@ -2,15 +2,15 @@
 title: "Basic Use"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Basic Use}
+%\VignetteIndexEntry{Basic Use}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
----
-
-```{r, include = FALSE}
+  ---
+  
+  ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+collapse = TRUE,
+comment = "#>"
 )
 ```
 
@@ -106,9 +106,16 @@ In the directory your specified in `installTo`, you will find a new folder named
 
 Advanced: If you want to test the electron app without installing. You can open cmd.exe and `cd` to `installTo/appName` and if you have nodejs installed and in your `PATH`, use the command `npm start` to initiate the app. 
 
+Advanced: If you want to make changes before creating the exe- run the `electricShine::buildElectricApp()` with `build = FALSE` and make your changes within `installTo/appName`. When you're ready to build the installer run the following, using the same `installTo` and `appName` as in `electricShine::buildElectricApp()`.
 
+```{r}
+appPath <- file.path(installTo, appName)
 
-
+electricShine::runBuild(nodePath = NULL,
+                        npmPath = NULL,
+                        appPath = appPath,
+                        node = file.path(system.file(package = "electricShine"), "nodejs"))
+```
 
 
 
