@@ -45,7 +45,8 @@ install_user_app <- function(appPath = NULL,
                                                  dependencies = NA,
                                                  force = TRUE,
                                                  destdir = NULL,
-                                                 type="binary"))
+                                                 repos = repo,
+                                                 type = "binary"))
   }
   # If local path was provided, install using install.packages::
 
@@ -54,7 +55,7 @@ install_user_app <- function(appPath = NULL,
     if (base::dir.exists(localPath)) {
       tryCatch(
         utils::install.packages(localPath,
-                                repos = NULL,
+                                repos = repo,
                                 type = "binary"),
         error = function(e) {
           base::stop("In electricShine::install_user_app(), localPath was provided but was unable to install.")
