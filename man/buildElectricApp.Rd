@@ -7,7 +7,7 @@
 buildElectricApp(appName = "My_Package", productName = "productName",
   semanticVersion = "0.0.0", installTo = NULL, MRANdate = Sys.Date()
   - 3, functionName = NULL, githubRepo = NULL, localPath = NULL,
-  only64 = FALSE, packageName = NULL)
+  only64 = FALSE, packageName = NULL, build = TRUE)
 }
 \arguments{
 \item{appName}{electron app name}
@@ -29,6 +29,8 @@ buildElectricApp(appName = "My_Package", productName = "productName",
 \item{only64}{if TRUE, remove 32-bit dlls; if FALSE do not remove 32-bit dlls}
 
 \item{packageName}{can be empty if Github repo/base path is same as your shiny package name}
+
+\item{build}{logical, whether to start the build process, helpful if want to mod before building}
 }
 \value{
 Nothing

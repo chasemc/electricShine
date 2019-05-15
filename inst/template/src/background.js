@@ -5,7 +5,6 @@ import jetpack from "fs-jetpack";
 
 import path from "path";
 const url = require('url')
-const port = "9191"
 const child = require('child_process');
 const MACOS = "darwin"
 const WINDOWS = "win32"
@@ -15,6 +14,15 @@ var appPath = path.join(__dirname, "app.R" )
 var execPath = "RScript"
 
 
+//Find and bind an open port
+//Assigned port can be accesssed with srv.address().port
+var net = require('net');
+var srv = net.createServer(function(sock) {
+  sock.end('Hello world\n');
+});
+srv.listen(0, function() {
+  console.log('Listening on port ' + srv.address().port);
+});
 
 
 
@@ -37,7 +45,7 @@ if(process.platform == WINDOWS){
 
 console.log(process.env)
 
-const childProcess = child.spawn(execPath, ["-e", "<?<R_SHINY_FUNCTION>?>(port="+port+")"])
+const childProcess = child.spawn(execPath, ["--vanilla -e", "<?<R_SHINY_FUNCTION>?>(port="+srv.address().port+")"])
 childProcess.stdout.on('data', (data) => {
   console.log(`stdout:${data}`)
 })
@@ -81,9 +89,9 @@ function createWindow () {
       })
 	  
 	  
-      console.log(port)
+      console.log(srv.address().port)
       // long loading html
-      mainWindow.loadURL('http://127.0.0.1:'+port)
+      mainWindow.loadURL('http://127.0.0.1:'+srv.address().port)
       
       mainWindow.webContents.on('did-finish-load', function() {
         console.log(new Date().toISOString()+'::did-finish-load')

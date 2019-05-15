@@ -10,6 +10,7 @@
 #' @param functionName the function name in your package that starts the shiny app
 #' @param only64 if TRUE, remove 32-bit dlls; if FALSE do not remove 32-bit dlls
 #' @param packageName can be empty if Github repo/base path is same as your shiny package name
+#' @param build logical, whether to start the build process, helpful if want to mod before building
 #'
 #' @return Nothing
 #' @export
@@ -23,7 +24,8 @@ buildElectricApp <- function(appName = "My_Package",
                              githubRepo = NULL,
                              localPath  = NULL,
                              only64 = FALSE,
-                             packageName = NULL){
+                             packageName = NULL,
+                             build = TRUE){
 
   if (is.null(githubRepo) && is.null(localPath)) {
     stop("electricShine::buildElectricApp() requires you to specify either a 'githubRepo' or 'localPath' argument specifying
@@ -139,12 +141,19 @@ buildElectricApp <- function(appName = "My_Package",
 
 
   # Build the electron app --------------------------------------------------
-
+if (build == TRUE) {
   electricShine::runBuild(nodePath = NULL,
                           npmPath = NULL,
                           appPath = appPath,
                           node = file.path(system.file(package = "electricShine"), "nodejs"))
 
   message("You should now have both a transferable and distributable installer Electron app.")
-
+} else {
+  message("Build step was skipped. When you are ready to build the distributable run 'electricShine::runBuild(...)'")
+}
+  
+  
+  
+  
+  
 }

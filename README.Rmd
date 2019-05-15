@@ -28,6 +28,11 @@ Your shiny app should be built as an R package and should list all dependencies,
 A template for desgining a shiny app as a package may be found here: https://github.com/ThinkR-open/shinytemplate
 
 
+
+
+Please see the "Basic Use" vignette for instructions.
+
+
 ### Example
 ```{r eval=FALSE}
 
