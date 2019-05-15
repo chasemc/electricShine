@@ -30,8 +30,7 @@ Please see the "Basic Use" vignette for instructions.
 
 
 ### Example
-```{r eval=FALSE}
-
+```{r}
 installTo <- tempdir()
 MRANdate <- as.character(Sys.Date() - 3)
 
@@ -48,7 +47,5 @@ githubRepo = "chasemc/demoApp",
 localPath  = NULL,
 only64 = TRUE
 )
-
-  
 ```
   
