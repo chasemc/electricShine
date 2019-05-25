@@ -84,7 +84,7 @@ function createWindow () {
           loading.hide()
           loading.close()
 
-        }, 2000)
+        }, 9000)
 
       })
 	  
