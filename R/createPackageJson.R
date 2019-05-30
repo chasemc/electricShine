@@ -35,7 +35,8 @@ create_package_json <- function(appName = "MyApp",
   # null is to allow for testing
   if (is.null(deps)) {
   # get package.json dependencies
-  deps <- readLines(system.file("template/package.json", package = "electricShine"))
+    # [-1] remove open { necessary for automated dependency checker
+  deps <- readLines(system.file("template/package.json", package = "electricShine"))[-1]
   deps <- paste0(deps, collapse = "\n")
   }
 
@@ -76,7 +77,7 @@ create_package_json <- function(appName = "MyApp",
   "release": "npm test && webpack --config=build/webpack.app.config.js --env=production && electron-builder"
   },
  <<deps>>
-}
+
 ',  .open = "<<", .close = ">>")
 
   electricShine::write_text(text = file,
