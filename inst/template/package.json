@@ -1,4 +1,4 @@
-
+{
  "dependencies": {
   "fs-jetpack": "^2.2.2"
   },
@@ -22,3 +22,4 @@
   "webpack-merge": "^4.2.1",
   "webpack-node-externals": "^1.7.2"
   }
+}
