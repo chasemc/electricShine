@@ -72,6 +72,6 @@ only64 = TRUE
   
   
   
-## Continuous Deployment (CD)
+### Continuous Deployment (CD)
 
 One of the main reasons I wrote this package was to allow easy CD, and `{electricShine}` is currently being used for this. I hope to write more on this later. 
