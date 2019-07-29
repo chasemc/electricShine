@@ -17,6 +17,7 @@
 #'
 buildElectricApp <- function(appName = "My_Package",
                              productName = "productName",
+                             description = "description",
                              semanticVersion = "0.0.0",
                              installTo = NULL,
                              MRANdate = Sys.Date() - 3,
@@ -122,7 +123,8 @@ buildElectricApp <- function(appName = "My_Package",
   # Create package.json -----------------------------------------------------
   electricShine::create_package_json(appName = appName,
                                      semanticVersion = semanticVersion,
-                                     path = appPath)
+                                     path = appPath,
+                                     description = "description")
 
   
 
