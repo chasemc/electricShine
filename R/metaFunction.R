@@ -105,11 +105,13 @@ buildElectricApp <- function(appName = "My_Package",
                                   localPath = localPath)
 
   # transfer icons if present
-  buildResources <- withr::with_libpaths( base::file.path(appPath,
+  buildResources <- system.file("extdata", 
+                                "icon",
+                                package = packageName,
+                                lib.loc = base::file.path(appPath,
                                                           "app",
                                                           "r_win",
-                                                          "library"),
-                                          system.file("extdata", "icon", package = "tempRepo"))
+                                                          "library"))
 
   if (nchar(buildResources) == 0) {
   } else {
