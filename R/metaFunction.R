@@ -11,6 +11,7 @@
 #' @param only64 if TRUE, remove 32-bit dlls; if FALSE do not remove 32-bit dlls
 #' @param packageName can be empty if Github repo/base path is same as your shiny package name
 #' @param build logical, whether to start the build process, helpful if want to mod before building
+#' @param description short app description
 #'
 #' @return Nothing
 #' @export

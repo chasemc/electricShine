@@ -15,6 +15,8 @@ buildElectricApp(appName = "My_Package", productName = "productName",
 
 \item{productName}{necessary?}
 
+\item{description}{short app description}
+
 \item{semanticVersion}{semantic version of your app, as character (not numeric!)}
 
 \item{installTo}{path to create installer, preferably points to an empty directory}
