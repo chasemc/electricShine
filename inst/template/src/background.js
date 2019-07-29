@@ -134,8 +134,6 @@ function cleanUpApplication(){
   
   if(childProcess){
     childProcess.kill();
-    if(killStr !== "");
-      child.execSync(killStr);
   }
 }
 // This method will be called when Electron has finished
