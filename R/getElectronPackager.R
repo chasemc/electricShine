@@ -28,7 +28,7 @@ buildElectronDependencies <- function(appPath,
                           pattern = "npm-cli.js")
     if (is.null(nodePath) || is.null(npmPath)) {
 
-      stop("Try running electricShine::getNodejs(force = TRUE)")
+      stop("Try running electricShine::get_nodejs(force = TRUE)")
 
     }
 
