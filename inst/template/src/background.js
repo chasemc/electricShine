@@ -10,6 +10,13 @@ const MACOS = "darwin";
 const WINDOWS = "win32";
 const desktop = path.join(require('os').homedir(), 'Desktop').split('\\').join('/');
 
+// Logto:
+//Linux: ~/.config/<app name>/log.log
+//macOS: ~/Library/Logs/<app name>/log.log
+//Windows: %USERPROFILE%\AppData\Roaming\<app name>\log.log
+const log = require('electron-log');
+log.info('Application Started');
+
 var killStr = "";
 var appPath = path.join(__dirname, "app.R" );
 var execPath = "RScript";
@@ -46,12 +53,12 @@ if(process.platform == WINDOWS){
 
 console.log(process.env);
 
-const childProcess = child.spawn(execPath, ["--vanilla -e", ".libPaths(normalizePath(as.list(Sys.getenv())$R_HOME)); <?<R_SHINY_FUNCTION>?>(port="+srv.address().port+", desktop = '"+desktop+"')"]);
+const childProcess = child.spawn(execPath, ['--vanilla -e', '.libPaths(normalizePath(as.list(Sys.getenv())$R_HOME)); <?<R_SHINY_FUNCTION>?>(port = '+srv.address().port+')']);
 childProcess.stdout.on('data', (data) => {
-  console.log(`stdout:${data}`);
+ log.warn(`stdout:${data}`);
 });
 childProcess.stderr.on('data', (data) => {
-  console.log(`stderr:${data}`);
+ log.error(`stderr:${data}`);
 });
 
 // Keep a global reference of the window object, if you don't, the window will
