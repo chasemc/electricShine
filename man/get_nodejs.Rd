@@ -6,7 +6,7 @@
 \usage{
 get_nodejs(nodeUrl = "https://nodejs.org/dist",
   installTo = file.path(system.file(package = "electricShine"),
-  "nodejs"), force = FALSE, nodeVersion = "v10.15.1")
+  "nodejs"), force = FALSE, nodeVersion = "v10.16.0")
 }
 \arguments{
 \item{nodeUrl}{path to node.js.org}
