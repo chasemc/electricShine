@@ -11,7 +11,7 @@
 get_nodejs <- function(nodeUrl = "https://nodejs.org/dist",
                       installTo = file.path(system.file(package = "electricShine"), "nodejs"),
                       force = FALSE,
-                      nodeVersion = "v10.15.1"){
+                      nodeVersion = "v10.16.0"){
 
 
   if (!file.exists(installTo)) {

@@ -11,12 +11,14 @@
 #' @param only64 if TRUE, remove 32-bit dlls; if FALSE do not remove 32-bit dlls
 #' @param packageName can be empty if Github repo/base path is same as your shiny package name
 #' @param build logical, whether to start the build process, helpful if want to mod before building
+#' @param description short app description
 #'
 #' @return Nothing
 #' @export
 #'
 buildElectricApp <- function(appName = "My_Package",
                              productName = "productName",
+                             description = "description",
                              semanticVersion = "0.0.0",
                              installTo = NULL,
                              MRANdate = Sys.Date() - 3,
@@ -104,11 +106,13 @@ buildElectricApp <- function(appName = "My_Package",
                                   localPath = localPath)
 
   # transfer icons if present
-  buildResources <- withr::with_libpaths( base::file.path(appPath,
+  buildResources <- system.file("extdata", 
+                                "icon",
+                                package = packageName,
+                                lib.loc = base::file.path(appPath,
                                                           "app",
                                                           "r_win",
-                                                          "library"),
-                                          system.file("extdata", "icon", package = "tempRepo"))
+                                                          "library"))
 
   if (nchar(buildResources) == 0) {
   } else {
@@ -122,7 +126,8 @@ buildElectricApp <- function(appName = "My_Package",
   # Create package.json -----------------------------------------------------
   electricShine::create_package_json(appName = appName,
                                      semanticVersion = semanticVersion,
-                                     path = appPath)
+                                     path = appPath,
+                                     description = "description")
 
   
 
