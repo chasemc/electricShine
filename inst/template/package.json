@@ -18,7 +18,7 @@
   "source-map-support": "0.5.13",
   "spectron": "7.0.0",
   "style-loader": "0.23.1",
-  "webpack": "4.38.0",
+  "webpack": "4.39.0",
   "webpack-cli": "3.3.6",
   "webpack-merge": "4.2.1",
   "webpack-node-externals": "1.7.2"
