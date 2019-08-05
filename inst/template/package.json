@@ -16,7 +16,7 @@
   "friendly-errors-webpack-plugin": "1.7.0",
   "mocha": "6.2.0",
   "source-map-support": "0.5.13",
-  "spectron": "7.0.0",
+  "spectron": "8.0.0",
   "style-loader": "0.23.1",
   "webpack": "4.39.1",
   "webpack-cli": "3.3.6",
