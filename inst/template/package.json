@@ -1,6 +1,7 @@
 {
  "dependencies": {
-  "fs-jetpack": "2.2.2"
+  "fs-jetpack": "2.2.2",
+  "electron-log": "3.0.7"
   },
   "devDependencies": {
   "@babel/core": "7.5.5",
@@ -11,7 +12,6 @@
   "css-loader": "3.1.0",
   "electron": "6.0.0",
   "electron-builder": "21.2.0",
-  "electron-log": "3.0.7",
   "electron-mocha": "8.1.1",
   "friendly-errors-webpack-plugin": "1.7.0",
   "mocha": "6.2.0",
