@@ -5,7 +5,7 @@
 \title{Install electron-packager and electron via npm}
 \usage{
 buildElectronDependencies(appPath, nodePath = NULL, npmPath = NULL,
-  installTo = file.path(system.file(package = "electricShine"),
+  buildPath = file.path(system.file(package = "electricShine"),
   "nodejs"))
 }
 \arguments{
@@ -15,7 +15,7 @@ buildElectronDependencies(appPath, nodePath = NULL, npmPath = NULL,
 
 \item{npmPath}{path to npm-cli.js}
 
-\item{installTo}{path of nodejs folder}
+\item{buildPath}{path of nodejs folder}
 }
 \value{
 nothing

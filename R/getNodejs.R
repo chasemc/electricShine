@@ -1,7 +1,7 @@
 #' Install Node.js
 #'
 #' @param nodeUrl path to node.js.org
-#' @param installTo where node.js will be installed to
+#' @param buildPath where node.js will be installed to
 #' @param force should node.js be installed if it's already present?
 #' @param nodeVersion version of node.js (eg "v10.15.1")
 #'
@@ -9,21 +9,21 @@
 #' @export
 #'
 get_nodejs <- function(nodeUrl = "https://nodejs.org/dist",
-                      installTo = file.path(system.file(package = "electricShine"), "nodejs"),
+                      buildPath = file.path(system.file(package = "electricShine"), "nodejs"),
                       force = FALSE,
                       nodeVersion = "v10.16.0"){
 
 
-  if (!file.exists(installTo)) {
-    dir.create(installTo)
+  if (!file.exists(buildPath)) {
+    dir.create(buildPath)
   }
   # Check if node and npm are already installed
-  findNode <- list.files(installTo,
+  findNode <- list.files(buildPath,
                          recursive = TRUE,
                          full.names = TRUE,
                          pattern = "node.exe")
 
-  findNPM <- list.files(installTo,
+  findNPM <- list.files(buildPath,
                         recursive = TRUE,
                         full.names = TRUE,
                         pattern = "npm-cli.js")
@@ -75,28 +75,28 @@ get_nodejs <- function(nodeUrl = "https://nodejs.org/dist",
     }
     message("Downloaded sha matches expected sha")
     message("Decompressing node.js files, might take a few minutes...")
-    message(glue::glue("All node.js files will be installed into: \n {installTo}"))
+    message(glue::glue("All node.js files will be installed into: \n {buildPath}"))
 
     if (base::grepl("zip$", base::basename(nodeUrl))) {
       base::try(
       utils::unzip(zipfile = temp,
-                   exdir = installTo)
+                   exdir = buildPath)
       )
     }
     if (base::grepl("gz$", base::basename(nodeUrl))) {
       base::try(
         utils::untar(tarfile = temp,
-                   exdir = installTo)
+                   exdir = buildPath)
       )
     }
 
 
-    findNode <- list.files(installTo,
+    findNode <- list.files(buildPath,
                            recursive = TRUE,
                            full.names = TRUE,
                            pattern = "node.exe")
 
-    findNPM <- list.files(installTo,
+    findNPM <- list.files(buildPath,
                           recursive = TRUE,
                           full.names = TRUE,
                           pattern = "npm-cli.js")

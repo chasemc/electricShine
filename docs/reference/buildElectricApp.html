@@ -133,7 +133,7 @@
 
     <pre class="usage"><span class='fu'>buildElectricApp</span>(<span class='kw'>appName</span> <span class='kw'>=</span> <span class='st'>"My_Package"</span>, <span class='kw'>productName</span> <span class='kw'>=</span> <span class='st'>"productName"</span>,
   <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"description"</span>, <span class='kw'>semanticVersion</span> <span class='kw'>=</span> <span class='st'>"0.0.0"</span>,
-  <span class='kw'>installTo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>MRANdate</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.Date</a></span>() - <span class='fl'>3</span>, <span class='kw'>functionName</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>buildPath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>MRANdate</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.time'>Sys.Date</a></span>() - <span class='fl'>3</span>, <span class='kw'>functionName</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>githubRepo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>localPath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>only64</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>packageName</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>build</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
@@ -157,7 +157,7 @@
       <td><p>semantic version of your app, as character (not numeric!)</p></td>
     </tr>
     <tr>
-      <th>installTo</th>
+      <th>buildPath</th>
       <td><p>path to create installer, preferably points to an empty directory</p></td>
     </tr>
     <tr>
