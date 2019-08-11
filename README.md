@@ -1,16 +1,15 @@
 [![Lifecycle:
     experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-
 [![Build
     status](https://ci.appveyor.com/api/projects/status/1l973ho8q4y03fnd/branch/master?svg=true)](https://ci.appveyor.com/project/chasemc/electricshine/branch/master)
-
 [![Build
     Status](https://travis-ci.org/chasemc/electricShine.svg?branch=master)](https://travis-ci.org/chasemc/electricShine)
 
+# electricShine  <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 # Purpose
 
-Sometimes an R Shiny app is too resource-intensive, or otherwise resticted, to be deployed into the cloud. Alomg with this it can be non-trivial for someone inexperienced with R, or programming in general, to install R and open your Shiny app. 
+Sometimes an R Shiny app is too resource-intensive, or otherwise resticted, to be deployed into the cloud. Along with this, it can be non-trivial for someone inexperienced with R, or programming in general, to install R and open your Shiny app. 
 
 For these reasons it is desireable to be able to create a Shiny app that can be opened like a "regular" computer application, preferably from a Desktop shortcut. This is the purpose of  `{electricShine}` and what it will do with your Shiny app.
 
