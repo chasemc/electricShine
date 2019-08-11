@@ -17,7 +17,7 @@
   "mocha": "6.2.0",
   "source-map-support": "0.5.13",
   "spectron": "8.0.0",
-  "style-loader": "0.23.1",
+  "style-loader": "1.0.0",
   "webpack": "4.39.1",
   "webpack-cli": "3.3.6",
   "webpack-merge": "4.2.1",
