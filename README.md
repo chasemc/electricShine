@@ -76,7 +76,7 @@ An example app structured for use with `{electricShine}` can be found at https:/
 # Main Function
 
 ```{r}
-installTo <- tempdir()
+buildPath <- tempdir()
 MRANdate <- as.character(Sys.Date() - 3)
 
 
@@ -85,7 +85,7 @@ appName = "My_App",                  # This is what the app/desktop shortcuts wi
 description = "My demo application", # Short description when installer is run, etc.
 packageName = "demoApp",             # The name of the R package that contains your shiny app.
 semanticVersion = "1.0.0",           # You app's version
-installTo = installTo,               # Where the app will build to on your computer.
+buildPath = buildPath,               # Where the app will build to on your computer.
 MRANdate = MRANdate,                 # The MRAN snapshot date R and R packages will be downloaded from.
 functionName = "run_app",            # The function name in your app that starts your shiny app.
 githubRepo = "chasemc/demoApp",      # GitHub of your R package

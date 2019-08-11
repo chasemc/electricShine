@@ -1,6 +1,6 @@
 #' Meta-function
 #'
-#' @param installTo path to create installer, preferably points to an empty directory
+#' @param buildPath path to create installer, preferably points to an empty directory
 #' @param appName electron app name
 #' @param productName necessary?
 #' @param semanticVersion semantic version of your app, as character (not numeric!)
@@ -20,7 +20,7 @@ buildElectricApp <- function(appName = "My_Package",
                              productName = "productName",
                              description = "description",
                              semanticVersion = "0.0.0",
-                             installTo = NULL,
+                             buildPath = NULL,
                              MRANdate = Sys.Date() - 3,
                              functionName = NULL,
                              githubRepo = NULL,
@@ -33,7 +33,7 @@ buildElectricApp <- function(appName = "My_Package",
     stop("electricShine::buildElectricApp() requires you to specify either a 'githubRepo' or 'localPath' argument specifying
          the shiny app/package to be turned into an Electron app")
   }
-  if (is.null(installTo)) {
+  if (is.null(buildPath)) {
     stop("electricShine::buildElectricApp() requires you to specify a 'path' argument.
 (e.g. electricShine::electricShine(path = 'C:/Users/me/Desktop/my_app') )")
   }
@@ -51,10 +51,10 @@ buildElectricApp <- function(appName = "My_Package",
   electricShine::get_nodejs()
 
 
-  electricShine::create_folder(path = installTo,
+  electricShine::create_folder(path = buildPath,
                                name = appName)
 
-  appPath <- file.path(installTo,
+  appPath <- file.path(buildPath,
                        appName)
 
 

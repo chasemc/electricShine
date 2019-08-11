@@ -3,7 +3,7 @@
 #'
 #' @param nodePath path to node.exe
 #' @param npmPath path to npm-cli.js
-#' @param installTo path of nodejs folder
+#' @param buildPath path of nodejs folder
 #' @param appPath path of new electron app
 #'
 #' @return nothing
@@ -12,17 +12,17 @@
 buildElectronDependencies <- function(appPath,
                                       nodePath = NULL,
                                       npmPath = NULL,
-                                      installTo = file.path(system.file(package = "electricShine"), "nodejs")
+                                      buildPath = file.path(system.file(package = "electricShine"), "nodejs")
 ){
 
   if (is.null(nodePath) || is.null(nodePath)) {
 
-    nodePath <- list.files(installTo,
+    nodePath <- list.files(buildPath,
                            recursive = TRUE,
                            full.names = TRUE,
                            pattern = "node.exe")
 
-    npmPath <- list.files(installTo,
+    npmPath <- list.files(buildPath,
                           recursive = TRUE,
                           full.names = TRUE,
                           pattern = "npm-cli.js")

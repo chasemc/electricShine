@@ -6,7 +6,7 @@
 \usage{
 buildElectricApp(appName = "My_Package", productName = "productName",
   description = "description", semanticVersion = "0.0.0",
-  installTo = NULL, MRANdate = Sys.Date() - 3, functionName = NULL,
+  buildPath = NULL, MRANdate = Sys.Date() - 3, functionName = NULL,
   githubRepo = NULL, localPath = NULL, only64 = FALSE,
   packageName = NULL, build = TRUE)
 }
@@ -19,7 +19,7 @@ buildElectricApp(appName = "My_Package", productName = "productName",
 
 \item{semanticVersion}{semantic version of your app, as character (not numeric!)}
 
-\item{installTo}{path to create installer, preferably points to an empty directory}
+\item{buildPath}{path to create installer, preferably points to an empty directory}
 
 \item{MRANdate}{MRAN snapshot date, formatted as 'YYYY-MM-DD'}
 

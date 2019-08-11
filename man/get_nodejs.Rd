@@ -5,13 +5,13 @@
 \title{Install Node.js}
 \usage{
 get_nodejs(nodeUrl = "https://nodejs.org/dist",
-  installTo = file.path(system.file(package = "electricShine"),
+  buildPath = file.path(system.file(package = "electricShine"),
   "nodejs"), force = FALSE, nodeVersion = "v10.16.0")
 }
 \arguments{
 \item{nodeUrl}{path to node.js.org}
 
-\item{installTo}{where node.js will be installed to}
+\item{buildPath}{where node.js will be installed to}
 
 \item{force}{should node.js be installed if it's already present?}
 
