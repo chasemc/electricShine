@@ -1,16 +1,10 @@
-Lifecycle:
-
-  - [![Lifecycle:
+[![Lifecycle:
     experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 
-Windows CI:
-
-  - [![Build
+[![Build
     status](https://ci.appveyor.com/api/projects/status/1l973ho8q4y03fnd/branch/master?svg=true)](https://ci.appveyor.com/project/chasemc/electricshine/branch/master)
 
-Mac and Linux CI
-
-  - [![Build
+[![Build
     Status](https://travis-ci.org/chasemc/electricShine.svg?branch=master)](https://travis-ci.org/chasemc/electricShine)
 
 
@@ -54,8 +48,9 @@ Your shiny app should be built as an R package and should list all dependencies,
 A template for designing a shiny app as a package may be found here: https://github.com/ThinkR-open/shinytemplate
 
 
-Important: your package must contain a function that electricShine can use to start your app. This function must contain an argument `port`. An example for an R package named `demoApp`:
+Important: your package must contain a function that electricShine can use to start your app. This function must contain an argument `port` to be passed to `shiny::shinyApp`. The easiest thing to do would be to modify the example below (change `demoApp` to your package name). 
 ```{r}
+# Example for an R package named `demoApp`:
 
 run_app <- function(port = NULL) {
   
