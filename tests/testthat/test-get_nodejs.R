@@ -19,7 +19,7 @@ if(dir.exists(temp)) {
 test_that("get_nodejs provides message", {
   skip_on_os(c("mac","linux"))
   expect_message(get_nodejs(nodeUrl = "https://nodejs.org/dist",
-                            installTo = temp,
+                            buildPath = temp,
                             force = FALSE,
                             nodeVersion = "v10.15.1"))
 })
@@ -32,7 +32,7 @@ test_that("get_nodejs provides paths for node and npm", {
   skip_on_os(c("mac","linux"))
 
   a <- get_nodejs(nodeUrl = "https://nodejs.org/dist",
-                  installTo = temp,
+                  buildPath = temp,
                   force = FALSE,
                   nodeVersion = "v10.15.1")
   expect_equal(length(a), 2L)
