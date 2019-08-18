@@ -37,7 +37,7 @@ buildElectronDependencies <- function(appPath,
   appPath <- (normalizePath(appPath))
   nodePath <- shQuote(nodePath)
   npmPath <- shQuote(npmPath)
-  message("Downloading Electron packager...")
+  message("Downloading build tools from npm...")
   # Use npm to get electron packager
   message(system("cmd.exe",
                  input = glue::glue("cd {appPath} && {nodePath} {npmPath} install --scripts-prepend-node-path"),
