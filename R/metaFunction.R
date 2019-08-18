@@ -51,11 +51,12 @@ buildElectricApp <- function(appName = "My_Package",
   electricShine::get_nodejs()
 
 
-  electricShine::create_folder(path = buildPath,
-                               name = appName)
-
+  
   appPath <- file.path(buildPath,
                        appName)
+  electricShine::create_folder(appPath)
+
+  
 
 
 
