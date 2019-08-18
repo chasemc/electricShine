@@ -49,8 +49,9 @@ get_nodejs <- function(nodeUrl = "https://nodejs.org/dist",
 
     if (base::version$arch[[1]] == "x86_64") {
       arch <- "x64"
-    } else (stop("Unfortunately this build machine is unsupported"))
-
+    } else {
+      stop("Unfortunately this build machine is unsupported")
+}
     # Put together binary name and url
     binary_name <- glue::glue("node-{nodeVersion}-{platform}-{arch}.{ext}")
     nodeUrl <- file.path(nodeUrl, nodeVersion, binary_name)
@@ -63,11 +64,14 @@ get_nodejs <- function(nodeUrl = "https://nodejs.org/dist",
 
     # Download sha file and parse
     online_sha <- glue::glue("https://nodejs.org/dist/{nodeVersion}/SHASUMS256.txt")
-    online_sha <- utils::read.delim(online_sha, sep = "")
+    
+    
+    
+    online_sha <- utils::read.delim(online_sha, sep = "", header = FALSE)
 
     online_sha <- as.character(online_sha[grepl(binary_name, online_sha[,2]), 1])
 
-    local_sha <- as.character(openssl::sha256(file(temp)))
+    local_sha <- as.character(openssl::sha256(file(temp, raw = TRUE)))
     class(local_sha) <- "character"
 
     if (!identical(online_sha, local_sha)) {
