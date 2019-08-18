@@ -16,21 +16,22 @@ installR <- function(mran_date = as.character(Sys.Date() - 3),
   os <- electricShine::get_os()
   
   if (identical(os, "mac")) {
-    .install_mac_r(app_build_path)
+    path <- .install_mac_r(app_build_path = app_build_path,
+                   mac_url = mac_url)
   }
   
   if (identical(os, "win")) {
     
-    win_url <- .find_win_exe_url(mran_date)
+    win_url <- .find_win_exe_url(mran_date = mran_date)
     # download R.exe installer
-    win_installer_path <- .download_r(win_url)
+    win_installer_path <- .download_r(d_url = win_url)
     # install R
     path <- .install_win_r(win_installer_path,
                            app_build_path)
     
     path <- base::file.path(path,
-                    "bin",
-                    fsep = "/")
+                            "bin",
+                            fsep = "/")
     
     if (length(list.files(path, pattern = "Rscript.exe")) != 1L) {
       stop("Didn't find Rscript.exe after Windows R install.")
@@ -76,13 +77,13 @@ installR <- function(mran_date = as.character(Sys.Date() - 3),
 #' @param url url to download R from
 #'
 #' @return Path to R.exe installer
-.download_r <- function(url) {
+.download_r <- function(d_url) {
   
-  installer_filename <- basename(url)
+  installer_filename <- basename(d_url)
   download_path <- base::file.path(tempdir(), 
                                    installer_filename,
                                    fsep = "/")
-  utils::download.file(url = url, 
+  utils::download.file(url = d_url, 
                        destfile = download_path, 
                        mode = "wb")
   return(download_path)
@@ -121,7 +122,8 @@ installR <- function(mran_date = as.character(Sys.Date() - 3),
 #' @param app_build_path top level of new electricShine app build
 #'
 #' @return NA
-.install_mac_r <- function(app_build_path){
+.install_mac_r <- function(app_build_path,
+                           mac_url){
   
   installer_path <- .download_r(mac_url)
   # path R installer will install to
@@ -132,9 +134,10 @@ installR <- function(mran_date = as.character(Sys.Date() - 3),
   # create folder R will be installed to
   base::dir.create(install_r_to_path)
   
-  install_r_to_path <- shQuote(install_r_to_path)
   # untar files to the app folder
   untar(tarfile = installer_path, exdir = install_r_to_path)
+  
+  return(install_r_to_path)
   
 }
 
