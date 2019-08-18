@@ -11,29 +11,32 @@ installR <- function(mran_date = as.character(Sys.Date() - 3),
                      app_build_path,
                      mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz"){
   
+  app_build_path <- normalizePath(app_build_path, winslash = "/")
   
   os <- electricShine::get_os()
   
-  if(identical(os, "mac")) {
+  if (identical(os, "mac")) {
     .install_mac_r(app_build_path)
   }
   
-  if(identical(os, "win")) {
+  if (identical(os, "win")) {
     
     win_url <- .find_win_exe_url(mran_date)
     # download R.exe installer
     win_installer_path <- .download_r(win_url)
-    # path R installer will install to
-    install_r_to_path <- base::file.path(app_build_path, 
-                                         "r_win",
-                                         fsep = "/")
-    # create folder R will be installed to
-    base::dir.create(install_r_to_path)
-    # Quote path in case user's path has spaces, etc
-    install_r_to_path <- base::shQuote(install_r_to_path)
     # install R
-    .install_win_r(win_installer_path,
-                   install_r_to_path)
+    path <- .install_win_r(win_installer_path,
+                           app_build_path)
+    
+    path <- base::file.path(path,
+                    "bin",
+                    fsep = "/")
+    
+    if (length(list.files(path, pattern = "Rscript.exe")) != 1L) {
+      stop("Didn't find Rscript.exe after Windows R install.")
+    }
+    
+    return(path)
   }
 }
 
@@ -91,14 +94,24 @@ installR <- function(mran_date = as.character(Sys.Date() - 3),
 #' Install R for Windows at given path
 #'
 #' @param win_installer_path path of Windows R installer 
-#' @param install_r_to_path path to tell installer to install R to
+#' @param app_build_path top level of new electricShine app build
 #'
 #' @return NA, installs R to path
 
 .install_win_r <- function(win_installer_path,
-                           install_r_to_path){
+                           app_build_path){
+  # path R installer will install to
+  
+  install_r_to_path <- base::file.path(app_build_path, 
+                                       "r_lang",
+                                       fsep = "/")
+  # create folder R will be installed to
+  base::dir.create(install_r_to_path)
+  # Quote path in case user's path has spaces, etc
+  quoted_install_r_to_path <- base::shQuote(install_r_to_path)
   # install R
-  base::system(glue::glue("{win_installer} /SILENT /DIR={install_r_to_path}"))
+  base::system(glue::glue("{win_installer_path} /SILENT /DIR={quoted_install_r_to_path}"))
+  return(install_r_to_path)
 }
 
 
