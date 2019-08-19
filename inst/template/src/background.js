@@ -17,10 +17,6 @@ const log = require('electron-log');
 log.info('Application Started');
 
 var killStr = "";
-const NODE_R_HOME = "<?<r_path>?>";
-
-
-
 
 
 //Find and bind an open port
@@ -34,16 +30,24 @@ srv.listen(0, function() {
 });
 
 
+// folder above "bin/RScript"
+var rresources = "<?<r_path>?>";
 
-if(process.platform == WINDOWS){
- const childProcess = child.spawn(NODE_R_HOME, ['--vanilla -e', '.libPaths(normalizePath(as.list(Sys.getenv())$R_HOME)); <?<R_SHINY_FUNCTION>?>(port = '+srv.address().port+')']);
-}
+//Set environment variables for R
+//Necessary for letting R know where it is/not using another R 
+process.env['NODE_R_HOME'] = rresources
+//Necessary for setting the R package library R uses
+process.env['R_LIBS_SITE'] = path.join(rresources, "library")
 
-if(process.platform == MACOS){
-const childProcess = child.spawn(NODE_R_HOME, ['--vanilla -e', '.libPaths(normalizePath(as.list(Sys.getenv())$R_HOME)); <?<R_SHINY_FUNCTION>?>(port = '+srv.address().port+')']);
-}
+//Variable of where the R executable is
+//Unfortunately on MacOS paths are hardcoded into 
+//Rscript but it's in binary so have to use R instead
+const NODER = path.join(rresources, "bin","R");
 
-//console.log(process.env);
+
+
+const childProcess = child.spawn(NODER, ['-e', 'demoApp::run_app(port = '+srv.address().port+')']);
+
 
 childProcess.stdout.on('data', (data) => {
  log.warn(`stdout:${data}`);
