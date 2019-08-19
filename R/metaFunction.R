@@ -100,6 +100,8 @@ buildElectricApp <- function(app_name = "My_Package",
                               "Resources/library", 
                               fsep = "/")
     
+    
+    
   }  
   # Install shiny app/package and dependencies ------------------------------
   
@@ -145,11 +147,7 @@ buildElectricApp <- function(app_name = "My_Package",
                                      function_name = function_name,
                                      r_path = base::dirname(library_path))
   
-  # Download npm dependencies -----------------------------------------------
-  
-  
-  electricShine::buildElectronDependencies(app_root_path = app_root_path)
-  
+
   
   # Build the electron app --------------------------------------------------
   if (build == TRUE) {
