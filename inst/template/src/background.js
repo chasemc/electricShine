@@ -19,8 +19,10 @@ log.info('Application Started');
 
 var killStr = "";
 var appPath = path.join(__dirname, "app.R" );
-var execPath = "RScript";
-
+// relative path starting with "r_lang" to "r" or "rscript", glued in from R
+var execPath = "<?<rlang_to_executable_path>?>";
+appPath = appPath.replace(/\\/g, "\\\\");
+execPath = path.join(__dirname, "r_lang", execPath);
 
 //Find and bind an open port
 //Assigned port can be accesssed with srv.address().port
@@ -35,25 +37,18 @@ srv.listen(0, function() {
 
 
 if(process.platform == WINDOWS){
-  appPath = appPath.replace(/\\/g, "\\\\");
-  execPath = path.join(__dirname, "R_win", "bin", "RScript.exe" );
+ const childProcess = child.spawn(execPath, ['--vanilla -e', '.libPaths(normalizePath(as.list(Sys.getenv())$R_HOME)); <?<R_SHINY_FUNCTION>?>(port = '+srv.address().port+')']);
+
 } else if(process.platform == MACOS){
-  var macAbsolutePath = path.join(__dirname, "R_mac");
-  var env_path = macAbsolutePath+((process.env.PATH)?":"+process.env.PATH:"");
-  var env_libs_site = macAbsolutePath+"/library"+((process.env.R_LIBS_SITE)?":"+process.env.R_LIBS_SITE:"");
-  process.env.PATH = env_path;
-  process.env.R_LIBS_SITE = env_libs_site;
-  process.env.NODE_R_HOME = macAbsolutePath;
-  
-  execPath = path.join(__dirname, "R_mac", "bin", "R" );
+const childProcess = child.spawn(execPath, ['--vanilla -e', '.libPaths(normalizePath(as.list(Sys.getenv())$R_HOME)); <?<R_SHINY_FUNCTION>?>(port = '+srv.address().port+')']);
+
 } else {
   console.log("not on windows or macos?");
   throw new Error("not on windows or macos?");
 }
 
-console.log(process.env);
+//console.log(process.env);
 
-const childProcess = child.spawn(execPath, ['--vanilla -e', '.libPaths(normalizePath(as.list(Sys.getenv())$R_HOME)); <?<R_SHINY_FUNCTION>?>(port = '+srv.address().port+')']);
 childProcess.stdout.on('data', (data) => {
  log.warn(`stdout:${data}`);
 });

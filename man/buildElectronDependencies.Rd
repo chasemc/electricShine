@@ -4,16 +4,16 @@
 \alias{buildElectronDependencies}
 \title{Install electron-packager and electron via npm}
 \usage{
-buildElectronDependencies(appPath, nodePath = NULL, npmPath = NULL,
-  buildPath = file.path(system.file(package = "electricShine"),
-  "nodejs"))
+buildElectronDependencies(app_root_path, node_path = NULL,
+  npm_path = NULL, electricShine_nodejs = file.path(system.file(package
+  = "electricShine"), "nodejs"))
 }
 \arguments{
-\item{appPath}{path of new electron app}
+\item{app_root_path}{path of new electron app}
 
-\item{nodePath}{path to node.exe}
+\item{node_path}{path to node.exe}
 
-\item{npmPath}{path to npm-cli.js}
+\item{npm_path}{path to npm-cli.js}
 
 \item{buildPath}{path of nodejs folder}
 }

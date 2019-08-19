@@ -1,22 +1,22 @@
 #' Install R from MRAN date into electricShine folder
 #'
 #' @param mran_date MRAN date from which to install R
-#' @param app_build_path path to current electricShine app build
+#' @param app_root_path path to current electricShine app build
 #'
 #' @return NA, installs/downloads R to a given path
 #' @export
 #'
 
-installR <- function(mran_date = as.character(Sys.Date() - 3),
-                     app_build_path,
+install_r <- function(mran_date = as.character(Sys.Date() - 3),
+                      app_root_path,
                      mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz"){
   
-  app_build_path <- normalizePath(app_build_path, winslash = "/")
+  app_root_path <- normalizePath(app_root_path, winslash = "/")
   
   os <- electricShine::get_os()
   
   if (identical(os, "mac")) {
-    path <- .install_mac_r(app_build_path = app_build_path,
+    path <- .install_mac_r(app_root_path = app_root_path,
                    mac_url = mac_url)
   }
   
@@ -27,7 +27,7 @@ installR <- function(mran_date = as.character(Sys.Date() - 3),
     win_installer_path <- .download_r(d_url = win_url)
     # install R
     path <- .install_win_r(win_installer_path,
-                           app_build_path)
+                           app_root_path)
     
     path <- base::file.path(path,
                             "bin",
@@ -95,15 +95,15 @@ installR <- function(mran_date = as.character(Sys.Date() - 3),
 #' Install R for Windows at given path
 #'
 #' @param win_installer_path path of Windows R installer 
-#' @param app_build_path top level of new electricShine app build
+#' @param app_root_path top level of new electricShine app build
 #'
 #' @return NA, installs R to path
 
 .install_win_r <- function(win_installer_path,
-                           app_build_path){
+                           app_root_path){
   # path R installer will install to
   
-  install_r_to_path <- base::file.path(app_build_path, 
+  install_r_to_path <- base::file.path(app_root_path, 
                                        "r_lang",
                                        fsep = "/")
   # create folder R will be installed to
@@ -119,15 +119,15 @@ installR <- function(mran_date = as.character(Sys.Date() - 3),
 
 #' Download and untar mac R into app folder
 #'
-#' @param app_build_path top level of new electricShine app build
+#' @param app_root_path top level of new electricShine app build
 #'
 #' @return NA
-.install_mac_r <- function(app_build_path,
+.install_mac_r <- function(app_root_path,
                            mac_url){
   
   installer_path <- .download_r(mac_url)
   # path R installer will install to
-  install_r_to_path <- base::file.path(app_build_path, 
+  install_r_to_path <- base::file.path(app_root_path, 
                                        "r_lang",
                                        fsep = "/")
   

@@ -1,17 +1,18 @@
 
-#' Copy Electron boilerplate into appPath
+#' Copy Electron boilerplate into app_root_path
 #'
-#' @param appPath directory of new Electron app
+#' @param app_root_path directory of new Electron app
 #'
 #' @return none
 #' @export
 #'
-copy_template <- function(appPath){
+copy_template <- function(app_root_path){
 
-  dirs <- system.file("template", package = "electricShine")
+  dirs <- system.file("template",
+                      package = "electricShine")
   dirs <- list.dirs(dirs)
   dirs <- dirs[-1]
 
 file.copy(dirs,
-          appPath, recursive = T)
+          app_root_path, recursive = T)
 }

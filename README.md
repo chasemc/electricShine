@@ -81,16 +81,16 @@ MRANdate <- as.character(Sys.Date() - 3)
 
 
 electricShine::buildElectricApp(
-appName = "My_App",                  # This is what the app/desktop shortcuts will be named on installation.
+app_name = "My_App",                  # This is what the app/desktop shortcuts will be named on installation.
 description = "My demo application", # Short description when installer is run, etc.
-packageName = "demoApp",             # The name of the R package that contains your shiny app.
-semanticVersion = "1.0.0",           # You app's version
-buildPath = buildPath,               # Where the app will build to on your computer.
-MRANdate = MRANdate,                 # The MRAN snapshot date R and R packages will be downloaded from.
-functionName = "run_app",            # The function name in your app that starts your shiny app.
-githubRepo = "chasemc/demoApp",      # GitHub of your R package
-localPath  = NULL,                   # Alternate to GitHub you can use an R package at a local path
-only64 = TRUE                        # Set to TRUE, this will be deprecated.
+package_name = "demoApp",             # The name of the R package that contains your shiny app.
+semantic_version = "1.0.0",           # You app's version
+build_path = buildPath,               # Where the app will build to on your computer.
+mran_date = MRANdate,                 # The MRAN snapshot date R and R packages will be downloaded from.
+function_name = "run_app",            # The function name in your app that starts your shiny app.
+github_repo = "chasemc/demoApp",      # GitHub of your R package
+local_path  = NULL                   # Alternate to GitHub you can use an R package at a local path
+
 )
 ```
 Please see the "Basic Use" vignette for further instructions.

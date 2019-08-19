@@ -4,36 +4,35 @@
 \alias{buildElectricApp}
 \title{Meta-function}
 \usage{
-buildElectricApp(appName = "My_Package", productName = "productName",
-  description = "description", semanticVersion = "0.0.0",
-  buildPath = NULL, MRANdate = Sys.Date() - 3, functionName = NULL,
-  githubRepo = NULL, localPath = NULL, only64 = FALSE,
-  packageName = NULL, build = TRUE)
+buildElectricApp(app_name = "My_Package",
+  product_name = "product_name", description = "description",
+  semantic_version = "0.0.0", build_path = NULL,
+  mran_date = Sys.Date() - 3, function_name = NULL,
+  github_repo = NULL, local_path = NULL, package_name = NULL,
+  build = TRUE)
 }
 \arguments{
-\item{appName}{electron app name}
+\item{app_name}{electron app name}
 
-\item{productName}{necessary?}
+\item{product_name}{necessary?}
 
 \item{description}{short app description}
 
-\item{semanticVersion}{semantic version of your app, as character (not numeric!)}
+\item{semantic_version}{semantic version of your app, as character (not numeric!)}
 
-\item{buildPath}{path to create installer, preferably points to an empty directory}
+\item{build_path}{path to create installer, preferably points to an empty directory}
 
-\item{MRANdate}{MRAN snapshot date, formatted as 'YYYY-MM-DD'}
+\item{mran_date}{MRAN snapshot date, formatted as 'YYYY-MM-DD'}
 
-\item{functionName}{the function name in your package that starts the shiny app}
+\item{function_name}{the function name in your package that starts the shiny app}
 
-\item{githubRepo}{GitHub username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP')}
+\item{github_repo}{GitHub username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP')}
 
-\item{localPath}{path to local shiny-app package}
+\item{local_path}{path to local shiny-app package}
 
-\item{only64}{if TRUE, remove 32-bit dlls; if FALSE do not remove 32-bit dlls}
+\item{package_name}{name of your R package, because a git repo doesn't have to be the same as the package name}
 
-\item{packageName}{can be empty if Github repo/base path is same as your shiny package name}
-
-\item{build}{logical, whether to start the build process, helpful if want to mod before building}
+\item{build}{logical, whether to start the build process, helpful if you want to modify anthying before building}
 }
 \value{
 Nothing

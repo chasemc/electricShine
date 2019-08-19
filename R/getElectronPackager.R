@@ -1,46 +1,68 @@
 
 #' Install electron-packager and electron via npm
 #'
-#' @param nodePath path to node.exe
-#' @param npmPath path to npm-cli.js
+#' @param node_path path to node.exe
+#' @param npm_path path to npm-cli.js
 #' @param buildPath path of nodejs folder
-#' @param appPath path of new electron app
+#' @param app_root_path path of new electron app
 #'
 #' @return nothing
 #' @export
 #'
-buildElectronDependencies <- function(appPath,
-                                      nodePath = NULL,
-                                      npmPath = NULL,
-                                      buildPath = file.path(system.file(package = "electricShine"), "nodejs")
+buildElectronDependencies <- function(app_root_path,
+                                      node_path = NULL,
+                                      npm_path = NULL,
+                                      electricShine_nodejs = file.path(system.file(package = "electricShine"), "nodejs")
 ){
 
-  if (is.null(nodePath) || is.null(nodePath)) {
+  os <- electricShine::get_os()
+  
+  if (is.null(node_path) || is.null(node_path)) {
 
-    nodePath <- list.files(buildPath,
+    if (identical(os, "win")) {
+    node_path <- list.files(electricShine_nodejs,
                            recursive = TRUE,
                            full.names = TRUE,
                            pattern = "node.exe")
+    }
+    if (identical(os, "mac")) {
+      node_path <- list.files(electricShine_nodejs,
+                              recursive = TRUE,
+                              full.names = TRUE)
+      node_path <- node_path[grep("node$", node_path)]
+    }
 
-    npmPath <- list.files(buildPath,
+
+    npm_path <- list.files(electricShine_nodejs,
                           recursive = TRUE,
                           full.names = TRUE,
                           pattern = "npm-cli.js")
-    if (is.null(nodePath) || is.null(npmPath)) {
+    
+    
+    if (length(node_path) != 1L) {
+      node_path <- NULL
+    }
+    
+    if (length(npm_path) != 1L) {
+      npm_path <- NULL
+    }
+    
+    
+    if (is.null(node_path) || is.null(npm_path)) {
 
-      stop("Try running electricShine::get_nodejs(force = TRUE)")
+      stop("Make sure you ran, 'electricShine::get_nodejs()'. If you did, try running electricShine::get_nodejs(force = TRUE)")
 
     }
 
   }
 
-  appPath <- (normalizePath(appPath))
-  nodePath <- shQuote(nodePath)
-  npmPath <- shQuote(npmPath)
+  app_root_path <- (normalizePath(app_root_path))
+  node_path <- shQuote(node_path)
+  npm_path <- shQuote(npm_path)
   message("Downloading build tools from npm...")
   # Use npm to get electron packager
   message(system("cmd.exe",
-                 input = glue::glue("cd {appPath} && {nodePath} {npmPath} install --scripts-prepend-node-path"),
+                 input = glue::glue("cd {app_root_path} && {node_path} {npm_path} install --scripts-prepend-node-path"),
                  invisible = FALSE,
                  minimized = F,
                  wait = T))

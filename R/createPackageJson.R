@@ -1,31 +1,29 @@
 
 #' Create the package.json file for npm
 #'
-#' @param appName name of your app. This is what end-users will see/call an app
+#' @param app_name name of your app. This is what end-users will see/call an app
 #' @param description short description of app
-#' @param path path to where package.json will be written
-#' @param iconPath path to icon within created app
+#' @param app_root_path app_root_path to where package.json will be written
 #' @param repository purely for info- does the shiny app live in a repository (e.g. GitHub)
 #' @param author author of the app
 #' @param license license of the App. Not the full license, only the title (e.g. MIT, or GPLv3)
-#' @param semanticVersion semantic version of app see https://semver.org/ for more information on versioning
-#' @param copyrightYear year of copyright
-#' @param copyrightName copyright-holder's name
+#' @param semantic_version semantic version of app see https://semver.org/ for more information on versioning
+#' @param copyright_year year of copyright
+#' @param copyright_name copyright-holder's name
 #' @param deps is to allow testing with testthat
 #' @param website website of app or company
 #'
 #' @return outputs package.json file with user-input modifications
 #' @export
 #'
-create_package_json <- function(appName = "MyApp",
+create_package_json <- function(app_name = "MyApp",
                                 description = "description",
-                                semanticVersion = "0.0.0",
-                                path = NULL,
-                                iconPath = NULL,
+                                semantic_version = "0.0.0",
+                                app_root_path = NULL,
                                 repository = "",
                                 author = "",
-                                copyrightYear = "",
-                                copyrightName = "",
+                                copyright_year = "",
+                                copyright_name = "",
                                 website = "",
                                 license = "",
                                 deps = NULL){
@@ -43,18 +41,18 @@ create_package_json <- function(appName = "MyApp",
   file <- glue::glue(
 '
 {
-  "name": "<<appName>>",
-  "productName": "<<appName>>",
+  "name": "<<app_name>>",
+  "productName": "<<app_name>>",
   "description": "<<description>>",
-  "version": "<<semanticVersion>>",
+  "version": "<<semantic_version>>",
   "private": true,
   "author": "<<author>>",
-  "copyright": "<<copyrightYear>> <<copyrightName>>",
+  "copyright": "<<copyright_year>> <<copyright_name>>",
   "license": "<<license>>",
   "homepage": "<<website>>",
   "main": "app/background.js",
   "build": {
-  "appId": "com.<<appName>>",
+  "appId": "com.<<app_name>>",
   "files": [
   "app/**/*",
   "node_modules/**/*",
@@ -82,6 +80,6 @@ create_package_json <- function(appName = "MyApp",
 
   electricShine::write_text(text = file,
                             filename = "package.json",
-                            path = path)
+                            path = app_root_path)
 
 }

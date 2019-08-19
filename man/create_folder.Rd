@@ -4,12 +4,10 @@
 \alias{create_folder}
 \title{Create an output folder}
 \usage{
-create_folder(path, name)
+create_folder(app_root_path)
 }
 \arguments{
-\item{path}{path where output folder gonna be}
-
-\item{name}{name of the output folder about to be created}
+\item{app_root_path}{path where output folder gonna be}
 }
 \value{
 if folder name already exists, show error and do nothing;
