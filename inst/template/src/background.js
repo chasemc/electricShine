@@ -8,7 +8,6 @@ const url = require('url');
 const child = require('child_process');
 const MACOS = "darwin";
 const WINDOWS = "win32";
-const desktop = path.join(require('os').homedir(), 'Desktop').split('\\').join('/');
 
 // Logto:
 //Linux: ~/.config/<app name>/log.log
@@ -18,11 +17,11 @@ const log = require('electron-log');
 log.info('Application Started');
 
 var killStr = "";
-var appPath = path.join(__dirname, "app.R" );
-// relative path starting with "r_lang" to "r" or "rscript", glued in from R
-var execPath = "<?<rlang_to_executable_path>?>";
-appPath = appPath.replace(/\\/g, "\\\\");
-execPath = path.join(__dirname, "r_lang", execPath);
+const NODE_R_HOME = "<?<r_path>?>";
+
+
+
+
 
 //Find and bind an open port
 //Assigned port can be accesssed with srv.address().port
@@ -37,14 +36,11 @@ srv.listen(0, function() {
 
 
 if(process.platform == WINDOWS){
- const childProcess = child.spawn(execPath, ['--vanilla -e', '.libPaths(normalizePath(as.list(Sys.getenv())$R_HOME)); <?<R_SHINY_FUNCTION>?>(port = '+srv.address().port+')']);
+ const childProcess = child.spawn(NODE_R_HOME, ['--vanilla -e', '.libPaths(normalizePath(as.list(Sys.getenv())$R_HOME)); <?<R_SHINY_FUNCTION>?>(port = '+srv.address().port+')']);
+}
 
-} else if(process.platform == MACOS){
-const childProcess = child.spawn(execPath, ['--vanilla -e', '.libPaths(normalizePath(as.list(Sys.getenv())$R_HOME)); <?<R_SHINY_FUNCTION>?>(port = '+srv.address().port+')']);
-
-} else {
-  console.log("not on windows or macos?");
-  throw new Error("not on windows or macos?");
+if(process.platform == MACOS){
+const childProcess = child.spawn(NODE_R_HOME, ['--vanilla -e', '.libPaths(normalizePath(as.list(Sys.getenv())$R_HOME)); <?<R_SHINY_FUNCTION>?>(port = '+srv.address().port+')']);
 }
 
 //console.log(process.env);

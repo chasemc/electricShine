@@ -22,37 +22,10 @@ get_nodejs <- function(nodeUrl = "https://nodejs.org/dist",
   
   os <- electricShine::get_os()
   
-  if (is.null(node_path) || is.null(node_path)) {
-    
-    if (identical(os, "win")) {
-      node_path <- list.files(electricShine_nodejs,
-                              recursive = TRUE,
-                              full.names = TRUE,
-                              pattern = "node.exe")
-    }
-    if (identical(os, "mac")) {
-      node_path <- list.files(electricShine_nodejs,
-                              recursive = TRUE,
-                              full.names = TRUE)
-      node_path <- node_path[grep("node$", node_path)]
-    }
-    
-    
-    npm_path <- list.files(electricShine_nodejs,
-                           recursive = TRUE,
-                           full.names = TRUE,
-                           pattern = "npm-cli.js")
-    
-    
-  }
+  temp <- electricShine::find_nodejs()
+  node_path <- temp$node_path
+  npm_path <- temp$npm_path
   
-  if (length(node_path) != 1L) {
-    node_path <- NULL
-  }
-  
-  if (length(npm_path) != 1L) {
-    npm_path <- NULL
-  }
   
   
   
@@ -121,19 +94,12 @@ get_nodejs <- function(nodeUrl = "https://nodejs.org/dist",
     }
     
     
-    node_path <- list.files(electricShine_nodejs,
-                           recursive = TRUE,
-                           full.names = TRUE,
-                           pattern = "node.exe")
+    temp <- electricShine::find_nodejs()
     
-    npm_path <- list.files(electricShine_nodejs,
-                          recursive = TRUE,
-                          full.names = TRUE,
-                          pattern = "npm-cli.js")
     
   }
   
-  return(list(nodePath = node_path,
-              npmPath = npm_path))
+  return(list(nodePath = temp$node_path,
+              npmPath = temp$npm_path))
 }
 

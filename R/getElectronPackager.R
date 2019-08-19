@@ -56,7 +56,7 @@ buildElectronDependencies <- function(app_root_path,
 
   }
 
-  app_root_path <- (normalizePath(app_root_path))
+  app_root_path <- (normalizePath(app_root_path, mustWork = F, winslash = "/"))
   node_path <- shQuote(node_path)
   npm_path <- shQuote(npm_path)
   message("Downloading build tools from npm...")

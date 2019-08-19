@@ -9,15 +9,15 @@
 
 install_r <- function(mran_date = as.character(Sys.Date() - 3),
                       app_root_path,
-                     mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz"){
+                      mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz"){
   
-  app_root_path <- normalizePath(app_root_path, winslash = "/")
+  app_root_path <- normalizePath(app_root_path, winslash = "/", mustWork = FALSE)
   
   os <- electricShine::get_os()
   
   if (identical(os, "mac")) {
     path <- .install_mac_r(app_root_path = app_root_path,
-                   mac_url = mac_url)
+                           mac_url = mac_url)
   }
   
   if (identical(os, "win")) {
@@ -104,6 +104,7 @@ install_r <- function(mran_date = as.character(Sys.Date() - 3),
   # path R installer will install to
   
   install_r_to_path <- base::file.path(app_root_path, 
+                                       "app",
                                        "r_lang",
                                        fsep = "/")
   # create folder R will be installed to
@@ -124,10 +125,12 @@ install_r <- function(mran_date = as.character(Sys.Date() - 3),
 #' @return NA
 .install_mac_r <- function(app_root_path,
                            mac_url){
+  os <- electricShine::get_os()
   
   installer_path <- .download_r(mac_url)
   # path R installer will install to
   install_r_to_path <- base::file.path(app_root_path, 
+                                       "app",
                                        "r_lang",
                                        fsep = "/")
   
@@ -137,6 +140,18 @@ install_r <- function(mran_date = as.character(Sys.Date() - 3),
   # untar files to the app folder
   untar(tarfile = installer_path, exdir = install_r_to_path)
   
+  
+  if (identical(os, "mac")) {
+    
+    r_executable_path <- file.path(app_root_path, 
+                              "app/r_lang/Library/Frameworks/R.framework/Versions")
+    r_executable_path <- list.dirs( r_executable_path, 
+                                recursive = FALSE)[[1]]
+    r_executable_path <- file.path(r_executable_path,
+                              "Resources/bin/R", 
+                              fsep = "/")
+    electricShine::modify_mac_r(r_executable_path)
+  }    
   return(install_r_to_path)
   
 }

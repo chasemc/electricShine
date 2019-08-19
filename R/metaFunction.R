@@ -79,17 +79,10 @@ buildElectricApp <- function(app_name = "My_Package",
                         #only64 = only64
   )
   
-  # Install shiny app/package and dependencies ------------------------------
-  
-  electricShine::install_user_app(app_root_path = app_root_path,
-                                  mran_date = mran_date,
-                                  github_repo = github_repo,
-                                  local_path = local_path)
-  
-  
+
+# Get path to the Electron app's R's library folder
   if (identical(os, "win")) {
     
-    # transfer icons if present
     library_path <- base::file.path(app_root_path,
                                     "app",
                                     "r_win",
@@ -99,11 +92,24 @@ buildElectricApp <- function(app_name = "My_Package",
   
   if (identical(os, "mac")) {
     
-    library_path <- file.path(app_root_path, "r_lang/Library/Frameworks/R.framework/Versions")
-    library_path <-  list.dirs( library_path, recursive = FALSE)[[1]]
-    library_path <- file.path(library_path, "Resources/library", fsep = "/")
+    library_path <- file.path(app_root_path, 
+                              "app/r_lang/Library/Frameworks/R.framework/Versions")
+    library_path <-  list.dirs( library_path, 
+                                recursive = FALSE)[[1]]
+    library_path <- file.path(library_path,
+                              "Resources/library", 
+                              fsep = "/")
     
   }  
+  # Install shiny app/package and dependencies ------------------------------
+  
+  electricShine::install_user_app(library_path = library_path,
+                                  mran_date = mran_date,
+                                  github_repo = github_repo,
+                                  local_path = local_path)
+  
+  
+  # transfer icons if present
   
   electron_build_resources <- system.file("extdata", 
                                           "icon",
@@ -136,7 +142,8 @@ buildElectricApp <- function(app_name = "My_Package",
                                                                     "src", 
                                                                     "background.js"),
                                      package_name = package_name,
-                                     function_name = function_name)
+                                     function_name = function_name,
+                                     r_path = base::dirname(library_path))
   
   # Download npm dependencies -----------------------------------------------
   

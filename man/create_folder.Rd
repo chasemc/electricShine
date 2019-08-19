@@ -11,7 +11,6 @@ create_folder(app_root_path)
 }
 \value{
 if folder name already exists, show error and do nothing;
-        if folder name doesn't exist, create a new file
 }
 \description{
 Create an output folder

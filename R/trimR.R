@@ -12,6 +12,7 @@ trim_r <- function(app_root_path
 
   
   r_lang_path <- file.path(app_root_path,
+                           "app",
                            "r_lang",
                            fsep = "/")
   

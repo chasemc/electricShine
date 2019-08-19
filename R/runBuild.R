@@ -9,51 +9,81 @@
 #' @export
 #'
 run_build <- function(node_path = NULL,
-                     npm_path = NULL,
-                     app_path,
-                     node = file.path(system.file(package = "electricShine"), "nodejs")){
-
-
-  if (is.null(node_path) || is.null(node_path)) {
-
-    node_path <- list.files(node,
-                           recursive = TRUE,
-                           full.names = TRUE,
-                           pattern = "node.exe")
-
-    npm_path <- list.files(node,
-                          recursive = TRUE,
-                          full.names = TRUE,
-                          pattern = "npm-cli.js")
-
+                      npm_path = NULL,
+                      app_path,
+                      node = file.path(system.file(package = "electricShine"), "nodejs")){
+  
+  
+  os <- electricShine::get_os()
+  
+  temp <- electricShine::find_nodejs()
+  
+  node_path <- temp$node_path
+  npm_path <- temp$npm_path
+  
+  
+  if (length(node_path) == 0 || length(npm_path) == 0) {
+    electricShine::get_nodejs()
+    temp <- electricShine::find_nodejs()
+    
+    node_path <- temp$node_path
+    npm_path <- temp$npm_path
     if (length(node_path) == 0 || length(npm_path) == 0) {
-
       stop("Try running electricShine::getNodejs()
-electricShine::getElectron() first")
-
+           electricShine::getElectron() first")
     }
-
   }
-
-
+  
+  
   node_path <- shQuote(node_path)
   npm_path <- shQuote(npm_path)
   app_path <- shQuote(app_path)
   message("Creating app...")
-
-
+  
+  
+  
   # electron-packager <sourcedir> <appname> --platform=<platform> --arch=<arch> [optional flags...]
   # npm start --prefix path/to/your/app
-
-  message(system("cmd.exe",
-                 glue::glue("cd {app_path} && {node_path} {npm_path} run release --scripts-prepend-node-path"),
-                 invisible = FALSE,
-                 minimized = F,
-                 wait = T,
-                 intern=F,
-                 ignore.stdout=F,
-                 ignore.stderr=F))
+  message("Installing npm dependencies for the installation process. these are specfied in 'package.json'. Also this step can take a few minutes.")
+  
+  if (identical(os, "win")) {
+    message(system("cmd.exe",
+                   glue::glue("cd {app_path} && {node_path} {npm_path} install --scripts-prepend-node-path"),
+                   invisible = FALSE,
+                   minimized = F,
+                   wait = T,
+                   intern=F,
+                   ignore.stdout=F,
+                   ignore.stderr=F))
+    message("Building your Electron app.")
+    message(system("cmd.exe",
+                   glue::glue("cd {app_path} && {node_path} {npm_path} run release --scripts-prepend-node-path"),
+                   invisible = FALSE,
+                   minimized = F,
+                   wait = T,
+                   intern=F,
+                   ignore.stdout=F,
+                   ignore.stderr=F))
+    
+  }
+  
+  
+  if (identical(os, "mac")) {
+    message(system(glue::glue("cd {app_path} && {node_path} {npm_path} install --scripts-prepend-node-path"),
+                   wait = T,
+                   intern=F,
+                   ignore.stdout=F,
+                   ignore.stderr=F))
+    message("Building your Electron app.")
+    message(system(glue::glue("cd {app_path} && {node_path} {npm_path} run release --scripts-prepend-node-path"),
+                   wait = T,
+                   intern=F,
+                   ignore.stdout=F,
+                   ignore.stderr=F))
+    
+  }
+  
+  
+  
 }
-
-
 

@@ -1,14 +1,14 @@
 #' Install your shiny app package and its dependencies to the R installation's library
 #'
 #' @param mran_date MRAN date from which to download packages from
-#' @param app_root_path path to the Electron app's build folder
+#' @param library_path path to the Electron app's R's library folder
 #' @param github_repo GitHub username/repo of your the shiny-app package  (e.g. 'chasemc/demoAPP')
 #' @param local_path path to local shiny-app package
 #'
 #' @return nothing
 #' @export
 #'
-install_user_app <- function(app_root_path = NULL,
+install_user_app <- function(library_path = NULL,
                              mran_date = NULL,
                              github_repo = NULL,
                              local_path  = NULL){
@@ -26,10 +26,7 @@ install_user_app <- function(app_root_path = NULL,
 
   repo <- glue::glue("https://cran.microsoft.com/snapshot/{mran_date}/")
 
-  library_path <- base::file.path(app_root_path,
-                                  "app",
-                                  "r_win",
-                                  "library")
+  
 
   withr::with_libpaths(library_path,
                        utils::install.packages("remotes",

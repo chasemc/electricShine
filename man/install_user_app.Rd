@@ -4,11 +4,11 @@
 \alias{install_user_app}
 \title{Install your shiny app package and its dependencies to the R installation's library}
 \usage{
-install_user_app(app_root_path = NULL, mran_date = NULL,
+install_user_app(library_path = NULL, mran_date = NULL,
   github_repo = NULL, local_path = NULL)
 }
 \arguments{
-\item{app_root_path}{path to the Electron app's build folder}
+\item{library_path}{path to the Electron app's R's library folder}
 
 \item{mran_date}{MRAN date from which to download packages from}
 
