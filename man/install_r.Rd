@@ -11,6 +11,8 @@ install_r(mran_date = as.character(Sys.Date() - 3), app_root_path,
 \item{mran_date}{MRAN date from which to install R}
 
 \item{app_root_path}{path to current electricShine app build}
+
+\item{mac_url}{mac R installer url}
 }
 \value{
 NA, installs/downloads R to a given path

@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{app_root_path}{top level of new electricShine app build}
+
+\item{mac_url}{url for mac R language download}
 }
 \value{
 NA

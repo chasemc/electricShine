@@ -2,16 +2,16 @@
 % Please edit documentation in R/installR.R
 \name{.download_r}
 \alias{.download_r}
-\title{Download R installer for windows to tempdir()}
+\title{Download R installer given its url}
 \usage{
 .download_r(d_url)
 }
 \arguments{
-\item{url}{url to download R from}
+\item{d_url}{download file from url}
 }
 \value{
 Path to R.exe installer
 }
 \description{
-Download R installer for windows to tempdir()
+Download R installer given its url
 }

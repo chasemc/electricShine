@@ -2,6 +2,7 @@
 #'
 #' @param mran_date MRAN date from which to install R
 #' @param app_root_path path to current electricShine app build
+#' @param mac_url mac R installer url
 #'
 #' @return NA, installs/downloads R to a given path
 #' @export
@@ -72,9 +73,9 @@ install_r <- function(mran_date = as.character(Sys.Date() - 3),
 
 
 
-#' Download R installer for windows to tempdir()
+#' Download R installer given its url
 #'
-#' @param url url to download R from
+#' @param d_url download file from url
 #'
 #' @return Path to R.exe installer
 .download_r <- function(d_url) {
@@ -121,6 +122,7 @@ install_r <- function(mran_date = as.character(Sys.Date() - 3),
 #' Download and untar mac R into app folder
 #'
 #' @param app_root_path top level of new electricShine app build
+#' @param mac_url url for mac R language download
 #'
 #' @return NA
 .install_mac_r <- function(app_root_path,
@@ -138,7 +140,7 @@ install_r <- function(mran_date = as.character(Sys.Date() - 3),
   base::dir.create(install_r_to_path)
   
   # untar files to the app folder
-  untar(tarfile = installer_path, exdir = install_r_to_path)
+  utils::untar(tarfile = installer_path, exdir = install_r_to_path)
   
   
   if (identical(os, "mac")) {
