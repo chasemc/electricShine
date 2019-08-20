@@ -85,7 +85,7 @@ buildElectricApp <- function(app_name = "My_Package",
     
     library_path <- base::file.path(app_root_path,
                                     "app",
-                                    "r_win",
+                                    "r_lang",
                                     "library",
                                     fsep = "/")
   }
