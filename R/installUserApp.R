@@ -3,7 +3,7 @@
 #' @param mran_date MRAN date from which to download packages from
 #' @param library_path path to the Electron app's R's library folder
 #' @param github_repo GitHub username/repo of your the shiny-app package  (e.g. 'chasemc/demoAPP')
-#' @param local_path path to local shiny-app package
+#' @param local_package path to local shiny-app package
 #'
 #' @return nothing
 #' @export
@@ -11,7 +11,7 @@
 install_user_app <- function(library_path = NULL,
                              mran_date = NULL,
                              github_repo = NULL,
-                             local_path  = NULL){
+                             local_package  = NULL){
 
   if(is.null(mran_date)){
     base::stop("electricShine::install_user_app() requires an mran_date value, in the format 'YYYY-MM-DD'")
@@ -47,25 +47,25 @@ install_user_app <- function(library_path = NULL,
   }
   # If local path was provided, install using install.packages::
 
-  if (!base::is.null(local_path)) {
+  if (!base::is.null(local_package)) {
 
-    if (base::dir.exists(local_path)) {
+    if (base::dir.exists(local_package)) {
       tryCatch(
-        utils::install.packages(local_path,
+        utils::install.packages(local_package,
                                 repos = repo,
                                 type = "binary"),
         error = function(e) {
-          base::stop("In electricShine::install_user_app(), local_path was provided but was unable to install.")
+          base::stop("In electricShine::install_user_app(), local_package was provided but was unable to install.")
         }
       )
 
     } else {
-      base::warning("In electricShine::install_user_app(), local_path was given, but path wasn't found.")
+      base::warning("In electricShine::install_user_app(), local_package was given, but path wasn't found.")
     }
   }
 
-  if (base::is.null(local_path) && base::is.null(github_repo)) {
-    base::warning("In electricShine::install_user_app(), either a 'github_repo' or 'local_path' must be provided")
+  if (base::is.null(local_package) && base::is.null(github_repo)) {
+    base::warning("In electricShine::install_user_app(), either a 'github_repo' or 'local_package' must be provided")
 
   }
 
