@@ -53,10 +53,14 @@ get_nodejs <- function(nodeUrl = "https://nodejs.org/dist",
     }
     # Put together binary name and url
     binary_name <- glue::glue("node-{node_version}-{platform}-{arch}.{ext}")
-    nodeUrl <- file.path(nodeUrl, node_version, binary_name)
+    nodeUrl <- file.path(nodeUrl,
+                         node_version,
+                         binary_name)
     
     # Download to temporary directory
-    temp <- base::file.path(tempdir(), base::basename(nodeUrl))
+    temp <- base::file.path(tempdir(), 
+                            base::basename(nodeUrl))
+    
     utils::download.file(nodeUrl,
                          destfile = temp,
                          mode = 'wb')
