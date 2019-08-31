@@ -20,13 +20,27 @@ buildElectricApp <- function(app_name = "My_Package",
                              description = "description",
                              semantic_version = "0.0.0",
                              build_path = NULL,
-                             mran_date = Sys.Date() - 3,
+                             mran_date = NULL,
+                             cran_like_url = NULL,
                              function_name = NULL,
                              github_repo = NULL,
                              local_path  = NULL,
-                             #  only64 = FALSE, taken out for now, some pkgs need the 32 bit dlls
                              package_name = NULL,
                              build = TRUE){
+  
+  
+  #----
+  # Check and fail early:
+  os <- electricShine::get_os()
+  
+  arguments <- as.list(match.call())
+  arguments <- lapply(arguments, eval)
+                       
+  .check_arch()  
+  .check_repo_set(arguments)  
+  .check_build_path_exists(arguments)
+  
+  #----
   
   if (is.null(github_repo) && is.null(local_path)) {
     stop("electricShine::buildElectricApp() requires you to specify either a 'github_repo' or 'local_path' argument specifying
