@@ -4,11 +4,11 @@
 \alias{find_nodejs}
 \title{Find nodejs and npm executables}
 \usage{
-find_nodejs(electricShine_nodejs = file.path(system.file(package =
+find_nodejs(nodejs_path = file.path(system.file(package =
   "electricShine"), "nodejs"))
 }
 \arguments{
-\item{electricShine_nodejs}{electricShine pacakge location or location of nodejs directory}
+\item{nodejs_path}{electricShine package location or location of nodejs directory}
 }
 \value{
 list of two executable paths, one for nodejs and one for npm

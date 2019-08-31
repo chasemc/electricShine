@@ -18,10 +18,10 @@
 # 
 # test_that("get_nodejs provides message", {
 #   skip_on_os(c("mac","linux"))
-#   expect_message(get_nodejs(nodeUrl = "https://nodejs.org/dist",
-#                             buildPath = temp,
-#                             force = FALSE,
-#                             nodeVersion = "v10.15.1"))
+#   expect_message(get_nodejs(node_url = "https://nodejs.org/dist",
+#                             force_install = FALSE,
+#                             nodejs_path = temp,
+#                             node_version = "v10.15.1"))
 # })
 # 
 # 
@@ -32,7 +32,7 @@
 #   skip_on_os(c("mac","linux"))
 # 
 #   a <- get_nodejs(nodeUrl = "https://nodejs.org/dist",
-#                   buildPath = temp,
+#                   nodejs_path  = temp,
 #                   force = FALSE,
 #                   nodeVersion = "v10.15.1")
 #   expect_equal(length(a), 2L)

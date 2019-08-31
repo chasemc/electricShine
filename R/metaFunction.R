@@ -6,27 +6,29 @@
 #' @param semantic_version semantic version of your app, as character (not numeric!)
 #' @param mran_date MRAN snapshot date, formatted as 'YYYY-MM-DD'
 #' @param github_repo GitHub username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP')
-#' @param local_path path to local shiny-app package
+#' @param local_package path to local shiny-app package
 #' @param function_name the function name in your package that starts the shiny app
 #' @param package_name name of your R package, because a git repo doesn't have to be the same as the package name
 #' @param build logical, whether to start the build process, helpful if you want to modify anthying before building
-#' @param description short app description
+#' @param short_description short app description
 #'
 #' @return Nothing
 #' @export
 #'
-buildElectricApp <- function(app_name = "My_Package",
+buildElectricApp <- function(app_name = NULL,
                              product_name = "product_name",
-                             description = "description",
-                             semantic_version = "0.0.0",
+                             short_description = NULL,
+                             semantic_version = NULL,
                              build_path = NULL,
                              mran_date = NULL,
                              cran_like_url = NULL,
                              function_name = NULL,
                              github_repo = NULL,
-                             local_path  = NULL,
+                             local_package  = NULL,
                              package_name = NULL,
-                             build = TRUE){
+                             build = TRUE,
+                             nodejs_path = NULL,
+                             nodejs_version = NULL){
   
   
   #----
@@ -35,24 +37,22 @@ buildElectricApp <- function(app_name = "My_Package",
   
   arguments <- as.list(match.call())
   arguments <- lapply(arguments, eval)
-                       
+  
   .check_arch()  
   .check_repo_set(arguments)  
   .check_build_path_exists(arguments)
-  
+  .check_package_provided(arguments)
   #----
   
-  if (is.null(github_repo) && is.null(local_path)) {
-    stop("electricShine::buildElectricApp() requires you to specify either a 'github_repo' or 'local_path' argument specifying
-         the shiny app/package to be turned into an Electron app")
+  
+  if (is.null(app_name)) {
+    stop("electricShine::buildElectricApp() requires you to provide an 'app_name' argument specifying
+         the shiny app/package name.")
   }
-  if (is.null(build_path)) {
-    stop("electricShine::buildElectricApp() requires you to specify a 'path' argument.
-(e.g. electricShine::electricShine(path = 'C:/Users/me/Desktop/my_app') )")
-  }
-  if (is.null(version)) {
-    stop("electricShine::buildElectricApp() requires you to specify a 'version' argument.
-           (e.g. electricShine::electricShine(version = '1.0.0') )")
+
+  if (is.null(semantic_version)) {
+    stop("electricShine::buildElectricApp() requires you to specify a 'semantic_version' argument.
+           (e.g. electricShine::electricShine(semantic_version = '1.0.0') )")
   }
   if (is.null(function_name)) {
     stop("electricShine::buildElectricApp() requires you to specify a 'function_name' argument.
@@ -64,10 +64,15 @@ buildElectricApp <- function(app_name = "My_Package",
            (e.g. electricShine::electricShine(package_name = 'myPackage') )")
   }
   
-  os <- electricShine::get_os()
   
+  if (is.null(nodejs_path)) {
+    file.path(system.file(package = "electricShine"), "nodejs")
+  }
   
-  electricShine::get_nodejs()
+  electricShine::get_nodejs(node_url = "https://nodejs.org/dist",
+                            nodejs_path = nodejs_path,
+                            force_install = FALSE,
+                            nodejs_version = nodejs_version)
   
   
   # create top-level build folder for app 
@@ -89,12 +94,13 @@ buildElectricApp <- function(app_name = "My_Package",
   # Trim R's size -----------------------------------------------------------
   
   
-  electricShine::trim_r(app_root_path = app_root_path
-                        #only64 = only64
-  )
+  electricShine::trim_r(app_root_path = app_root_path)
   
-
-# Get path to the Electron app's R's library folder
+  
+  # Get path to the Electron app's R's library folder
+  
+  os <- electricShine::get_os()
+  
   if (identical(os, "win")) {
     
     library_path <- base::file.path(app_root_path,
@@ -113,16 +119,14 @@ buildElectricApp <- function(app_name = "My_Package",
     library_path <- file.path(library_path,
                               "Resources/library", 
                               fsep = "/")
-    
-    
-    
   }  
+  
   # Install shiny app/package and dependencies ------------------------------
   
   electricShine::install_user_app(library_path = library_path,
                                   mran_date = mran_date,
                                   github_repo = github_repo,
-                                  local_path = local_path)
+                                  local_package = local_package)
   
   
   # transfer icons if present
@@ -133,7 +137,6 @@ buildElectricApp <- function(app_name = "My_Package",
                                           lib.loc = library_path)
   
   if (nchar(electron_build_resources) == 0) {
-  } else {
     electron_build_resources <- base::list.files(electron_build_resources, 
                                                  full.names = TRUE)
     resources <- base::file.path(app_root_path, 
@@ -155,28 +158,24 @@ buildElectricApp <- function(app_name = "My_Package",
   # Add function that runs the shiny app to description.js ------------------
   
   electricShine::modify_background_js(background_js_path = file.path(app_root_path,
-                                                                    "src", 
-                                                                    "background.js"),
-                                     package_name = package_name,
-                                     function_name = function_name,
-                                     r_path = base::dirname(library_path))
+                                                                     "src", 
+                                                                     "background.js"),
+                                      package_name = package_name,
+                                      function_name = function_name,
+                                      r_path = base::dirname(library_path))
   
-
+  
   
   # Build the electron app --------------------------------------------------
   if (build == TRUE) {
     electricShine::run_build(node_path = NULL,
-                            npm_path = NULL,
-                            app_path = app_root_path,
-                            node = file.path(system.file(package = "electricShine"), "nodejs"))
+                             npm_path = NULL,
+                             app_path = app_root_path,
+                             node = file.path(system.file(package = "electricShine"), "nodejs"))
     
     message("You should now have both a transferable and distributable installer Electron app.")
   } else {
     message("Build step was skipped. When you are ready to build the distributable run 'electricShine::runBuild(...)'")
   }
-  
-  
-  
-  
   
 }

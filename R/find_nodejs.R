@@ -1,12 +1,12 @@
 
 #' Find nodejs and npm executables
 #'
-#' @param electricShine_nodejs electricShine pacakge location or location of nodejs directory
+#' @param nodejs_path electricShine package location or location of nodejs directory
 #'
 #' @return list of two executable paths, one for nodejs and one for npm 
 #' @export
 #'
-find_nodejs <- function(electricShine_nodejs = file.path(system.file(package = "electricShine"), "nodejs")) {
+find_nodejs <- function(nodejs_path = file.path(system.file(package = "electricShine"), "nodejs")) {
   
   os <- electricShine::get_os()
   
@@ -22,19 +22,19 @@ find_nodejs <- function(electricShine_nodejs = file.path(system.file(package = "
   if (is.null(node_path) || is.null(npm_path) || !file.exists(node_path) || !file.exists(npm_path)) {
     
     if (identical(os, "win")) {
-      node_path <- list.files(electricShine_nodejs,
+      node_path <- list.files(nodejs_path,
                               recursive = TRUE,
                               full.names = TRUE,
                               pattern = "node.exe")
     }
     if (identical(os, "mac")) {
-      node_path <- list.files(electricShine_nodejs,
+      node_path <- list.files(nodejs_path,
                               recursive = TRUE,
                               full.names = TRUE)
       node_path <- node_path[grep("node$", node_path)]
     }
     
-    npm_path <- list.files(electricShine_nodejs,
+    npm_path <- list.files(nodejs_path,
                            recursive = TRUE,
                            full.names = TRUE,
                            pattern = "npm-cli.js")

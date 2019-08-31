@@ -4,7 +4,7 @@
 \alias{.find_win_exe_url}
 \title{Find Windows R installer URL from MRAN snapshot}
 \usage{
-.find_win_exe_url(mran_date)
+.find_win_exe_url(cran_like_url = NULL, mran_date = NULL)
 }
 \arguments{
 \item{mran_date}{MRAN date (yyyy-mm-dd) to download from}

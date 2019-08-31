@@ -4,19 +4,19 @@
 \alias{buildElectricApp}
 \title{Meta-function}
 \usage{
-buildElectricApp(app_name = "My_Package",
-  product_name = "product_name", description = "description",
-  semantic_version = "0.0.0", build_path = NULL,
-  mran_date = Sys.Date() - 3, function_name = NULL,
-  github_repo = NULL, local_path = NULL, package_name = NULL,
-  build = TRUE)
+buildElectricApp(app_name = NULL, product_name = "product_name",
+  short_description = NULL, semantic_version = NULL,
+  build_path = NULL, mran_date = NULL, cran_like_url = NULL,
+  function_name = NULL, github_repo = NULL, local_package = NULL,
+  package_name = NULL, build = TRUE, nodejs_path = NULL,
+  nodejs_version = NULL)
 }
 \arguments{
 \item{app_name}{electron app name}
 
 \item{product_name}{necessary?}
 
-\item{description}{short app description}
+\item{short_description}{short app description}
 
 \item{semantic_version}{semantic version of your app, as character (not numeric!)}
 
@@ -28,7 +28,7 @@ buildElectricApp(app_name = "My_Package",
 
 \item{github_repo}{GitHub username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP')}
 
-\item{local_path}{path to local shiny-app package}
+\item{local_package}{path to local shiny-app package}
 
 \item{package_name}{name of your R package, because a git repo doesn't have to be the same as the package name}
 

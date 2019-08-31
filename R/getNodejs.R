@@ -1,21 +1,21 @@
 #' Install Node.js
 #'
-#' @param nodeUrl path to node.js.org
-#' @param electricShine_nodejs where node.js will be installed to
-#' @param force should node.js be installed if it's already present?
+#' @param node_url path to node.js.org
+#' @param nodejs_path where node.js will be installed to
+#' @param node_url should node.js be installed if it's already present?
 #' @param node_version version of node.js (eg "v10.15.1")
 #'
 #' @return list of 2: "nodePath": path to node.exe; "npmPath": path to npm-cli.js
 #' @export
 #'
-get_nodejs <- function(nodeUrl = "https://nodejs.org/dist",
-                       electricShine_nodejs = file.path(system.file(package = "electricShine"), "nodejs"),
-                       force = FALSE,
+get_nodejs <- function(node_url = "https://nodejs.org/dist",
+                       nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
+                       force_install = FALSE,
                        node_version = "v10.16.0"){
   
   
-  if (!file.exists(electricShine_nodejs)) {
-    dir.create(electricShine_nodejs)
+  if (!file.exists(nodejs_path)) {
+    dir.create(nodejs_path)
   }
   # Check if node and npm are already installed
   
@@ -29,7 +29,7 @@ get_nodejs <- function(nodeUrl = "https://nodejs.org/dist",
   
   
   
-  if (length(node_path) == 0 || length(npm_path) == 0 || force == TRUE) {
+  if (length(node_path) == 0 || length(npm_path) == 0 || node_url == TRUE) {
     
     # Get operating system:
     os <- get_os()
@@ -53,15 +53,15 @@ get_nodejs <- function(nodeUrl = "https://nodejs.org/dist",
     }
     # Put together binary name and url
     binary_name <- glue::glue("node-{node_version}-{platform}-{arch}.{ext}")
-    nodeUrl <- file.path(nodeUrl,
+    node_url <- file.path(node_url,
                          node_version,
                          binary_name)
     
     # Download to temporary directory
     temp <- base::file.path(tempdir(), 
-                            base::basename(nodeUrl))
+                            base::basename(node_url))
     
-    utils::download.file(nodeUrl,
+    utils::download.file(node_url,
                          destfile = temp,
                          mode = 'wb')
     
@@ -82,18 +82,18 @@ get_nodejs <- function(nodeUrl = "https://nodejs.org/dist",
     }
     message("Downloaded sha matches expected sha")
     message("Decompressing node.js files, might take a few minutes...")
-    message(glue::glue("All node.js files will be installed into: \n {electricShine_nodejs}"))
+    message(glue::glue("All node.js files will be installed into: \n {nodejs_path}"))
     
-    if (base::grepl("zip$", base::basename(nodeUrl))) {
+    if (base::grepl("zip$", base::basename(node_url))) {
       base::try(
         utils::unzip(zipfile = temp,
-                     exdir = electricShine_nodejs)
+                     exdir = nodejs_path)
       )
     }
-    if (base::grepl("gz$", base::basename(nodeUrl))) {
+    if (base::grepl("gz$", base::basename(node_url))) {
       base::try(
         utils::untar(tarfile = temp,
-                     exdir = electricShine_nodejs)
+                     exdir = nodejs_path)
       )
     }
     

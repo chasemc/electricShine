@@ -5,7 +5,7 @@
 \title{Install your shiny app package and its dependencies to the R installation's library}
 \usage{
 install_user_app(library_path = NULL, mran_date = NULL,
-  github_repo = NULL, local_path = NULL)
+  github_repo = NULL, local_package = NULL)
 }
 \arguments{
 \item{library_path}{path to the Electron app's R's library folder}
@@ -14,7 +14,7 @@ install_user_app(library_path = NULL, mran_date = NULL,
 
 \item{github_repo}{GitHub username/repo of your the shiny-app package  (e.g. 'chasemc/demoAPP')}
 
-\item{local_path}{path to local shiny-app package}
+\item{local_package}{path to local shiny-app package}
 }
 \value{
 nothing
