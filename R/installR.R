@@ -50,7 +50,30 @@ install_r <- function(mran_date = as.character(Sys.Date() - 3),
 #'
 #' @return url 
 #'
-.find_win_exe_url <- function(mran_date){
+.find_win_exe_url <- function(cran_like_url = NULL,
+                              mran_date = NULL){
+  
+  if (is.null(c(cran_like_url, mran_date))) {
+    stop("'cran_like_url' or 'mran_date' must be set. 'mran_date' is suggested and
+        should be a date in the format 'yyyy-mm-dd' ") 
+  }
+  
+  if (is.null(cran_like_url) && is.null(mran_date)) {
+    stop("Values provided for both 'cran_like_url' and 'mran_date'.") 
+  }
+ 
+  
+  base_url <- NULL
+  
+  if (!is.null(cran_like_url)) {
+    base_url <- cran_like_url
+  }
+  
+  
+  if (!is.null(mran_date)) {
+    baseUrl <- glue::glue("https://cran.microsoft.com/snapshot/{mran_date}/bin/windows/base")
+  }
+  
   
   baseUrl <- glue::glue("https://cran.microsoft.com/snapshot/{mran_date}/bin/windows/base")
   # Read snapshot html
@@ -146,12 +169,12 @@ install_r <- function(mran_date = as.character(Sys.Date() - 3),
   if (identical(os, "mac")) {
     
     r_executable_path <- file.path(app_root_path, 
-                              "app/r_lang/Library/Frameworks/R.framework/Versions")
+                                   "app/r_lang/Library/Frameworks/R.framework/Versions")
     r_executable_path <- list.dirs( r_executable_path, 
-                                recursive = FALSE)[[1]]
+                                    recursive = FALSE)[[1]]
     r_executable_path <- file.path(r_executable_path,
-                              "Resources/bin/R", 
-                              fsep = "/")
+                                   "Resources/bin/R", 
+                                   fsep = "/")
     electricShine::modify_mac_r(r_executable_path)
   }    
   return(install_r_to_path)
