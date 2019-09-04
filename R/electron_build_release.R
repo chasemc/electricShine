@@ -1,22 +1,23 @@
 #' Create an electron-builder release
 #'
-#' @param node_path option to specifiy the path to the node.js directory if already installed
-#' @param npm_path option to specifiy the path to the npm module directory if already installed
-#' @param node folder where electricShine installs/looks for node an npm if not given in node_path/npm_path
+#' @param nodejs_path same as what you would use as system PATH for node.exe
 #' @param app_path path to new electron app top directory
 #'
 #' @return nothing, used for side-effects
 #' @export
 #'
-run_build <- function(node_path = NULL,
-                      npm_path = NULL,
-                      app_path,
-                      node = file.path(system.file(package = "electricShine"), "nodejs")){
+run_build <- function(nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
+                      app_path){
   
   
   os <- electricShine::get_os()
   
-  temp <- electricShine::find_nodejs()
+ 
+  
+  nodejs_path
+  
+  
+  
   
   node_path <- temp$node_path
   npm_path <- temp$npm_path
