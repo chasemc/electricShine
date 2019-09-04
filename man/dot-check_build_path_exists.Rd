@@ -4,10 +4,10 @@
 \alias{.check_build_path_exists}
 \title{Check whether build path exists}
 \usage{
-.check_build_path_exists(arguments)
+.check_build_path_exists(build_path)
 }
 \arguments{
-\item{arguments}{arguments to check}
+\item{build_path}{build_path}
 }
 \value{
 stops

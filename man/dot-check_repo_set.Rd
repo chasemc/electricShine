@@ -2,16 +2,15 @@
 % Please edit documentation in R/fail_fast.R
 \name{.check_repo_set}
 \alias{.check_repo_set}
-\title{Check that repo is set}
+\title{Check that a repo for packages/R was set}
 \usage{
-.check_repo_set(arguments)
+.check_repo_set(cran_like_url = NULL, mran_date = NULL)
 }
 \arguments{
-\item{arguments}{arguments to check}
-}
-\value{
-stops if neither cran-like url or mran date is set
+\item{cran_like_url}{cran_like_url}
+
+\item{mran_date}{mran_date}
 }
 \description{
-Doesn't check whether it works, only that it is not-null
+Check that a repo for packages/R was set
 }
