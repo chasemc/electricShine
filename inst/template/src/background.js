@@ -46,7 +46,8 @@ const NODER = path.join(rresources, "bin","R");
 
 
 
-const childProcess = child.spawn(NODER, ['-e', 'demoApp::run_app(port = '+srv.address().port+')']);
+const childProcess = child.spawn(NODER, ['-e', '<?<R_SHINY_FUNCTION>?>(port = '+srv.address().port+')']);
+
 
 
 childProcess.stdout.on('data', (data) => {
