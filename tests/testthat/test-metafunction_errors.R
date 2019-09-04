@@ -7,16 +7,20 @@ MRANdate <- as.character(Sys.Date() - 3)
 fail1 <- function(){
   electricShine::buildElectricApp(
     app_name = "My_App",
-    short_description = "My demo application",
-    package_name = "demoApp",
-    semantic_version = "1.0.0",
+    product_name = "I'm a aproduct name!!!!",
+    short_description = "I'm a description",
+    semantic_version = "0.1.1",
     build_path = tempdir(),
-    mran_date = "2019-01-01",
+    mran_date = NULL,
+    cran_like_url = "https://cran.r-project.org/bin/windows/base",
     function_name = "run_app",
-    github_repo = "chasemc/demoApp",
-    local_package  = NULL,
-    cran_like_url = "NULL"
-  )
+    git_host = "github",
+    git_repo = "chasemc/demoApp",
+    local_package_path = NULL,
+    package_install_opts = NULL,
+    run_build = TRUE,
+    nodejs_path = tempdir(),
+    nodejs_version = "v10.16.0")
 }
 
 
