@@ -1,83 +1,74 @@
 #' Install R from MRAN date into electricShine folder
 #'
-#' @param mran_date MRAN date from which to install R
+#' @param cran_like_url CRAN-like url e.g. https://cran.r-project.org/bin/windows/base
 #' @param app_root_path path to current electricShine app build
 #' @param mac_url mac R installer url
 #'
-#' @return NA, installs/downloads R to a given path
 #' @export
 #'
-
-install_r <- function(mran_date = as.character(Sys.Date() - 3),
+install_r <- function(cran_like_url = NULL,
                       app_root_path,
                       mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz"){
   
-  app_root_path <- normalizePath(app_root_path, winslash = "/", mustWork = FALSE)
   
   os <- electricShine::get_os()
   
+  app_root_path <- normalizePath(app_root_path,
+                                 winslash = "/",
+                                 mustWork = FALSE)
+  # Make NULL here so can check if not null later
+  rlang_path <- NULL
+  
   if (identical(os, "mac")) {
-    path <- .install_mac_r(app_root_path = app_root_path,
-                           mac_url = mac_url)
+    rlang_path <- .install_mac_r(app_root_path = app_root_path,
+                                 mac_url = mac_url)
   }
   
   if (identical(os, "win")) {
     
-    win_url <- .find_win_exe_url(mran_date = mran_date)
-    # download R.exe installer
+    win_url <- .find_win_exe_url(cran_like_url = cran_like_url)
+    
     win_installer_path <- .download_r(d_url = win_url)
-    # install R
-    path <- .install_win_r(win_installer_path,
-                           app_root_path)
     
-    path <- base::file.path(path,
-                            "bin",
-                            fsep = "/")
+    rlang_path <- .install_win_r(win_installer_path,
+                                 app_root_path)
     
-    if (length(list.files(path, pattern = "Rscript.exe")) != 1L) {
-      stop("Didn't find Rscript.exe after Windows R install.")
-    }
-    
-    return(path)
+    rlang_path <- base::file.path(rlang_path,
+                                  "bin",
+                                  fsep = "/")
   }
+  
+  # Check that Rscript is present (ie R at least probably installed)
+  # TODO: Mod this check to a system call that checks if R is functional (see testthat tests for install_r())
+  if (length(list.files(rlang_path,
+                        pattern = "Rscript")) != 1L) {
+    stop("R install didn't work as expected.")
+  } 
+  
+  return(rlang_path)
+  
 }
 
 
 
 #' Find Windows R installer URL from MRAN snapshot
 #'
-#' @param mran_date MRAN date (yyyy-mm-dd) to download from
+#' @param cran_like_url  url to cran-like repository
 #'
-#' @return url 
+#' @return url for Windows R installer  
 #'
-.find_win_exe_url <- function(cran_like_url = NULL,
-                              mran_date = NULL){
-  
-  if (is.null(c(cran_like_url, mran_date))) {
-    stop("'cran_like_url' or 'mran_date' must be set. 'mran_date' is suggested and
-        should be a date in the format 'yyyy-mm-dd' ") 
-  }
-  
-  if (is.null(cran_like_url) && is.null(mran_date)) {
-    stop("Values provided for both 'cran_like_url' and 'mran_date'.") 
-  }
- 
-  
-  base_url <- NULL
-  
-  if (!is.null(cran_like_url)) {
-    base_url <- cran_like_url
-  }
+.find_win_exe_url <- function(cran_like_url = NULL){
   
   
-  if (!is.null(mran_date)) {
-    baseUrl <- glue::glue("https://cran.microsoft.com/snapshot/{mran_date}/bin/windows/base")
-  }
+  baseUrl <-  file.path(cran_like_url,
+                        "bin",
+                        "windows",
+                        "base")
   
-  
-  baseUrl <- glue::glue("https://cran.microsoft.com/snapshot/{mran_date}/bin/windows/base")
   # Read snapshot html
-  readCran <- base::readLines(baseUrl, warn = FALSE)
+  readCran <- base::readLines(baseUrl,
+                              warn = FALSE)
+  
   # Find the name of the windows exe
   filename <- base::regexpr("R-[0-9.]+.+-win\\.exe", readCran)
   filename <- base::regmatches(readCran, filename)
@@ -87,12 +78,12 @@ install_r <- function(mran_date = as.character(Sys.Date() - 3),
   }
   
   # Construct the url of the download
-  base::file.path(baseUrl, 
-                  filename,
-                  fsep = "/")
+  win_exe_url <- base::file.path(baseUrl, 
+                                 filename,
+                                 fsep = "/")
+  
+  return(win_exe_url)
 }
-
-
 
 
 
@@ -125,18 +116,22 @@ install_r <- function(mran_date = as.character(Sys.Date() - 3),
 
 .install_win_r <- function(win_installer_path,
                            app_root_path){
-  # path R installer will install to
   
+  # path R installer will install to
   install_r_to_path <- base::file.path(app_root_path, 
                                        "app",
                                        "r_lang",
                                        fsep = "/")
+  
   # create folder R will be installed to
   base::dir.create(install_r_to_path)
+  
   # Quote path in case user's path has spaces, etc
   quoted_install_r_to_path <- base::shQuote(install_r_to_path)
+  
   # install R
   base::system(glue::glue("{win_installer_path} /SILENT /DIR={quoted_install_r_to_path}"))
+  
   return(install_r_to_path)
 }
 
@@ -163,20 +158,22 @@ install_r <- function(mran_date = as.character(Sys.Date() - 3),
   base::dir.create(install_r_to_path)
   
   # untar files to the app folder
-  utils::untar(tarfile = installer_path, exdir = install_r_to_path)
+  utils::untar(tarfile = installer_path, 
+               exdir = install_r_to_path)
   
   
   if (identical(os, "mac")) {
     
     r_executable_path <- file.path(app_root_path, 
                                    "app/r_lang/Library/Frameworks/R.framework/Versions")
-    r_executable_path <- list.dirs( r_executable_path, 
-                                    recursive = FALSE)[[1]]
+    r_executable_path <- list.dirs(r_executable_path, 
+                                   recursive = FALSE)[[1]]
     r_executable_path <- file.path(r_executable_path,
                                    "Resources/bin/R", 
                                    fsep = "/")
     electricShine::modify_mac_r(r_executable_path)
   }    
+  
   return(install_r_to_path)
   
 }
