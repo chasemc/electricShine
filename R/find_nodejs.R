@@ -56,6 +56,15 @@ find_nodejs <- function(nodejs_path = file.path(system.file(package = "electricS
     npm_path <- NULL
   }
   
+  if (!is.null(node_path)) {
+    node_path <- normalizePath(node_path,
+                              winslash = "/")
+  }
+  if (!is.null(npm_path)) {
+    npm_path <- normalizePath(npm_path,
+                              winslash = "/")
+  }
+  
   return(list(node_path = node_path,
               npm_path = npm_path))
   
