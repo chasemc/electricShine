@@ -3,7 +3,7 @@
 #' @param node_url path to node.js.org
 #' @param nodejs_path where node.js will be installed to
 #' @param node_url should node.js be installed if it's already present?
-#' @param node_version version of node.js (eg "v10.15.1")
+#' @param nodejs_version version of node.js (eg "v10.15.1")
 #'
 #' @return list of 2: "nodePath": path to node.exe; "npmPath": path to npm-cli.js
 #' @export
@@ -11,7 +11,13 @@
 get_nodejs <- function(node_url = "https://nodejs.org/dist",
                        nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
                        force_install = FALSE,
-                       node_version = "v10.16.0"){
+                       nodejs_version = "v10.16.0"){
+  
+  # TODO: replce this with regex rules for the version format (e.g. "v10.16.0")
+  if (!grepl("v", nodejs_version)) {
+    nodejs_version <- paste0("v",
+                             nodejs_version)
+  }
   
   
   if (!file.exists(nodejs_path)) {
@@ -22,7 +28,7 @@ get_nodejs <- function(node_url = "https://nodejs.org/dist",
   
   os <- electricShine::get_os()
   
-  temp <- electricShine::find_nodejs()
+  temp <- electricShine::find_nodejs(nodejs_path)
   node_path <- temp$node_path
   npm_path <- temp$npm_path
   
@@ -52,9 +58,9 @@ get_nodejs <- function(node_url = "https://nodejs.org/dist",
       stop("Unfortunately this build machine is unsupported")
     }
     # Put together binary name and url
-    binary_name <- glue::glue("node-{node_version}-{platform}-{arch}.{ext}")
+    binary_name <- glue::glue("node-{nodejs_version}-{platform}-{arch}.{ext}")
     node_url <- file.path(node_url,
-                         node_version,
+                         nodejs_version,
                          binary_name)
     
     # Download to temporary directory
@@ -66,7 +72,7 @@ get_nodejs <- function(node_url = "https://nodejs.org/dist",
                          mode = 'wb')
     
     # Download sha file and parse
-    online_sha <- glue::glue("https://nodejs.org/dist/{node_version}/SHASUMS256.txt")
+    online_sha <- glue::glue("https://nodejs.org/dist/{nodejs_version}/SHASUMS256.txt")
     
     
     
@@ -98,12 +104,12 @@ get_nodejs <- function(node_url = "https://nodejs.org/dist",
     }
     
     
-    temp <- electricShine::find_nodejs()
+    temp <- electricShine::find_nodejs(nodejs_path)
     
     
   }
   
-  return(list(nodePath = temp$node_path,
-              npmPath = temp$npm_path))
+  return(list(node_path = temp$node_path,
+              npm_path = temp$npm_path))
 }
 
