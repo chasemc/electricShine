@@ -1,7 +1,7 @@
 #' Install Node.js
 #'
 #' @param node_url path to node.js.org
-#' @param nodejs_path where node.js will be installed to
+#' @param nodejs_path where node.js will be installed to (same as what you would use as system PATH for node.exe)
 #' @param node_url should node.js be installed if it's already present?
 #' @param nodejs_version version of node.js (eg "v10.15.1")
 #'
@@ -13,7 +13,8 @@ get_nodejs <- function(node_url = "https://nodejs.org/dist",
                        force_install = FALSE,
                        nodejs_version = "v10.16.0"){
   
-  # TODO: replce this with regex rules for the version format (e.g. "v10.16.0")
+  # TODO: replce this with regex rules for the 
+  # version format (e.g. "v10.16.0")
   if (!grepl("v", nodejs_version)) {
     nodejs_version <- paste0("v",
                              nodejs_version)
@@ -23,22 +24,19 @@ get_nodejs <- function(node_url = "https://nodejs.org/dist",
   if (!file.exists(nodejs_path)) {
     dir.create(nodejs_path)
   }
+  
+  
+  node_exists <- .check_node_works(node_top_dir = nodejs_path,
+                                   expected_version = nodejs_version)
+  
+  npm_exists <- .check_npm_works(node_top_dir = nodejs_path)
+  
   # Check if node and npm are already installed
   
-  
-  os <- electricShine::get_os()
-  
-  temp <- electricShine::find_nodejs(nodejs_path)
-  node_path <- temp$node_path
-  npm_path <- temp$npm_path
-  
-  
-  
-  
-  if (length(node_path) == 0 || length(npm_path) == 0 || node_url == TRUE) {
+  if(!node_exists || !npm_exists){
     
     # Get operating system:
-    os <- get_os()
+    os <- electricShine::get_os()
     
     if (identical(os, "win")) {
       platform <- "win"
@@ -60,8 +58,8 @@ get_nodejs <- function(node_url = "https://nodejs.org/dist",
     # Put together binary name and url
     binary_name <- glue::glue("node-{nodejs_version}-{platform}-{arch}.{ext}")
     node_url <- file.path(node_url,
-                         nodejs_version,
-                         binary_name)
+                          nodejs_version,
+                          binary_name)
     
     # Download to temporary directory
     temp <- base::file.path(tempdir(), 
@@ -104,12 +102,23 @@ get_nodejs <- function(node_url = "https://nodejs.org/dist",
     }
     
     
-    temp <- electricShine::find_nodejs(nodejs_path)
+    nodejs_path <- file.path(nodejs_path,
+                             tools::file_path_sans_ext(basename(temp)))
+    
+    node_exists <- .check_node_works(node_top_dir = nodejs_path,
+                                     expected_version = nodejs_version)
+    
+    npm_exists <- .check_npm_works(node_top_dir = nodejs_path)
+    
+    if (!node_exists || !npm_exists) {
+      
+      stop("Was unable to successfully install nodejs/npm executable.")
+      
+    }
     
     
   }
   
-  return(list(node_path = temp$node_path,
-              npm_path = temp$npm_path))
+  return(nodejs_path)
 }
 
