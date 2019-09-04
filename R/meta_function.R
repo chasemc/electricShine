@@ -50,6 +50,7 @@ buildElectricApp <- function(app_name = NULL,
   .check_arch()  
   .check_repo_set(cran_like_url = cran_like_url,
                   mran_date = mran_date)  
+  
   .check_build_path_exists(build_path = build_path)
   
   
@@ -73,11 +74,7 @@ buildElectricApp <- function(app_name = NULL,
          e.g. is you have the function myPackage::start_shiny(), provide 'start_shiny'")
   }
   
-  if (is.null(my_package_name)) {
-    stop("electricShine::buildElectricApp() requires you to specify a 'my_package_name' argument.
-           (e.g. electricShine::electricShine(my_package_name = 'myPackage') )")
-  }
-  
+ 
   if (is.null(nodejs_path)) {
     file.path(system.file(package = "electricShine"), "nodejs")
   }
@@ -123,7 +120,6 @@ buildElectricApp <- function(app_name = NULL,
   
   # Download and Install R --------------------------------------------------
   electricShine::install_r(cran_like_url = cran_like_url,
-                           mran_date = mran_date,
                            app_root_path = app_root_path,
                            mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz")
   
