@@ -4,7 +4,7 @@ dir.create(tmp)
 tmp <- normalizePath(tmp, "/")
 
 repo <- system.file("demoApp", package = "electricShine")
-repos <- "https://cran.r-project.org/bin/windows/base"
+repos <- "https://cran.r-project.org"
 
 
 

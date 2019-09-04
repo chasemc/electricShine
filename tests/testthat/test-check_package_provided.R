@@ -2,15 +2,18 @@
 
 test_that(".check_package_provided works", {
   
-  expect_silent(.check_package_provided(github_repo = NULL,
-                                        local_package = "NULL"))
+  expect_silent(.check_package_provided(git_host = "any_string",
+                                        git_repo = "any_string",
+                                        local_package_path = NULL))
   
-  expect_silent(.check_package_provided(github_repo = "NULL",
-                                        local_package = NULL))
+  expect_silent(.check_package_provided(git_host = NULL,
+                                        git_repo = NULL,
+                                        local_package_path = "any_string"))
   
-  expect_error(.check_package_provided(github_repo = NULL,
-                                       local_package = NULL),
-               "electricShine requires you to specify either a 'github_repo' or 'local_package' argument specifying\n         the shiny app/package to be turned into an Electron app",
+  expect_error(.check_package_provided(git_host = NULL,
+                                       git_repo = "chasemc",
+                                       local_package_path = NULL),
+               "Must provide both 'git_host' and 'git_repo', or just 'local_package_path'.",
                fixed = TRUE)
   
   expect_error(.check_package_provided(github_repo = "NULL",
@@ -19,3 +22,7 @@ test_that(".check_package_provided works", {
                fixed = TRUE)
 })
 
+
+.check_package_provided(git_host = "github",
+                        git_repo = "chasemc",
+                        local_package_path = NUll)
