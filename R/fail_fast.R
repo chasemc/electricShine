@@ -98,9 +98,9 @@
 #' @return stops 
 .check_package_provided <- function(git_host,
                                     git_repo,
-                                    local_package_path_path){
+                                    local_package_path){
   
-  # Either 'git_repo' or 'local_package_path_path' must be set
+  # Either 'git_repo' or 'local_package_path' must be set
   if (is.null(c(git_repo, local_package_path))) {
     base::stop("electricShine requires you to specify either a 'git_repo' or 'local_package_path' argument specifying
          the shiny app/package to be turned into an Electron app") 
