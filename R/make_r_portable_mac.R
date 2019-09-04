@@ -8,14 +8,17 @@
 #' @export
 modify_mac_r <- function(r_executable_path){
 
-con <- file(r_executable_path, "rt")
-b <- readLines(con, n=-1, warn = F)
+con <- file(r_executable_path,
+            "rt")
+executable_contents <- readLines(con, 
+                                 n=-1, 
+                                 warn = F)
 close(con)
 
-grepped <- grepl("usage=", b)
+grepped <- grepl("usage=", executable_contents)
 grepped <- which(grepped)
 
-z <- 
+modifications <- 
 '
 #!/bin/sh
 # Shell wrapper for R executable.
@@ -45,7 +48,9 @@ export R_DOC_DIR
 : ${R_ARCH=""}
 '
 
-combined <- c(z, b[grepped:length(b)] )
+combined <- c(modifications,
+              executable_contents[grepped:length(executable_contents)])
 
-writeLines(combined, r_executable_path)
+writeLines(combined,
+           r_executable_path)
 }
