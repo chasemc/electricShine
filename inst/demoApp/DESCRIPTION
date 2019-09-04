@@ -1,0 +1,16 @@
+Package: demoApp
+Title: Example For electricShine
+Version: 1.0.18
+Authors@R: c(person("Chase", "Clark", email = "chasec288@gmail.com", role = c("aut", "cre")))
+Description: Minimal Shiny app for demonstrating {electricShine} package with continuous delivery.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    datasets,
+    grDevices,
+    graphics,
+    stats
+Depends: 
+    shiny
+RoxygenNote: 6.1.1
