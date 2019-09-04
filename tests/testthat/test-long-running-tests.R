@@ -6,7 +6,7 @@ dir.create(temp)
 temp <- normalizePath(temp, "/")
 copy_template(temp)
 
-install_r(cran_like_url = "https://cran.r-project.org/bin/windows/base",
+install_r(cran_like_url = "https://cran.r-project.org",
           app_root_path = temp,
           mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz")
 
@@ -24,18 +24,34 @@ test_that("install_r installs r.exe", {
 temp <- file.path(tempdir(), "deletemetesting")
 dir.create(temp)
 temp <- normalizePath(temp, "/")
+nodejs_version <- "10.16.0"
+
 
 getnode <- electricShine::get_nodejs(node_url = "https://nodejs.org/dist/",
                                nodejs_path = temp,
                                force_install = FALSE,
-                               nodejs_version = "10.16.0")
+                               nodejs_version = nodejs_version)
 
 test_that("get_nodejs provides message", {
-  skip_on_os(c("mac","linux"))
   expect_equal(basename(getnode$node_path), "node.exe")
   expect_equal(basename(getnode$npm_path), "npm-cli.js")
-  
 })
+
+node_top_dir <- dirname(getnode$node_path)
+
+
+test_that("get_nodejs provides message", {
+  expect_silent(.check_node_works(node_top_dir,
+                                  nodejs_version))
+  
+  expect_error(.check_node_works(node_top_dir,
+                                 "1"))
+})
+
+
+
+
+
 
 #---- Check that get and find return same paths
 findnode <- electricShine::find_nodejs(temp)
@@ -53,21 +69,63 @@ buildPath <- tempdir()
 MRANdate <- as.character(Sys.Date() - 3)
 
 
-electricShine::buildElectricApp(
-  app_name = "Test_App",
-  product_name = "test prod name",
-  short_description = "test desc",
-  semantic_version = "1.0.0",
-  build_path = buildPath,
-  mran_date = NULL,
-  cran_like_url = "https://cran.r-project.org/bin/windows/base",
-  function_name =  "run_app",
-  github_repo = NULL,
-  local_package  = system.file("demoApp", package = "electricShine"),
-  package_name = "demoApp",
-  build = TRUE,
-  nodejs_path = findnode$node_path,
-  nodejs_version = "v10.16.0")
+electricShine::buildElectricApp(app_name = "Test_App",
+                                product_name = "test prod name",
+                                short_description = "test desc",
+                                semantic_version = "1.0.0",
+                                build_path = buildPath,
+                                mran_date = NULL,
+                                cran_like_url = "https://cran.r-project.org",
+                                function_name = "run_app",
+                                git_host = NULL,
+                                git_repo = NULL,
+                                local_package_path = system.file("demoApp", package = "electricShine"),
+                                package_install_opts = NULL,
+                                run_build = TRUE,
+                                nodejs_path = findnode$node_path,
+                                nodejs_version = "v10.16.0")
+  
+
+
+
+
+
+
+
+
+
+
+
+
+app_name = "Test_App"
+product_name = "test prod name"
+short_description = "test desc"
+semantic_version = "1.0.0"
+build_path = buildPath
+mran_date = NULL
+cran_like_url = "https://cran.r-project.org"
+function_name = "run_app"
+git_host = NULL
+git_repo = NULL
+local_package_path = system.file("demoApp", package = "electricShine")
+package_install_opts = NULL
+run_build = TRUE
+nodejs_path = findnode$node_path
+nodejs_version = "v10.16.0"
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
 
 
 
