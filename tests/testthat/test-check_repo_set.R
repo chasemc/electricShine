@@ -2,7 +2,7 @@
 test_that(".check_repo_set works", {
   expect_error(.check_repo_set(cran_like_url = NULL, 
                                mran_date = NULL),
-               "'cran_like_url' or 'mran_date' must be set. 'mran_date' is suggested and should be a date in the format 'yyyy-mm-dd'")
+               "electricShine requires you to specify either a 'cran_like_url' or 'mran_date' argument specifying\n         the shiny app/package to be turned into an Electron app")
   
   expect_error(.check_repo_set(cran_like_url = 'NULL', 
                                mran_date = 'NULL'),
