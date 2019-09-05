@@ -72,7 +72,6 @@ jobs:
       - template: pkg-workflow.yml
         parameters:
           coverage: ${{parameters.coverage}}
-      - template: eshine.yml
 
   - job: 'macLatest'
     variables:
@@ -86,7 +85,6 @@ jobs:
       - template: pkg-workflow.yml
         parameters:
           coverage: ${{parameters.coverage}}
-      - template: eshine.yml
 
 
   - job: 'Windows'
