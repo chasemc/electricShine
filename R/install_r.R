@@ -3,52 +3,68 @@
 #' @param cran_like_url CRAN-like url e.g. https://cran.r-project.org/bin/windows/base
 #' @param app_root_path path to current electricShine app build
 #' @param mac_url mac R installer url
+#' @param permission_to_install have permission to install R?
 #'
 #' @export
 #'
 install_r <- function(cran_like_url = NULL,
                       app_root_path,
-                      mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz"){
+                      mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz",
+                      permission_to_install  = FALSE){
   
   
-  os <- electricShine::get_os()
   
-  app_root_path <- normalizePath(app_root_path,
-                                 winslash = "/",
-                                 mustWork = FALSE)
-  # Make NULL here so can check if not null later
-  rlang_path <- NULL
-  
-  if (identical(os, "mac")) {
-    rlang_path <- .install_mac_r(app_root_path = app_root_path,
-                                 mac_url = mac_url)
+  if (permission_to_install == FALSE) {
+    
+    permission_to_install <- .prompt_install_r(app_root_path)
+    
   }
   
-  if (identical(os, "win")) {
+  if (permission_to_install == FALSE) {
+    message("R is bundled into the electricShine app. buildElectricApp() requires this to be accepted, 
+            otherwise steps to build the app must be run individually.")
+  } else {
     
-    win_url <- .find_win_exe_url(cran_like_url = cran_like_url)
     
-    win_installer_path <- .download_r(d_url = win_url)
     
-    rlang_path <- .install_win_r(win_installer_path,
-                                 app_root_path)
+    os <- electricShine::get_os()
     
-    rlang_path <- base::file.path(rlang_path,
-                                  "bin",
-                                  fsep = "/")
+    app_root_path <- normalizePath(app_root_path,
+                                   winslash = "/",
+                                   mustWork = FALSE)
+    # Make NULL here so can check if not null later
+    rlang_path <- NULL
+    
+    if (identical(os, "mac")) {
+      rlang_path <- .install_mac_r(app_root_path = app_root_path,
+                                   mac_url = mac_url)
+    }
+    
+    if (identical(os, "win")) {
+      
+      win_url <- .find_win_exe_url(cran_like_url = cran_like_url)
+      
+      win_installer_path <- .download_r(d_url = win_url)
+      
+      rlang_path <- .install_win_r(win_installer_path,
+                                   app_root_path)
+      
+      rlang_path <- base::file.path(rlang_path,
+                                    "bin",
+                                    fsep = "/")
+    }
+    
+    # Check that Rscript is present (ie R at least probably installed)
+    # TODO: Mod this check to a system call that checks if R is functional (see testthat tests for install_r())
+    if (length(list.files(rlang_path,
+                          pattern = "Rscript")) != 1L) {
+      stop("R install didn't work as expected.")
+    } 
+    
+    return(rlang_path)
+    
   }
-  
-  # Check that Rscript is present (ie R at least probably installed)
-  # TODO: Mod this check to a system call that checks if R is functional (see testthat tests for install_r())
-  if (length(list.files(rlang_path,
-                        pattern = "Rscript")) != 1L) {
-    stop("R install didn't work as expected.")
-  } 
-  
-  return(rlang_path)
-  
 }
-
 
 
 #' Find Windows R installer URL from MRAN snapshot
