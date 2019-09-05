@@ -1,11 +1,10 @@
 #' Install Node.js
 #'
 #' @param node_url path to node.js.org
-#' @param nodejs_path where node.js will be installed to (same as what you would use as system PATH for node.exe)
-#' @param node_url should node.js be installed if it's already present?
-#' @param nodejs_version version of node.js (eg "v10.15.1")
+#' @param nodejs_path parent folder of node.exe (~nodejs_path/node.exe)
+#' @param nodejs_version version of node.js (eg "v10.16.0")
 #'
-#' @return list of 2: "nodePath": path to node.exe; "npmPath": path to npm-cli.js
+#' @return installed or checked nodejs_path
 #' @export
 #'
 get_nodejs <- function(node_url = "https://nodejs.org/dist",
@@ -13,9 +12,9 @@ get_nodejs <- function(node_url = "https://nodejs.org/dist",
                        force_install = FALSE,
                        nodejs_version = "v10.16.0"){
   
-  # TODO: replce this with regex rules for the 
-  # version format (e.g. "v10.16.0")
   if (!grepl("v", nodejs_version)) {
+    # Node version format is "v10.16.0", not "10.16.0"
+    # add "v" if needed
     nodejs_version <- paste0("v",
                              nodejs_version)
   }
