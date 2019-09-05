@@ -6,7 +6,10 @@ dir.create(temp)
 temp <- normalizePath(temp, "/")
 copy_template(temp)
 
-install_r(cran_like_url = "https://cran.r-project.org",
+cran_like_url = "https://cran.r-project.org"
+
+
+install_r(cran_like_url = cran_like_url,
           app_root_path = temp,
           mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz")
 
@@ -110,49 +113,8 @@ electricShine::buildElectricApp(app_name = "Test_App",
                                 local_package_path = system.file("demoApp", package = "electricShine"),
                                 package_install_opts = NULL,
                                 run_build = TRUE,
-                                nodejs_path = findnode$node_path,
-                                nodejs_version = "v10.16.0")
-  
-
-
-
-
-
-
-
-
-
-
-
-
-app_name = "Test_App"
-product_name = "test prod name"
-short_description = "test desc"
-semantic_version = "1.0.0"
-build_path = buildPath
-mran_date = NULL
-cran_like_url = "https://cran.r-project.org"
-function_name = "run_app"
-git_host = NULL
-git_repo = NULL
-local_package_path = system.file("demoApp", package = "electricShine")
-package_install_opts = NULL
-run_build = TRUE
-nodejs_path = findnode$node_path
-nodejs_version = "v10.16.0"
-
-
-
-
-
-
-
-
-
-
-
-
-  
+                                nodejs_path = getnode,
+                                nodejs_version = nodejs_version)
 
 
 

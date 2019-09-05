@@ -2,39 +2,28 @@
 #'
 #' @param nodejs_path parent folder of node.exe (~nodejs_path/node.exe)
 #' @param app_path path to new electron app top directory
+#' @param nodejs_version for checking if nodejs is functional 
 #'
 #' @return nothing, used for side-effects
 #' @export
 #'
-run_build <- function(nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
-                      app_path){
+run_build_release <- function(nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
+                              app_path,
+                              nodejs_version){
   
   
   os <- electricShine::get_os()
   
- 
+  node_path <- .check_node_works(node_top_dir = nodejs_path,
+                                 expected_version = nodejs_version)
   
-  nodejs_path
+  npm_path <- .check_npm_works(node_top_dir = nodejs_path)
   
-  
-  
-  
-  node_path <- temp$node_path
-  npm_path <- temp$npm_path
-  
-  
-  if (length(node_path) == 0 || length(npm_path) == 0) {
-    electricShine::get_nodejs()
-    temp <- electricShine::find_nodejs()
+  if (base::isFALSE(node_path) || base::isFALSE(npm_path)) {
     
-    node_path <- temp$node_path
-    npm_path <- temp$npm_path
-    if (length(node_path) == 0 || length(npm_path) == 0) {
-      stop("Try running electricShine::getNodejs()
-           electricShine::getElectron() first")
-    }
+    stop("First run install_nodejs() or point nodejs_path to a functional version of nodejs.")
+    
   }
-  
   
   node_path <- shQuote(node_path)
   npm_path <- shQuote(npm_path)
@@ -49,7 +38,7 @@ run_build <- function(nodejs_path = file.path(system.file(package = "electricShi
   
   if (identical(os, "win")) {
     message(system("cmd.exe",
-                   glue::glue("cd {app_path} && {node_path} {npm_path} install --scripts-prepend-node-path"),
+                   glue::glue("cd {app_path} && {npm_path} install --scripts-prepend-node-path"),
                    invisible = FALSE,
                    minimized = F,
                    wait = T,
@@ -58,7 +47,7 @@ run_build <- function(nodejs_path = file.path(system.file(package = "electricShi
                    ignore.stderr=F))
     message("Building your Electron app.")
     message(system("cmd.exe",
-                   glue::glue("cd {app_path} && {node_path} {npm_path} run release --scripts-prepend-node-path"),
+                   glue::glue("cd {app_path} && {npm_path} run release --scripts-prepend-node-path"),
                    invisible = FALSE,
                    minimized = F,
                    wait = T,
@@ -68,15 +57,14 @@ run_build <- function(nodejs_path = file.path(system.file(package = "electricShi
     
   }
   
-  
   if (identical(os, "mac")) {
-    message(system(glue::glue("cd {app_path} && {node_path} {npm_path} install --scripts-prepend-node-path"),
+    message(system(glue::glue("cd {app_path} && {npm_path} install --scripts-prepend-node-path"),
                    wait = T,
                    intern=F,
                    ignore.stdout=F,
                    ignore.stderr=F))
     message("Building your Electron app.")
-    message(system(glue::glue("cd {app_path} && {node_path} {npm_path} run release --scripts-prepend-node-path"),
+    message(system(glue::glue("cd {app_path} && {npm_path} run release --scripts-prepend-node-path"),
                    wait = T,
                    intern=F,
                    ignore.stdout=F,
