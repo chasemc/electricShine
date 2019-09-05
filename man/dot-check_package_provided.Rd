@@ -4,7 +4,7 @@
 \alias{.check_package_provided}
 \title{Check package paths}
 \usage{
-.check_package_provided(git_host, git_repo, local_package_path_path)
+.check_package_provided(git_host, git_repo, local_package_path)
 }
 \arguments{
 \item{git_host}{git_host}

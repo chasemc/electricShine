@@ -2,13 +2,13 @@
 % Please edit documentation in R/fail_fast.R
 \name{.ping_url}
 \alias{.ping_url}
-\title{Title}
+\title{Check internet connection}
 \usage{
-.ping_url(cran_like_url)
+.ping_url(url)
 }
 \arguments{
-\item{cran_like_url}{}
+\item{url}{url to check}
 }
 \description{
-Title
+Check internet connection
 }
