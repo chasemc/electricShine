@@ -1,6 +1,6 @@
 #' Create an electron-builder release
 #'
-#' @param nodejs_path same as what you would use as system PATH for node.exe
+#' @param nodejs_path parent folder of node.exe (~nodejs_path/node.exe)
 #' @param app_path path to new electron app top directory
 #'
 #' @return nothing, used for side-effects
