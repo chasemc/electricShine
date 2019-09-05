@@ -22,7 +22,7 @@ file.copy(background_js_path,
 background_js_path <- normalizePath(background_js_path, winslash = "/")
 
 modify_background_js(background_js_path = background_js_path,
-                     package_name = "testcheck",
+                     my_package_name = "testcheck",
                      function_name = "apprunner", 
                      r_path = "a")
 

@@ -1,25 +1,88 @@
 context("test-long_running_tests")
 
-#---- Install R
-temp <- file.path(tempdir(), "testapp")
-dir.create(temp)
-temp <- normalizePath(temp, "/")
-copy_template(temp)
+# Install R package and deps from local path ------------------------------
 
-cran_like_url = "https://cran.r-project.org"
+tmp <- file.path(tempdir(), "build_local_install")
+dir.create(tmp)
+tmp <- normalizePath(tmp, "/")
+
+repo <- system.file("demoApp", package = "electricShine")
+repos <- "https://cran.r-project.org"
 
 
-install_r(cran_like_url = cran_like_url,
-          app_root_path = temp,
-          mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz")
 
-z <- file.exists(file.path(temp, "app", "r_lang", "bin", "R.exe"))
+electricShine::install_user_app(library_path = tmp,
+                                repo_location = "local",
+                                repo = repo,
+                                repos = repos,
+                                package_install_opts = NULL)
 
-test_that("install_r installs r.exe", {
-  skip_on_os(c("mac","linux"))
-  expect_true(z)
-  
+expected <- sort(c("BH",
+              "crayon",
+              "demoApp",
+              "digest",
+              "htmltools",
+              "httpuv",
+              "jsonlite",
+              "later",
+              "magrittr",
+              "mime",
+              "promises",
+              "R6",
+              "Rcpp",
+              "rlang",
+              "shiny",
+              "sourcetools",
+              "xtable"))
+returned <- sort(list.files(tmp, recursive = F, full.names = F))
+
+
+
+
+test_that("multiplication works", {
+  expect_equal(expected, returned)
 })
+
+# Install R package and deps from subdirectory at github ------------------
+
+tmp <- file.path(tempdir(), "build_git_install")
+dir.create(tmp)
+tmp <- normalizePath(tmp, "/")
+
+repo <- system.file("demoApp", package = "electricShine")
+repos <- "https://cran.r-project.org/"
+
+
+electricShine::install_user_app(library_path = tmp,
+                                repo_location = "github",
+                                repo = "chasemc/electricShine@223c993",
+                                repos = repos,
+                                package_install_opts = list( subdir = "inst/demoApp"))
+
+expected <- sort(c("BH",
+                   "crayon",
+                   "demoApp",
+                   "digest",
+                   "htmltools",
+                   "httpuv",
+                   "jsonlite",
+                   "later",
+                   "magrittr",
+                   "mime",
+                   "promises",
+                   "R6",
+                   "Rcpp",
+                   "rlang",
+                   "shiny",
+                   "sourcetools",
+                   "xtable"))
+returned <- sort(list.files(tmp, recursive = F, full.names = F))
+
+
+test_that("multiplication works", {
+  expect_equal(expected, returned)
+})
+
 
 
 #---- nodejs tests
