@@ -1,0 +1,104 @@
+# Most of the templates here are from: https://github.com/r-lib/r-azure-pipelines/commit/f7497f335190a47595a2b02d58ff28aae7d05fae
+# and have been been copied/modified under the following license:
+# MIT License
+#
+# Copyright (c) 2019 Jim Hester
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+
+
+parameters:
+  R_LIBS_USER: '$(Agent.BuildDirectory)/R/library'
+  CRAN: 'https://cloud.r-project.org'
+  coverage: false
+  env: {}
+
+
+jobs:
+  - job: 'Linux'
+    variables:
+      CRAN: ${{parameters.CRAN}}
+      R_LIBS_USER: ${{parameters.R_LIBS_USER}}
+      TZ: UTC
+      ${{ insert }}: ${{ parameters.env }}
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    strategy:
+      matrix:
+        R-3.2:
+          containerImage: rstudio/r-base:3.2-xenial
+        R-3.3:
+          containerImage: rstudio/r-base:3.3-xenial
+        R-3.4:
+          containerImage: rstudio/r-base:3.4-xenial
+        R-3.5:
+          containerImage: rstudio/r-base:3.5-xenial
+        R-3.6:
+          containerImage: rstudio/r-base:3.6-xenial
+    container: $[ variables['containerImage'] ]
+    steps:
+      - template: r-setup-linux.yml
+      - template: pkg-workflow.yml
+        parameters:
+          coverage: false
+
+
+  - job: 'macMojave'
+    variables:
+      CRAN: ${{parameters.CRAN}}
+      R_LIBS_USER: ${{parameters.R_LIBS_USER}}
+      ${{ insert }}: ${{ parameters.env }}
+    pool:
+      vmImage: 'macOS-10.13'
+    steps:
+      - template: r-setup-macOS.yml
+      - template: pkg-workflow.yml
+        parameters:
+          coverage: ${{parameters.coverage}}
+
+  - job: 'macLatest'
+    variables:
+      CRAN: ${{parameters.CRAN}}
+      R_LIBS_USER: ${{parameters.R_LIBS_USER}}
+      ${{ insert }}: ${{ parameters.env }}
+    pool:
+      vmImage: 'macOS-latest'
+    steps:
+      - template: r-setup-macOS.yml
+      - template: pkg-workflow.yml
+        parameters:
+          coverage: ${{parameters.coverage}}
+
+
+  - job: 'Windows'
+    variables:
+      CRAN: ${{parameters.CRAN}}
+      R_LIBS_USER: ${{parameters.R_LIBS_USER}}
+      ${{ insert }}: ${{ parameters.env }}
+    pool:
+      vmImage: 'windows-2019'
+    steps:
+      - template: r-setup-windows.yml
+      - template: pkg-workflow.yml
+        parameters:
+          args: "c('--no-manual', '--no-multiarch')"
+          coverage: false
+          cache: false
+

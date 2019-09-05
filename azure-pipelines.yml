@@ -1,0 +1,9 @@
+resources:
+  repositories:
+    - repository: electricShine
+      type: github
+      name: chasemc/electricShine
+      endpoint: chasemc
+
+jobs:
+  - template: tests/templates/azure-main.yml@electricShine
