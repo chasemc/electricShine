@@ -27,25 +27,63 @@ temp <- normalizePath(temp, "/")
 nodejs_version <- "10.16.0"
 
 
-getnode <- electricShine::get_nodejs(node_url = "https://nodejs.org/dist/",
-                               nodejs_path = temp,
-                               force_install = FALSE,
-                               nodejs_version = nodejs_version)
-
-test_that("get_nodejs provides message", {
-  expect_equal(basename(getnode$node_path), "node.exe")
-  expect_equal(basename(getnode$npm_path), "npm-cli.js")
-})
-
-node_top_dir <- dirname(getnode$node_path)
+getnode <- electricShine::install_nodejs(node_url = "https://nodejs.org/dist/",
+                                         nodejs_path = temp,
+                                         force_install = FALSE,
+                                         nodejs_version = nodejs_version)
 
 
-test_that("get_nodejs provides message", {
-  expect_silent(.check_node_works(node_top_dir,
-                                  nodejs_version))
+# Check "check_node/npm_works" --------------------------------------------
+
+test_that(".check_node_works provides message", {
   
-  expect_error(.check_node_works(node_top_dir,
-                                 "1"))
+  expect_message(.check_node_works(node_top_dir = getnode,
+                                   expected_version = nodejs_version))
+  
+})
+
+test_that(".check_npm_works provides message", {
+  
+  expect_message(.check_npm_works(node_top_dir = getnode))
+  
+})
+
+suppressMessages({
+node_exists <- .check_node_works(node_top_dir = tempdir(),
+                                 expected_version = nodejs_version)
+
+npm_exists <- .check_npm_works(node_top_dir = tempdir())
+})
+
+test_that(".check_node_works  gives false ", {
+  expect_false(node_exists)
+})
+
+
+test_that(".check_npm_works gives false", {
+  expect_false(npm_exists)
+  
+})
+
+suppressMessages({
+node_exists <- .check_node_works(node_top_dir = getnode,
+                                 expected_version = nodejs_version)
+
+npm_exists <- .check_npm_works(node_top_dir = getnode)
+})
+
+
+test_that(".check_node_works ", {
+  expect_true(file.exists(node_exists))
+  expect_equal(tools::file_path_sans_ext(basename(node_exists)),
+              "node")
+})
+
+
+test_that(".check_npm_works ", {
+  expect_true(file.exists(npm_exists))
+  expect_equal(tools::file_path_sans_ext(basename(npm_exists)),
+               "npm")
 })
 
 
@@ -53,17 +91,7 @@ test_that("get_nodejs provides message", {
 
 
 
-#---- Check that get and find return same paths
-findnode <- electricShine::find_nodejs(temp)
-
-test_that("get_nodejs() provides the same paths for node and npm as find_nodejs()", {
-  skip_on_os(c("mac","linux"))
-  expect_equal(getnode, findnode)
-})
-
-
-#---- Metafunction tests
-
+# Metafunction tests ------------------------------------------------------
 
 buildPath <- tempdir()
 MRANdate <- as.character(Sys.Date() - 3)
