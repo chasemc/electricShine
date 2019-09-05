@@ -86,7 +86,6 @@
 #' Check if npm works
 #'
 #' @param node_top_dir directory containing npmjs app/exe
-#' @param expected_version  expected version of npm
 #'
 #' @return path of npm executable if found and functional, otherwise: FALSE
 .check_npm_works <- function(node_top_dir) {
