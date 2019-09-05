@@ -6,4 +6,4 @@ resources:
       endpoint: chasemc
 
 jobs:
-  - template: tests/templates/azure-tidyverse.yml@electricShine
+  - template: tests/templates/azure-main.yml@electricShine
