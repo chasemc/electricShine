@@ -99,15 +99,6 @@ buildElectricApp <- function(app_name = NULL,
   
   
   
-  # Download and unzip nodejs -----------------------------------------------
-  
-  
-  electricShine::get_nodejs(node_url = "https://nodejs.org/dist",
-                            nodejs_path = nodejs_path,
-                            force_install = FALSE,
-                            nodejs_version = nodejs_version)
-  
-  
   # Create top-level build folder for app  ----------------------------------
   
   app_root_path <- file.path(build_path,
@@ -210,6 +201,14 @@ buildElectricApp <- function(app_name = NULL,
                                       my_package_name = my_package_name,
                                       function_name = function_name,
                                       r_path = base::dirname(library_path))
+  
+  
+  # Download and unzip nodejs -----------------------------------------------
+  
+  electricShine::get_nodejs(node_url = "https://nodejs.org/dist",
+                            nodejs_path = nodejs_path,
+                            force_install = FALSE,
+                            nodejs_version = nodejs_version)
   
   
   # Build the electron app --------------------------------------------------
