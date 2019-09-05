@@ -74,7 +74,7 @@ buildElectricApp <- function(app_name = NULL,
          e.g. is you have the function myPackage::start_shiny(), provide 'start_shiny'")
   }
   
- 
+  
   if (is.null(nodejs_path)) {
     file.path(system.file(package = "electricShine"), "nodejs")
   }
@@ -85,6 +85,11 @@ buildElectricApp <- function(app_name = NULL,
     }
   }
   
+  app_root_path <- file.path(build_path,
+                             app_name)
+  
+  permission_to_install_r <- .prompt_install_r(app_root_path)
+  permission_to_install_nodejs <- .prompt_install_nodejs(nodejs_path)
   
   
   # Determine Operating System ----------------------------------------------
@@ -101,8 +106,6 @@ buildElectricApp <- function(app_name = NULL,
   
   # Create top-level build folder for app  ----------------------------------
   
-  app_root_path <- file.path(build_path,
-                             app_name)
   
   electricShine::create_folder(app_root_path)
   
@@ -112,7 +115,8 @@ buildElectricApp <- function(app_name = NULL,
   # Download and Install R --------------------------------------------------
   electricShine::install_r(cran_like_url = cran_like_url,
                            app_root_path = app_root_path,
-                           mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz")
+                           mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz",
+                           permission_to_install = permission_to_install_r)
   
   # Trim R's size -----------------------------------------------------------
   electricShine::trim_r(app_root_path = app_root_path)
@@ -149,17 +153,17 @@ buildElectricApp <- function(app_name = NULL,
   if (!base::is.null(git_host)) {
     
     my_package_name <-  electricShine::install_user_app(library_path = library_path,
-                                                        site = git_host,
+                                                        repo_location = git_host,
                                                         repo = git_repo,
                                                         repos = cran_like_url,
                                                         package_install_opts = package_install_opts)
   }
   
   
-  if (!is.null(local_package)) {
+  if (!is.null(local_package_path)) {
     
     my_package_name <- electricShine::install_user_app(library_path = library_path ,
-                                                       site = "local",
+                                                       repo_location = "local",
                                                        repo = local_package_path,
                                                        repos = cran_like_url,
                                                        package_install_opts = package_install_opts)
@@ -205,18 +209,19 @@ buildElectricApp <- function(app_name = NULL,
   
   # Download and unzip nodejs -----------------------------------------------
   
-  electricShine::get_nodejs(node_url = "https://nodejs.org/dist",
-                            nodejs_path = nodejs_path,
-                            force_install = FALSE,
-                            nodejs_version = nodejs_version)
+  nodejs_path <- electricShine::install_nodejs(node_url = "https://nodejs.org/dist",
+                                               nodejs_path = nodejs_path,
+                                               force_install = FALSE,
+                                               nodejs_version = nodejs_version,
+                                               permission_to_install = permission_to_install_nodejs)
   
   
   # Build the electron app --------------------------------------------------
   if (run_build == TRUE) {
-    electricShine::run_build(node_path = NULL,
-                             npm_path = NULL,
-                             app_path = app_root_path,
-                             node = file.path(system.file(package = "electricShine"), "nodejs"))
+    
+    electricShine::run_build_release(nodejs_path = nodejs_path,
+                                     app_path = app_root_path,
+                                     nodejs_version = nodejs_version)
     
     message("You should now have both a transferable and distributable installer Electron app.")
     
