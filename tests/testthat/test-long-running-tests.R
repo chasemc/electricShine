@@ -55,7 +55,7 @@ repos <- "https://cran.r-project.org/"
 
 electricShine::install_user_app(library_path = tmp,
                                 repo_location = "github",
-                                repo = "chasemc/electricShine@223c993",
+                                repo = "chasemc/electricShine",
                                 repos = repos,
                                 package_install_opts = list( subdir = "inst/demoApp"))
 
