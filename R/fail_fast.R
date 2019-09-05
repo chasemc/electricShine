@@ -25,11 +25,11 @@
 
 
 
-#' Title
+#' Check internet connection
 #'
-#' @param cran_like_url 
+#' @param url url to check
 #'
-.ping_url <- function(cran_like_url){
+.ping_url <- function(url){
   
   if(capabilities("libcurl")) {
     
@@ -37,7 +37,7 @@
     
     if (attributes(a)$status != 200L) {
       message(a)
-      stop("provided cran_like_url was unable to resolve host ")
+      stop("provided url was unable to resolve host ")
       
     }
     message("----------")
@@ -45,7 +45,7 @@
     message(a[1:10])
     message("----------")
   } else {
-    warning("libcurl unavailable to check url before downloading R and R packages.")
+    warning("libcurl unavailable to check internet.")
   }
   
 }
