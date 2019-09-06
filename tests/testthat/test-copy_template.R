@@ -9,9 +9,9 @@ dir.create(a)
 
 electricShine::copy_template(a)
 
-a <- list.files(a, recursive = T)
+a <- sort(list.files(a, recursive = T))
 
-expected <- c("app/app.R",
+expected <- sort(c("app/app.R",
               "build/start.js",
               "build/webpack.app.config.js",
               "build/webpack.base.config.js",
@@ -36,7 +36,7 @@ expected <- c("app/app.R",
               "temp/e2e_entry.js",
               "temp/specs.js",
               "temp/specs.js.map",
-              "temp/specs_entry.js")
+              "temp/specs_entry.js"))
 
 test_that("copying boilerplate works", {
     expect_equal(a, expected)
