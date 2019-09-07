@@ -4,8 +4,8 @@
   "electron-log": "3.0.7"
   },
   "devDependencies": {
-  "@babel/core": "7.5.5",
-  "@babel/preset-env": "7.5.5",
+  "@babel/core": "7.6.0",
+  "@babel/preset-env": "7.6.0",
   "babel-loader": "8.0.6",
   "babel-plugin-transform-object-rest-spread": "6.26.0",
   "chai": "4.2.0",
