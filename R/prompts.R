@@ -37,6 +37,15 @@
   
   if (!interactive()) {
     return(TRUE)
+  } else if (is.null(nodejs_path) || is.na(nodejs_path)){
+    nodejs_path <- file.path(system.file(package = "electricShine"), "nodejs")
+    mess <- glue::glue("Can electricShine try and install nodejs to: {nodejs_path}? (y/n)... ")
+    answer <- readline(mess)
+    if (tolower(substr(answer, 1, 1)) == "y") {
+      return(TRUE)
+    } else {
+      return(FALSE)
+    } 
   } else {
     mess <- glue::glue("If not found, can electricShine try and install nodejs to: {nodejs_path}? (y/n)... ")
     answer <- readline(mess)
