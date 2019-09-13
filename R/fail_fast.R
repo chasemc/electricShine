@@ -33,7 +33,7 @@
   
   if(capabilities("libcurl")) {
     
-    a <- base::curlGetHeaders(cran_like_url)
+    a <- base::curlGetHeaders(url)
     
     if (attributes(a)$status != 200L) {
       message(a)
@@ -41,7 +41,7 @@
       
     }
     message("----------")
-    message(paste0("Connection to: ", cran_like_url, "\n"))
+    message(paste0("Connection to: ", url, "\n"))
     message(a[1:10])
     message("----------")
   } else {
