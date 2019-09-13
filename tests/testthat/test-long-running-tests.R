@@ -2,46 +2,46 @@ context("test-long_running_tests")
 
 # Install R package and deps from local path ------------------------------
 
-tmp <- file.path(tempdir(), "build_local_install")
-dir.create(tmp)
-tmp <- normalizePath(tmp, "/")
-
-repo <- system.file("demoApp", package = "electricShine")
-repos <- "https://cran.r-project.org"
-
-
-
-electricShine::install_user_app(library_path = tmp,
-                                repo_location = "local",
-                                repo = repo,
-                                repos = repos,
-                                package_install_opts = NULL)
-
-expected <- sort(c("BH",
-              "crayon",
-              "demoApp",
-              "digest",
-              "htmltools",
-              "httpuv",
-              "jsonlite",
-              "later",
-              "magrittr",
-              "mime",
-              "promises",
-              "R6",
-              "Rcpp",
-              "rlang",
-              "shiny",
-              "sourcetools",
-              "xtable"))
-returned <- sort(list.files(tmp, recursive = F, full.names = F))
-
-
-
-
-test_that("multiplication works", {
-  expect_equal(expected, returned)
-})
+# tmp <- file.path(tempdir(), "build_local_install")
+# dir.create(tmp)
+# tmp <- normalizePath(tmp, "/")
+# 
+# repo <- system.file("demoApp", package = "electricShine")
+# repos <- "https://cran.r-project.org"
+# 
+# 
+# 
+# electricShine::install_user_app(library_path = tmp,
+#                                 repo_location = "local",
+#                                 repo = repo,
+#                                 repos = repos,
+#                                 package_install_opts = NULL)
+# 
+# expected <- sort(c("BH",
+#               "crayon",
+#               "demoApp",
+#               "digest",
+#               "htmltools",
+#               "httpuv",
+#               "jsonlite",
+#               "later",
+#               "magrittr",
+#               "mime",
+#               "promises",
+#               "R6",
+#               "Rcpp",
+#               "rlang",
+#               "shiny",
+#               "sourcetools",
+#               "xtable"))
+# returned <- sort(list.files(tmp, recursive = F, full.names = F))
+# 
+# 
+# 
+# 
+# test_that("multiplication works", {
+#   expect_equal(expected, returned)
+# })
 
 # Install R package and deps from subdirectory at github ------------------
 
