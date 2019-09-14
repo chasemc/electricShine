@@ -1,5 +1,3 @@
-
-
 #' Check if Node works
 #'
 #' @param node_top_dir directory containing nodejs app/exe
@@ -47,7 +45,7 @@
     # Check that the node version is the same as what we expect and nodejs is functional
     command <- paste0(node_path, 
                       " -v")
-    nodejs_response <- tryCatch(system(command,
+    nodejs_response <- tryCatch(system(stringr::str_replace(command, "Max Feinberg", "\"Max Feinberg\""),
                                        intern = T),
                                 error = function(e) FALSE, 
                                 warning = function(e) FALSE)
