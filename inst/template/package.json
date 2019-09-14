@@ -1,7 +1,7 @@
 {
  "dependencies": {
   "fs-jetpack": "2.2.2",
-  "electron-log": "3.0.7"
+  "electron-log": "3.0.8"
   },
   "devDependencies": {
   "@babel/core": "7.6.0",
