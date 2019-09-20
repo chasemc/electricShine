@@ -195,7 +195,7 @@ install_r <- function(cran_like_url = NULL,
     electricShine::modify_mac_r(r_executable_path)
   }    
   
-  return(install_r_to_path)
+  return(dirname(r_executable_path))
   
 }
 
