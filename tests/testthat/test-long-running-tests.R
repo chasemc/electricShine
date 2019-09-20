@@ -46,50 +46,52 @@ context("test-long_running_tests")
 
 # Install R package and deps from subdirectory at github ------------------
 
-# tmp <- file.path(tempdir(), "space path")
-# dir.create(tmp)
-# tmp <- file.path(tempdir(), "space path", "build_git_install")
-# dir.create(tmp)
-# 
-# tmp <- normalizePath(tmp, "/")
-# 
-# repo <- system.file("demoApp", package = "electricShine")
-# repos <- "https://cran.r-project.org/"
-# 
-# 
-# electricShine::install_user_app(library_path = tmp,
-#                                 repo_location = "github",
-#                                 repo = "chasemc/electricShine",
-#                                 repos = repos,
-#                                 package_install_opts = list( subdir = "inst/demoApp"))
-# 
-# expected <- sort(c("BH",
-#                    "crayon",
-#                    "demoApp",
-#                    "digest",
-#                    "htmltools",
-#                    "httpuv",
-#                    "jsonlite",
-#                    "later",
-#                    "magrittr",
-#                    "mime",
-#                    "promises",
-#                    "R6",
-#                    "Rcpp",
-#                    "rlang",
-#                    "shiny",
-#                    "sourcetools",
-#                    "xtable"))
-# 
-# returned <- sort(list.files(tmp, 
-#                             recursive = F,
-#                             full.names = F))
-# 
-# 
-# test_that("multiplication works", {
-#   expect_equal(expected, 
-#                returned)
-# })
+tmp <- file.path(tempdir(), "space path")
+dir.create(tmp)
+tmp <- file.path(tempdir(), "space path", "build_git_install")
+dir.create(tmp)
+
+tmp <- normalizePath(tmp, "/")
+
+repo <- system.file("demoApp", package = "electricShine")
+repos <- "https://cran.r-project.org/"
+
+
+electricShine::install_user_app(library_path = tmp,
+                                repo_location = "github",
+                                repo = "chasemc/electricShine",
+                                repos = repos,
+                                package_install_opts = list(type = "binary",
+                                                            subdir = "inst/demoApp",
+                                                            args = "--no-test-load"))
+
+expected <- sort(c("BH",
+                   "crayon",
+                   "demoApp",
+                   "digest",
+                   "htmltools",
+                   "httpuv",
+                   "jsonlite",
+                   "later",
+                   "magrittr",
+                   "mime",
+                   "promises",
+                   "R6",
+                   "Rcpp",
+                   "rlang",
+                   "shiny",
+                   "sourcetools",
+                   "xtable"))
+
+returned <- sort(list.files(tmp, 
+                            recursive = F,
+                            full.names = F))
+
+
+test_that("multiplication works", {
+  expect_equal(expected, 
+               returned)
+})
 
 
 
@@ -188,7 +190,7 @@ electricShine::buildElectricApp(app_name = "Test_App",
                                 git_repo = NULL,
                                 local_package_path = system.file("demoApp", 
                                                                  package = "electricShine"),
-                                package_install_opts = NULL,
+                                package_install_opts = list(type = "binary"),
                                 run_build = TRUE,
                                 nodejs_path = getnode,
                                 nodejs_version = nodejs_version)
