@@ -1,4 +1,7 @@
 context("test-long_running_tests")
+cat(remotes:::download_method())
+
+cat(capabilities())
 
 # Install R package and deps from local path ------------------------------
 

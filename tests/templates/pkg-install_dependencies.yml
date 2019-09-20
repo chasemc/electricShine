@@ -24,6 +24,6 @@
 
 steps:
   - bash: |
-      Rscript -e "install.packages(c('remotes', 'rcmdcheck'))"
+      Rscript -e "install.packages(c('remotes', 'devtools', 'rcmdcheck'))"
       Rscript -e "remotes::install_deps(dependencies = TRUE)"
     displayName: 'Install package dependencies'
