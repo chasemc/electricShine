@@ -45,8 +45,11 @@ context("test-long_running_tests")
 
 # Install R package and deps from subdirectory at github ------------------
 
-tmp <- file.path(tempdir(), "build_git_install")
+tmp <- file.path(tempdir(), "space path")
 dir.create(tmp)
+tmp <- file.path(tempdir(), "space path", "build_git_install")
+dir.create(tmp)
+
 tmp <- normalizePath(tmp, "/")
 
 repo <- system.file("demoApp", package = "electricShine")
@@ -91,7 +94,8 @@ test_that("multiplication works", {
 
 #---- nodejs tests
 
-temp <- file.path(tempdir(),
+temp <- file.path(tempdir(), 
+                  "space path",
                   "deletemetesting")
 dir.create(temp)
 temp <- normalizePath(temp, "/")
@@ -163,8 +167,11 @@ test_that(".check_npm_works ", {
 
 
 # Metafunction tests ------------------------------------------------------
-
-buildPath <- tempdir()
+temp <- file.path(tempdir(), 
+                  "space path",
+                  "Test_Apps")
+buildPath <- temp
+dir.create(temp)
 MRANdate <- as.character(Sys.Date() - 3)
 
 
@@ -240,6 +247,7 @@ test_that("metaFunction scaffolds app dir", {
 
 b <- file.path(buildPath, "Test_App", "app", "r_lang", "bin", "Rscript.exe")
 b <- normalizePath(b, "/")
+b <- shQuote(b)
 w <- system(paste0(b, " -e 2+2"),
             intern = T)
 

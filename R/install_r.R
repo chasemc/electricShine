@@ -133,20 +133,25 @@ install_r <- function(cran_like_url = NULL,
 .install_win_r <- function(win_installer_path,
                            app_root_path){
   
-  # path R installer will install to
+  # create the path R installer will install to
+  install_r_to_path <- base::file.path(app_root_path, 
+                                       "app",
+                                       fsep = "/")
+  base::dir.create(install_r_to_path)
+  
   install_r_to_path <- base::file.path(app_root_path, 
                                        "app",
                                        "r_lang",
                                        fsep = "/")
-  
-  # create folder R will be installed to
+
   base::dir.create(install_r_to_path)
   
   # Quote path in case user's path has spaces, etc
   quoted_install_r_to_path <- base::shQuote(install_r_to_path)
+  quoted_win_installer_path <- base::shQuote(win_installer_path)
   
   # install R
-  base::system(glue::glue("{win_installer_path} /SILENT /DIR={quoted_install_r_to_path}"))
+  base::system(glue::glue("{quoted_win_installer_path} /SILENT /DIR={quoted_install_r_to_path}"))
   
   return(install_r_to_path)
 }

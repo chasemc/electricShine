@@ -14,21 +14,19 @@ run_build_release <- function(nodejs_path = file.path(system.file(package = "ele
   
   os <- electricShine::get_os()
   
-  node_path <- .check_node_works(node_top_dir = nodejs_path,
-                                 expected_version = nodejs_version)
-  
   npm_path <- .check_npm_works(node_top_dir = nodejs_path)
   
-  if (base::isFALSE(node_path) || base::isFALSE(npm_path)) {
+  if (base::isFALSE(npm_path)) {
     
     stop("First run install_nodejs() or point nodejs_path to a functional version of nodejs.")
     
   }
   
-  node_path <- shQuote(node_path)
-  npm_path <- shQuote(npm_path)
-  app_path <- shQuote(app_path)
   message("Creating app...")
+  
+  
+  quoted_app_path <- base::shQuote(app_path)
+  quoted_npm_path <- base::shQuote(npm_path)
   
   
   
@@ -36,43 +34,45 @@ run_build_release <- function(nodejs_path = file.path(system.file(package = "ele
   # npm start --prefix path/to/your/app
   message("Installing npm dependencies for the installation process. these are specfied in 'package.json'. Also this step can take a few minutes.")
   
-  if (identical(os, "win")) {
+  if (base::identical(os, "win")) {
+    
+
     message(system("cmd.exe",
-                   glue::glue("cd {app_path} && {npm_path} install --scripts-prepend-node-path"),
+                   glue::glue('cd {quoted_app_path} && {quoted_npm_path} install --scripts-prepend-node-path'),
                    invisible = FALSE,
                    minimized = F,
                    wait = T,
                    intern=F,
                    ignore.stdout=F,
                    ignore.stderr=F))
-    message("Building your Electron app.")
-    message(system("cmd.exe",
-                   glue::glue("cd {app_path} && {npm_path} run release --scripts-prepend-node-path"),
+    
+    base::message("Building your Electron app.")
+    
+    base::message(system("cmd.exe",
+                   glue::glue('cd {quoted_app_path} && {quoted_npm_path} run release --scripts-prepend-node-path'),
                    invisible = FALSE,
                    minimized = F,
                    wait = T,
-                   intern=F,
-                   ignore.stdout=F,
-                   ignore.stderr=F))
+                   intern = F,
+                   ignore.stdout = F,
+                   ignore.stderr = F))
     
   }
   
   if (identical(os, "mac")) {
-    message(system(glue::glue("cd {app_path} && {npm_path} install --scripts-prepend-node-path"),
+    message(system(glue::glue('cd {quoted_app_path} && {quoted_npm_path} install --scripts-prepend-node-path'),
                    wait = T,
-                   intern=F,
-                   ignore.stdout=F,
-                   ignore.stderr=F))
-    message("Building your Electron app.")
-    message(system(glue::glue("cd {app_path} && {npm_path} run release --scripts-prepend-node-path"),
-                   wait = T,
-                   intern=F,
-                   ignore.stdout=F,
-                   ignore.stderr=F))
+                   intern = F,
+                   ignore.stdout = F,
+                   ignore.stderr = F))
     
+    message("Building your Electron app.")
+    
+    message(system(glue::glue('cd {quoted_app_path} && {quoted_npm_path} run release --scripts-prepend-node-path'),
+                   wait = T,
+                   intern = F,
+                   ignore.stdout = F,
+                   ignore.stderr = F))
   }
-  
-  
-  
 }
 
