@@ -1,5 +1,6 @@
 context("test-long_running_tests")
 
+
 # Install R package and deps from local path ------------------------------
 
 # tmp <- file.path(tempdir(), "build_local_install")
@@ -45,8 +46,11 @@ context("test-long_running_tests")
 
 # Install R package and deps from subdirectory at github ------------------
 
-tmp <- file.path(tempdir(), "build_git_install")
+tmp <- file.path(tempdir(), "space path")
 dir.create(tmp)
+tmp <- file.path(tempdir(), "space path", "build_git_install")
+dir.create(tmp)
+
 tmp <- normalizePath(tmp, "/")
 
 repo <- system.file("demoApp", package = "electricShine")
@@ -57,7 +61,9 @@ electricShine::install_user_app(library_path = tmp,
                                 repo_location = "github",
                                 repo = "chasemc/electricShine",
                                 repos = repos,
-                                package_install_opts = list( subdir = "inst/demoApp"))
+                                package_install_opts = list(type = "binary",
+                                                            subdir = "inst/demoApp",
+                                                            args = "--no-test-load"))
 
 expected <- sort(c("BH",
                    "crayon",
@@ -76,18 +82,24 @@ expected <- sort(c("BH",
                    "shiny",
                    "sourcetools",
                    "xtable"))
-returned <- sort(list.files(tmp, recursive = F, full.names = F))
+
+returned <- sort(list.files(tmp, 
+                            recursive = F,
+                            full.names = F))
 
 
 test_that("multiplication works", {
-  expect_equal(expected, returned)
+  expect_equal(expected, 
+               returned)
 })
 
 
 
 #---- nodejs tests
 
-temp <- file.path(tempdir(), "deletemetesting")
+temp <- file.path(tempdir(), 
+                  "space path",
+                  "deletemetesting")
 dir.create(temp)
 temp <- normalizePath(temp, "/")
 nodejs_version <- "10.16.0"
@@ -158,8 +170,11 @@ test_that(".check_npm_works ", {
 
 
 # Metafunction tests ------------------------------------------------------
-
-buildPath <- tempdir()
+temp <- file.path(tempdir(), 
+                  "space path",
+                  "Test_Apps")
+buildPath <- temp
+dir.create(temp)
 MRANdate <- as.character(Sys.Date() - 3)
 
 
@@ -173,8 +188,9 @@ electricShine::buildElectricApp(app_name = "Test_App",
                                 function_name = "run_app",
                                 git_host = NULL,
                                 git_repo = NULL,
-                                local_package_path = system.file("demoApp", package = "electricShine"),
-                                package_install_opts = NULL,
+                                local_package_path = system.file("demoApp", 
+                                                                 package = "electricShine"),
+                                package_install_opts = list(type = "binary"),
                                 run_build = TRUE,
                                 nodejs_path = getnode,
                                 nodejs_version = nodejs_version)
@@ -186,13 +202,16 @@ electricShine::buildElectricApp(app_name = "Test_App",
 a <- list.dirs(buildPath, recursive = F, full.names = F)
 
 test_that("metaFunction builds app dir", {
-  testthat::expect_length(grep("Test_App", a), 1)
+  testthat::expect_length(grep("Test_App", a),
+                          1)
 })
 
 #----
 
 b <- file.path(buildPath, "Test_App")
-a <- list.dirs(b, recursive = F, full.names = F)
+a <- list.dirs(b,
+               recursive = F,
+               full.names = F)
 expected <- c("app",
               "build",
               "config",
@@ -212,14 +231,17 @@ test_that("metaFunction scaffolds app build", {
 #----
 
 b <- file.path(buildPath, "Test_App", "app")
-a <- list.files(b, recursive = F, full.names = F)
+a <- list.files(b, 
+                recursive = F,
+                full.names = F)
 expected <- c("app.R",
               "background.js",
               "background.js.map",
               "r_lang")
 
 test_that("metaFunction scaffolds app dir", {
-  testthat::expect_equal(a, expected)
+  testthat::expect_equal(a,
+                         expected)
 })
 
 
@@ -228,7 +250,9 @@ test_that("metaFunction scaffolds app dir", {
 
 b <- file.path(buildPath, "Test_App", "app", "r_lang", "bin", "Rscript.exe")
 b <- normalizePath(b, "/")
-w <- system(paste0(b, " -e 2+2"), intern = T)
+b <- shQuote(b)
+w <- system(paste0(b, " -e 2+2"),
+            intern = T)
 
 test_that("metaFunction has working rcript.exe for windows", {
   skip_on_os(c("mac","linux"))

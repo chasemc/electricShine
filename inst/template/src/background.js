@@ -56,6 +56,9 @@ childProcess.stdout.on('data', (data) => {
 childProcess.stderr.on('data', (data) => {
  log.error(`stderr:${data}`);
 });
+childProcess.on('exit', (code) => {
+  console.log(`Child exited with code ${code}`);
+});
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

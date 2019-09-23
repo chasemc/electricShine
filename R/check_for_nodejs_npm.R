@@ -45,8 +45,12 @@
     message("Found nodejs executable.")
     
     # Check that the node version is the same as what we expect and nodejs is functional
-    command <- paste0(node_path, 
+
+    quoted_node_path <- shQuote(node_path)
+    
+    command <- paste0(quoted_node_path, 
                       " -v")
+    
     nodejs_response <- tryCatch(system(command,
                                        intern = T),
                                 error = function(e) FALSE, 
@@ -112,7 +116,10 @@
   } else {
     
     # Check that the npm version is the same as what we expect
-    command <- paste0(npm_path, 
+    
+    quoted_npm_path <- shQuote(npm_path)
+    
+    command <- paste0(quoted_npm_path, 
                       " -v")
     
     result <- tryCatch(system(command,
