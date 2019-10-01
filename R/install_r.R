@@ -175,13 +175,9 @@ install_r <- function(cran_like_url = NULL,
                                        "r_lang",
                                        fsep = "/")
   
-  # create folder R will be installed to
-  base::dir.create(install_r_to_path)
-  
   # untar files to the app folder
   utils::untar(tarfile = installer_path, 
                exdir = install_r_to_path)
-  
   
   if (identical(os, "mac")) {
     
