@@ -16,7 +16,6 @@ const WINDOWS = "win32";
 const log = require('electron-log');
 log.info('Application Started');
 
-var killStr = "";
 
 
 //Find and bind an open port
@@ -31,13 +30,19 @@ srv.listen(0, function() {
 
 
 // folder above "bin/RScript"
-var rresources = "<?<r_path>?>";
+if(process.platform == WINDOWS){
+var rresources = path.join(app.getAppPath() + 'app' + 'r_lang');
+}
+if(process.platform == MACOS){
+var rresources = path.join(app.getAppPath() + 'app' + 'r_lang');
+}
+
 
 //Set environment variables for R
-//Necessary for letting R know where it is/not using another R 
-process.env['NODE_R_HOME'] = rresources
+//Necessary for letting R know where it is and ensure we're not using another R 
+process.env.NODE_R_HOME = rresources;
 //Necessary for setting the R package library R uses
-process.env['R_LIBS_SITE'] = path.join(rresources, "library")
+process.env.R_LIBS_SITE = path.join(rresources, "library");
 
 //Variable of where the R executable is
 //Unfortunately on MacOS paths are hardcoded into 
@@ -46,7 +51,7 @@ const NODER = path.join(rresources, "bin","R");
 
 
 
-const childProcess = child.spawn(NODER, ['-e', '<?<R_SHINY_FUNCTION>?>(port = '+srv.address().port+')']);
+const childProcess = child.spawn(NODER, ['-e', '<?<R_SHINY_FUNCTION>?>(port = ' + srv.address().port + ')']);
 
 
 
@@ -71,28 +76,12 @@ function createWindow () {
   console.log('create-window');
 
 
-    let loading = new BrowserWindow({show: false, frame: false});
-    //let loading = new BrowserWindow()
-    console.log(new Date().toISOString()+'::showing loading');
-    // Spin loader  (Chase TODO: This is leftover, go through it with base64enc::base64decode() then rawToChar())
-    loading.loadURL("data:text/html;charset=utf-8;base64,PGh0bWw+DQo8c3R5bGU+DQpib2R5ew0KICBwYWRkaW5nOiAxZW07DQogIGNvbG9yOiAjNzc3Ow0KICB0ZXh0LWFsaWduOiBjZW50ZXI7DQogIGZvbnQtZmFtaWx5OiAiR2lsbCBzYW5zIiwgc2Fucy1zZXJpZjsNCiAgd2lkdGg6IDgwJTsNCiAgbWFyZ2luOiAwIGF1dG87DQp9DQpoMXsNCiAgbWFyZ2luOiAxZW0gMDsNCiAgYm9yZGVyLWJvdHRvbTogMXB4IGRhc2hlZDsNCiAgcGFkZGluZy1ib3R0b206IDFlbTsNCiAgZm9udC13ZWlnaHQ6IGxpZ2h0ZXI7DQp9DQpwew0KICBmb250LXN0eWxlOiBpdGFsaWM7DQp9DQoubG9hZGVyew0KICBtYXJnaW46IDAgMCAyZW07DQogIGhlaWdodDogMTAwcHg7DQogIHdpZHRoOiAyMCU7DQogIHRleHQtYWxpZ246IGNlbnRlcjsNCiAgcGFkZGluZzogMWVtOw0KICBtYXJnaW46IDAgYXV0byAxZW07DQogIGRpc3BsYXk6IGlubGluZS1ibG9jazsNCiAgdmVydGljYWwtYWxpZ246IHRvcDsNCn0NCg0KLyoNCiAgU2V0IHRoZSBjb2xvciBvZiB0aGUgaWNvbg0KKi8NCnN2ZyBwYXRoLA0Kc3ZnIHJlY3R7DQogIGZpbGw6ICNGRjY3MDA7DQp9DQo8L3N0eWxlPg0KPGJvZHk+PCEtLSAzICAtLT4NCjxkaXYgY2xhc3M9ImxvYWRlciBsb2FkZXItLXN0eWxlMyIgdGl0bGU9IjIiPg0KICA8c3ZnIHZlcnNpb249IjEuMSIgaWQ9ImxvYWRlci0xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCiAgICAgd2lkdGg9IjgwcHgiIGhlaWdodD0iODBweCIgdmlld0JveD0iMCAwIDUwIDUwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MCA1MDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KICA8cGF0aCBmaWxsPSIjMDAwIiBkPSJNNDMuOTM1LDI1LjE0NWMwLTEwLjMxOC04LjM2NC0xOC42ODMtMTguNjgzLTE4LjY4M2MtMTAuMzE4LDAtMTguNjgzLDguMzY1LTE4LjY4MywxOC42ODNoNC4wNjhjMC04LjA3MSw2LjU0My0xNC42MTUsMTQuNjE1LTE0LjYxNWM4LjA3MiwwLDE0LjYxNSw2LjU0MywxNC42MTUsMTQuNjE1SDQzLjkzNXoiPg0KICAgIDxhbmltYXRlVHJhbnNmb3JtIGF0dHJpYnV0ZVR5cGU9InhtbCINCiAgICAgIGF0dHJpYnV0ZU5hbWU9InRyYW5zZm9ybSINCiAgICAgIHR5cGU9InJvdGF0ZSINCiAgICAgIGZyb209IjAgMjUgMjUiDQogICAgICB0bz0iMzYwIDI1IDI1Ig0KICAgICAgZHVyPSIwLjZzIg0KICAgICAgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiLz4NCiAgICA8L3BhdGg+DQogIDwvc3ZnPg0KPC9kaXY+DQo8L2JvZHk+DQo8L2h0bWw+");
+    let mainWindow = new BrowserWindow({webPreferences:{nodeIntegration:false}, show:false, width: 800, height: 600, title:""});
+ 
 
-    loading.once('show', () => {
-      console.log(new Date().toISOString()+'::show loading');
-      mainWindow = new BrowserWindow({webPreferences:{nodeIntegration:false}, show:false, width: 800, height: 600, title:""});
-
-      mainWindow.webContents.once('dom-ready', () => {
+      mainWindow.webContents.once('did-finish-load', () => {
         console.log(new Date().toISOString()+'::mainWindow loaded');
-        setTimeout( () => {
           mainWindow.show();
-          if(process.platform == WINDOWS){
-            mainWindow.reload();
-          }
-          loading.hide();
-          loading.close();
-
-        }, 9000);
-
       });
 	  
 	  
@@ -120,10 +109,8 @@ function createWindow () {
         console.log(new Date().toISOString()+'::mainWindow.closed()');
         cleanUpApplication();
       });
-    });
-
-    loading.show();
-
+    
+mainWindow.show();
 }
 
 
@@ -159,3 +146,147 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//MIT License
+//
+//Copyright (c) 2016 Joseph T. Lapp
+//
+//Permission is hereby granted, free of charge, to any person obtaining a copy of this software and //associated documentation files (the "Software"), to deal in the Software without restriction, including //without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell //copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the //following conditions:
+//
+//The above copyright notice and this permission notice shall be included in all copies or substantial //portions of the Software.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT //LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO //EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR //THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//This module has its origin in code by  @CanyonCasa at  http://stackoverflow.com/a/21947851/650894, but the //module was significantly rewritten to resolve issues raised by @Banjocat at http://stackoverflow.com///questions/14031763/doing-a-cleanup-action-just-before-node-js-exits#comment68567869_21947851. It has //also been extended for greater configurability.
+
+ 
+//// CONSTANTS ////////////////////////////////////////////////////////////////
+
+var DEFAULT_MESSAGES = {
+    ctrl_C: '[ctrl-C]',
+    uncaughtException: 'Uncaught exception...'
+};
+ 
+//// CONFIGURATION ////////////////////////////////////////////////////////////
+
+var cleanupHandlers = null; // array of cleanup handlers to call
+var messages = null; // messages to write to stderr
+
+var sigintHandler; // POSIX signal handlers
+var sighupHandler;
+var sigquitHandler;
+var sigtermHandler;
+
+//// HANDLERS /////////////////////////////////////////////////////////////////
+
+function signalHandler(signal)
+{
+    var exit = true;
+    cleanupHandlers.forEach(function (cleanup) {
+        if (cleanup(null, signal) === false)
+            exit = false;
+    });
+    if (exit) {
+        if (signal === 'SIGINT' && messages && messages.ctrl_C !== '')
+            process.stderr.write(messages.ctrl_C + "\n");
+        uninstall(); // don't cleanup again
+        // necessary to communicate the signal to the parent process
+        process.kill(process.pid, signal);
+    }
+}
+
+function exceptionHandler(e)
+{
+    if (messages && messages.uncaughtException !== '')
+        process.stderr.write(messages.uncaughtException + "\n");
+    process.stderr.write(e.stack + "\n");
+    process.exit(1); // will call exitHandler() for cleanup
+}
+
+function exitHandler(exitCode, signal)
+{
+    cleanupHandlers.forEach(function (cleanup) {
+        cleanup(exitCode, signal);
+    });
+}
+
+//// MAIN /////////////////////////////////////////////////////////////////////
+
+function install(cleanupHandler, stderrMessages)
+{
+    if (cleanupHandler) {
+        if (typeof cleanupHandler === 'object') {
+            stderrMessages = cleanupHandler;
+            cleanupHandler = null;
+        }
+    }
+    else if (!stderrMessages)
+        stderrMessages = DEFAULT_MESSAGES;
+    
+    if (stderrMessages) {
+        if (messages === null)
+            messages = { ctrl_C: '', uncaughtException: '' };
+        if (typeof stderrMessages.ctrl_C === 'string')
+            messages.ctrl_C = stderrMessages.ctrl_C;
+        if (typeof stderrMessages.uncaughtException === 'string')
+            messages.uncaughtException = stderrMessages.uncaughtException;
+    }
+    
+    if (cleanupHandlers === null) {
+        cleanupHandlers = []; // establish before installing handlers
+        
+        sigintHandler = signalHandler.bind(this, 'SIGINT');
+        sighupHandler = signalHandler.bind(this, 'SIGHUP');
+        sigquitHandler = signalHandler.bind(this, 'SIGQUIT');
+        sigtermHandler = signalHandler.bind(this, 'SIGTERM');
+        
+        process.on('SIGINT', sigintHandler);
+        process.on('SIGHUP', sighupHandler);
+        process.on('SIGQUIT', sigquitHandler);
+        process.on('SIGTERM', sigtermHandler);
+        process.on('uncaughtException', exceptionHandler);
+        process.on('exit', exitHandler);
+
+        cleanupHandlers.push(cleanupHandler || noCleanup);
+    }
+    else if (cleanupHandler)
+        cleanupHandlers.push(cleanupHandler);
+}
+
+function uninstall()
+{
+    if (cleanupHandlers !== null) {
+        process.removeListener('SIGINT', sigintHandler);
+        process.removeListener('SIGHUP', sighupHandler);
+        process.removeListener('SIGQUIT', sigquitHandler);
+        process.removeListener('SIGTERM', sigtermHandler);
+        process.removeListener('uncaughtException', exceptionHandler);
+        process.removeListener('exit', exitHandler);
+        cleanupHandlers = null; // null only after uninstalling
+    }
+}
+
+function noCleanup()
+{
+    return true; // signals will always terminate process
+}
