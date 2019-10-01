@@ -25,13 +25,14 @@ install_nodejs <- function(node_url = "https://nodejs.org/dist",
   
   # Check if node and npm are already installed
   
+  
   node_exists <- .check_node_works(node_top_dir = nodejs_path,
                                    expected_version = nodejs_version)
   
   npm_exists <- .check_npm_works(node_top_dir = nodejs_path)
   
   
-  if (base::isTRUE(node_exists) && base::isTRUE(npm_exists)) {
+  if (!base::isFALSE(node_exists) && !base::isFALSE(npm_exists)) {
     
     message("Skipping install_nodejs(), nodejs alreagy installed.")
     
@@ -132,6 +133,9 @@ install_nodejs <- function(node_url = "https://nodejs.org/dist",
     }
   }
   
+  nodejs_path <- normalizePath(nodejs_path, 
+                               winslash = "/", 
+                               mustWork = TRUE)
   return(nodejs_path)
 }
 
