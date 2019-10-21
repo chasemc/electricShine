@@ -140,7 +140,10 @@ buildElectricApp <- function(app_name = NULL,
                               "app/r_lang/Library/Frameworks/R.framework/Versions")
     
     library_path <-  list.dirs(library_path, 
-                               recursive = FALSE)[[1]]
+                               recursive = FALSE)
+    
+    library_path <- library_path[grep("\\d+\\.(?:\\d+|x)(?:\\.\\d+|x){0,1}",
+                                      library_path)][[1]]
     
     library_path <- file.path(library_path,
                               "Resources/library", 
