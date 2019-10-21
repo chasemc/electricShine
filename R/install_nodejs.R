@@ -115,9 +115,22 @@ install_nodejs <- function(node_url = "https://nodejs.org/dist",
                        exdir = nodejs_path)
         )
       }
+
       
-      nodejs_path <- file.path(nodejs_path,
-                               tools::file_path_sans_ext(basename(temp)))
+      if (identical(os, "win")) {
+        nodejs_path <- file.path(nodejs_path,
+                                 tools::file_path_sans_ext(basename(temp),
+                                                           compression = TRUE))
+      } else if (identical(os, "mac")) {
+        nodejs_path <- file.path(nodejs_path,
+                                 tools::file_path_sans_ext(basename(temp),
+                                                           compression = TRUE),
+                                 "bin")
+      } else if (identical(os, "unix")) {
+        platform <- "linux"
+        ext <- "tar.xz"
+      }
+
       
       node_exists <- .check_node_works(node_top_dir = nodejs_path,
                                        expected_version = nodejs_version)
