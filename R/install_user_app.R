@@ -77,10 +77,74 @@ install_user_app <- function(library_path = NULL,
   
   repo <- as.list(repo)
   
-  passthr <- c(repo, repos = repos ,package_install_opts)
-  
-  withr::with_libpaths(library_path,
-                       do.call(remotes_code, passthr)
+  passthr <- c(repo, repos = repos, c(package_install_opts, 
+                                      list(force = TRUE,
+                                           lib = library_path)
+  )
   )
   
+  os <- electricShine::get_os()  
+  
+  if (identical(os, "win")) {
+    rscript_path <- file.path(dirname(library_path),
+                              "bin",
+                              "Rscript.exe")
+  }
+  
+  if (identical(os, "mac")) {
+    rscript_path <- file.path(dirname(library_path),
+                              "bin",
+                              "Rscript")
+  }
+  
+  if (identical(os, "unix")) {
+    stop("electricShine is still under development for linux systems")
+    
+  }
+  
+  remotes_library <- copy_remotes_package()
+  
+  message("Installing your Shiny package into electricShine framework.")
+  
+  system2(rscript_path,
+          c('-e', do.call(remotes_code, passthr)),
+          env = paste0("R_LIBS=", remotes_library),
+          wait = TRUE)
+  
+  message("Finshed: Installing your Shiny package into electricShine framework")
+  
 }
+
+
+
+
+#' Copy {remotes} package to an isolated folder.
+#'    This is necessary to avoid dependency-install issues
+#'
+#' @return path of new {remotes}-only library
+copy_remotes_package <- function(){
+    remotes_path <- system.file(package = "remotes")
+  
+  new_path <- file.path(tempdir(), 
+                        "electricShine")
+  dir.create(new_path)
+  
+  new_path <- file.path(tempdir(), 
+                        "electricShine",
+                        "templib")
+  dir.create(new_path)
+  
+  file.copy(remotes_path,
+            new_path, 
+            recursive = FALSE,
+            copy.mode = F)
+  
+  test <- file.path(new_path, 
+                    "remotes",
+                    "DESCRIPTION")
+  if (!file.exists(test)) {
+    stop("Wasn't able to copy remotes package.")
+  }
+  normalizePath(remotes_library)
+}
+
