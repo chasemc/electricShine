@@ -1,6 +1,6 @@
 {
  "dependencies": {
-  "fs-jetpack": "2.2.2",
+  "fs-jetpack": "2.2.3",
   "electron-log": "3.0.8"
   },
   "devDependencies": {
