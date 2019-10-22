@@ -73,14 +73,15 @@ install_user_app <- function(library_path = NULL,
   
   remotes_code <- as.character(glue::glue("install_{repo_location}"))
   
-  remotes_code <- getFromNamespace(remotes_code, ns = "remotes")
+  
   
   repo <- as.list(repo)
   
-  passthr <- c(repo, repos = repos, c(package_install_opts, 
-                                      list(force = TRUE,
-                                           lib = library_path)
-  )
+  passthr <- c(repo, repos = repos,
+               c(package_install_opts, 
+                 list(force = TRUE,
+                      lib = library_path)
+               )
   )
   
   os <- electricShine::get_os()  
@@ -102,17 +103,45 @@ install_user_app <- function(library_path = NULL,
     
   }
   
+  
+  tmp_file <- tempfile()
+  save(list = c("remotes_code",
+                "passthr"),
+       file = tmp_file)
+  
+  
+  
   remotes_library <- copy_remotes_package()
   
+  copy_electricshine_package()
+  
+  
+  old_libs <- Sys.getenv("R_LIBS")
+  old_libs_user <- Sys.getenv("R_LIBS_USER")
+  Sys.setenv(R_LIBS=library_path)
+  Sys.setenv(R_LIBS_USER=remotes_library)
+  Sys.setenv(R_LIBS_SITE=remotes_library)
   message("Installing your Shiny package into electricShine framework.")
   
-  system2(rscript_path,
-          c('-e', do.call(remotes_code, passthr)),
-          env = paste0("R_LIBS=", remotes_library),
-          wait = TRUE)
+  
+  Sys.setenv(ESHINE_PASSTHRUPATH=tmp_file)
+  
+  Sys.setenv(ESHINE_remotes_code=remotes_code)
+  
+ z <- system2(rscript_path,
+          c("-e", quote(electricShine::install_package())),
+          wait = TRUE,
+          stdout = FALSE)
+  
+  
+  
+  
+  Sys.setenv(R_LIBS=old_libs)
+  Sys.setenv(R_LIBS_USER=old_libs_user)
+  
   
   message("Finshed: Installing your Shiny package into electricShine framework")
-  
+  return(z)
 }
 
 
@@ -123,7 +152,7 @@ install_user_app <- function(library_path = NULL,
 #'
 #' @return path of new {remotes}-only library
 copy_remotes_package <- function(){
-    remotes_path <- system.file(package = "remotes")
+  remotes_path <- system.file(package = "remotes")
   
   new_path <- file.path(tempdir(), 
                         "electricShine")
@@ -136,15 +165,47 @@ copy_remotes_package <- function(){
   
   file.copy(remotes_path,
             new_path, 
-            recursive = FALSE,
+            recursive = TRUE,
             copy.mode = F)
   
   test <- file.path(new_path, 
-                    "remotes",
-                    "DESCRIPTION")
+                    "remotes")
   if (!file.exists(test)) {
     stop("Wasn't able to copy remotes package.")
   }
-  normalizePath(remotes_library)
+  normalizePath(new_path,
+                winslash = "/")
+}
+
+
+
+#' Copy {electricShine} package to an isolated folder.
+#'    This is necessary to avoid dependency-install issues
+#'
+#' @return path of new {electricShine}-only library
+copy_electricshine_package <- function(){
+  remotes_path <- system.file(package = "electricShine")
+  
+  new_path <- file.path(tempdir(), 
+                        "electricShine")
+  dir.create(new_path)
+  
+  new_path <- file.path(tempdir(), 
+                        "electricShine",
+                        "templib")
+  dir.create(new_path)
+  
+  file.copy(remotes_path,
+            new_path, 
+            recursive = TRUE,
+            copy.mode = F)
+  
+  test <- file.path(new_path, 
+                    "electricShine")
+  if (!file.exists(test)) {
+    stop("Wasn't able to copy electricShine package.")
+  }
+  invisible(normalizePath(new_path,
+                          winslash = "/"))
 }
 
