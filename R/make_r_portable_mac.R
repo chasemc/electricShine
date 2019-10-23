@@ -23,13 +23,11 @@ modifications <-
 #!/bin/sh
 # Shell wrapper for R executable.
 
-#R_HOME_DIR=/Library/Frameworks/R.framework/Resources
 
-export R_HOME_DIR="${NODE_R_HOME}"
+export R_HOME_DIR="$(dirname $(dirname $0))"
 export R_HOME="${R_HOME_DIR}"
 
 echo "*** R_HOME_DIR ***"
-echo ${NODE_R_HOME}
 echo ${R_HOME_DIR}
 
 #R_SHARE_DIR=/Library/Frameworks/R.framework/Resources/share
