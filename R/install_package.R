@@ -21,10 +21,7 @@ install_package <- function(){
                                    ns = "remotes")
 
   
-  z <- do.call(remotes_code, passthr)
+   do.call(remotes_code, passthr)
   
-  stdout(z)
-  
-  
-  
+
 }

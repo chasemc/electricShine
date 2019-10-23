@@ -95,7 +95,7 @@ install_user_app <- function(library_path = NULL,
   if (identical(os, "mac")) {
     rscript_path <- file.path(dirname(library_path),
                               "bin",
-                              "Rscript")
+                              "R")
   }
   
   if (identical(os, "unix")) {
@@ -129,12 +129,10 @@ install_user_app <- function(library_path = NULL,
   Sys.setenv(ESHINE_remotes_code=remotes_code)
   
  z <- system2(rscript_path,
-          c("-e", quote(electricShine::install_package())),
+              paste0(" -e " ,"'","electricShine::install_package()","'"),
           wait = TRUE,
           stdout = FALSE)
-  
-  
-  
+
   
   Sys.setenv(R_LIBS=old_libs)
   Sys.setenv(R_LIBS_USER=old_libs_user)
