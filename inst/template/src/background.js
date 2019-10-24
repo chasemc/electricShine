@@ -115,6 +115,7 @@ function createWindow() {
 
   myLoop()
 
+  mainWindow.loadURL('http://127.0.0.1:' + srv.address().port);
 
 
   mainWindow.webContents.on('did-finish-load', function() {

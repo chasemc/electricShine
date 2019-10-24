@@ -132,26 +132,27 @@ install_user_app <- function(library_path = NULL,
   Sys.setenv(ESHINE_PASSTHRUPATH=tmp_file)
   Sys.setenv(ESHINE_remotes_code=remotes_code)
 
+  tmp_file2 <- tempfile()
+  file.create(tmp_file2)
+  Sys.setenv(ESHINE_package_return=tmp_file2)
+  
   message("Installing your Shiny package into electricShine framework.")
   
-  pkg <- system2(rscript_path,
-               paste0("-e ",
-                      "'",
-                      "electricShine::install_package()",
-                      "'"),
-               wait = TRUE,
-               stdout = TRUE)
+  system_install_pkgs(rscript_path)
   
+  on.exit({
   Sys.setenv(R_LIBS=old_R_LIBS)
   Sys.setenv(R_LIBS_USER=old_R_LIBS_USER)
   Sys.setenv(R_LIBS_SITE=old_R_LIBS_SITE)
   Sys.setenv(ESHINE_PASSTHRUPATH="")
   Sys.setenv(ESHINE_remotes_code="")
-
+})
   message("Finshed: Installing your Shiny package into electricShine framework")
-  return(strsplit(pkg[grep("electricShine package:\\*\\*",
-                         pkg)],
-                  "\\*\\*")[[1]][[2]])
+  
+  # TODO: break into unit-testable function
+  user_pkg <- readLines(tmp_file2)
+  
+  return(user_pkg)
 }
 
 
@@ -219,3 +220,34 @@ copy_electricshine_package <- function(){
                           winslash = "/"))
 }
 
+
+
+#' Run package installation using the newly-installed R
+#'
+#' @param rscript_path path to newly-installed R's executable
+#'
+#' @return nothing
+#'
+system_install_pkgs <- function(rscript_path){
+  
+  os <- electricShine::get_os()  
+  
+  if (identical(os, "win")) {
+    system2(rscript_path,
+            paste0("-e ",
+                   "electricShine::install_package()"),
+            wait = TRUE,
+            stdout = "")
+  }
+  
+  if (identical(os, "mac")) {
+    system2(rscript_path,
+            paste0("-e ",
+                   "'",
+                   "electricShine::install_package()",
+                   "'"),
+            wait = TRUE,
+            stdout = "")
+  }
+  
+}
