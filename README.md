@@ -4,6 +4,10 @@
 
 # electricShine  <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
+
+#NOTE: This version is about to be replaced
+
+
 # Purpose
 
 Sometimes an R Shiny app is too resource-intensive, or otherwise resticted, to be deployed into the cloud. Along with this, it can be non-trivial for someone inexperienced with R, or programming in general, to install R and open your Shiny app. 
