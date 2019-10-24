@@ -1,50 +1,12 @@
 context("test-long_running_tests")
 
 
-# Install R package and deps from local path ------------------------------
 
-# tmp <- file.path(tempdir(), "build_local_install")
-# dir.create(tmp)
-# tmp <- normalizePath(tmp, "/")
-# 
-# repo <- system.file("demoApp", package = "electricShine")
-# repos <- "https://cran.r-project.org"
-# 
-# 
-# 
-# electricShine::install_user_app(library_path = tmp,
-#                                 repo_location = "local",
-#                                 repo = repo,
-#                                 repos = repos,
-#                                 package_install_opts = NULL)
-# 
-# expected <- sort(c("BH",
-#               "crayon",
-#               "demoApp",
-#               "digest",
-#               "htmltools",
-#               "httpuv",
-#               "jsonlite",
-#               "later",
-#               "magrittr",
-#               "mime",
-#               "promises",
-#               "R6",
-#               "Rcpp",
-#               "rlang",
-#               "shiny",
-#               "sourcetools",
-#               "xtable"))
-# returned <- sort(list.files(tmp, recursive = F, full.names = F))
-# 
-# 
-# 
-# 
-# test_that("multiplication works", {
-#   expect_equal(expected, returned)
-# })
 
-# Install R package and deps from subdirectory at github ------------------
+
+# Install R package and deps from local path with space in path ----------
+
+
 
 tmp <- file.path(tempdir(), "space path")
 dir.create(tmp)
@@ -57,40 +19,84 @@ repo <- system.file("demoApp", package = "electricShine")
 repos <- "https://cran.r-project.org/"
 
 
-electricShine::install_user_app(library_path = tmp,
-                                repo_location = "github",
-                                repo = "chasemc/electricShine",
-                                repos = repos,
-                                package_install_opts = list(type = "binary",
-                                                            subdir = "inst/demoApp",
-                                                            args = "--no-test-load"))
 
-expected <- sort(c("BH",
+installed_r <- electricShine::install_r(cran_like_url = "https://cran.r-project.org",
+                              app_root_path = tmp,
+                              mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz",
+                              permission_to_install = TRUE)
+
+
+installed_app <- suppressWarnings({ 
+  electricShine::install_user_app(library_path =file.path(dirname(installed_r), "library"),
+                                  repo_location = "github",
+                                  repo = "chasemc/electricShine",
+                                  repos = repos,
+                                  package_install_opts = list(type = "binary",
+                                                              subdir = "inst/demoApp",
+                                                              args = "--no-test-load"))
+})
+
+expected_pkgs <- sort(c("base",
+                   "BH",
+                   "boot",
+                   "class",
+                   "cluster",
+                   "codetools",
+                   "compiler",
                    "crayon",
+                   "datasets",
                    "demoApp",
                    "digest",
+                   "fastmap",
+                   "foreign",
+                   "graphics",
+                   "grDevices",
+                   "grid",
                    "htmltools",
                    "httpuv",
                    "jsonlite",
+                   "KernSmooth",
                    "later",
+                   "lattice",
                    "magrittr",
+                   "MASS",
+                   "Matrix",
+                   "methods",
+                   "mgcv",
                    "mime",
+                   "nlme",
+                   "nnet",
+                   "parallel",
                    "promises",
                    "R6",
                    "Rcpp",
                    "rlang",
+                   "rpart",
                    "shiny",
                    "sourcetools",
+                   "spatial",
+                   "splines",
+                   "stats",
+                   "stats4",
+                   "survival",
+                   "tcltk",
+                   "tools",
+                   "utils",
                    "xtable"))
 
-returned <- sort(list.files(tmp, 
-                            recursive = F,
-                            full.names = F))
+returned_pkgs <- list.files(file.path(dirname(installed_r), "library"))
 
 
-test_that("multiplication works", {
-  expect_equal(expected, 
-               returned)
+test_that("install_r works", {
+  expect_gt(nchar(list.files(installed_r, pattern = "Rscript")[[1]]),
+            6)
+})
+
+test_that("installed_app works", {
+  expect_identical(installed_app,
+                   "demoApp")
+  expect_equal(sort(expected_pkgs), 
+               sort(returned_pkgs))
 })
 
 
@@ -127,10 +133,10 @@ test_that(".check_npm_works provides message", {
 })
 
 suppressMessages({
-node_exists <- .check_node_works(node_top_dir = tempdir(),
-                                 expected_version = nodejs_version)
-
-npm_exists <- .check_npm_works(node_top_dir = tempdir())
+  node_exists <- .check_node_works(node_top_dir = tempdir(),
+                                   expected_version = nodejs_version)
+  
+  npm_exists <- .check_npm_works(node_top_dir = tempdir())
 })
 
 test_that(".check_node_works  gives false ", {
@@ -144,17 +150,17 @@ test_that(".check_npm_works gives false", {
 })
 
 suppressMessages({
-node_exists <- .check_node_works(node_top_dir = getnode,
-                                 expected_version = nodejs_version)
-
-npm_exists <- .check_npm_works(node_top_dir = getnode)
+  node_exists <- .check_node_works(node_top_dir = getnode,
+                                   expected_version = nodejs_version)
+  
+  npm_exists <- .check_npm_works(node_top_dir = getnode)
 })
 
 
 test_that(".check_node_works ", {
   expect_true(file.exists(node_exists))
   expect_equal(tools::file_path_sans_ext(basename(node_exists)),
-              "node")
+               "node")
 })
 
 
