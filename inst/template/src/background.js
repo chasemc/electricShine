@@ -35,7 +35,7 @@ srv.listen(0, function() {
 
 // folder above "bin/RScript"
 if (process.platform == WINDOWS) {
-  var rresources = path.join(app.getAppPath() + 'app' + 'r_lang');
+  var rresources = path.join(app.getAppPath(), 'app', 'r_lang');
 }
 
 
