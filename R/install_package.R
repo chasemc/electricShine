@@ -21,7 +21,11 @@ install_package <- function(){
                                    ns = "remotes")
 
   
-   do.call(remotes_code, passthr)
-  
+  z <- do.call(remotes_code, passthr)
+  # the remotes package returns the name of the installed package
+  # but when called from system2, at least on mac,
+  # this results in a lot of kerfuffle so here we return
+  # a string that will we can regex for
+  return(paste0("electricShine package:**",z,"**"))
 
 }

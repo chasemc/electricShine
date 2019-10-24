@@ -103,7 +103,13 @@ install_user_app <- function(library_path = NULL,
     
   }
   
+  if (identical(os, "unix")) {
+    stop("electricShine is still under development for linux systems")
+    
+  }
   
+  
+
   tmp_file <- tempfile()
   save(list = c("remotes_code",
                 "passthr"),
@@ -116,30 +122,36 @@ install_user_app <- function(library_path = NULL,
   copy_electricshine_package()
   
   
-  old_libs <- Sys.getenv("R_LIBS")
-  old_libs_user <- Sys.getenv("R_LIBS_USER")
+  old_R_LIBS <- Sys.getenv("R_LIBS")
+  old_R_LIBS_USER <- Sys.getenv("R_LIBS_USER")
+  old_R_LIBS_SITE <- Sys.getenv("R_LIBS_SITE")
+  
   Sys.setenv(R_LIBS=library_path)
   Sys.setenv(R_LIBS_USER=remotes_library)
   Sys.setenv(R_LIBS_SITE=remotes_library)
+  Sys.setenv(ESHINE_PASSTHRUPATH=tmp_file)
+  Sys.setenv(ESHINE_remotes_code=remotes_code)
+
   message("Installing your Shiny package into electricShine framework.")
   
+  pkg <- system2(rscript_path,
+               paste0("-e ",
+                      "'",
+                      "electricShine::install_package()",
+                      "'"),
+               wait = TRUE,
+               stdout = TRUE)
   
-  Sys.setenv(ESHINE_PASSTHRUPATH=tmp_file)
-  
-  Sys.setenv(ESHINE_remotes_code=remotes_code)
-  
- z <- system2(rscript_path,
-              paste0(" -e " ,"'","electricShine::install_package()","'"),
-          wait = TRUE,
-          stdout = FALSE)
+  Sys.setenv(R_LIBS=old_R_LIBS)
+  Sys.setenv(R_LIBS_USER=old_R_LIBS_USER)
+  Sys.setenv(R_LIBS_SITE=old_R_LIBS_SITE)
+  Sys.setenv(ESHINE_PASSTHRUPATH="")
+  Sys.setenv(ESHINE_remotes_code="")
 
-  
-  Sys.setenv(R_LIBS=old_libs)
-  Sys.setenv(R_LIBS_USER=old_libs_user)
-  
-  
   message("Finshed: Installing your Shiny package into electricShine framework")
-  return(z)
+  return(strsplit(pkg[grep("electricShine package:\\*\\*",
+                         pkg)],
+                  "\\*\\*")[[1]][[2]])
 }
 
 
