@@ -20,11 +20,12 @@ repos <- "https://cran.r-project.org/"
 
 
 
-installed_r <- electricShine::install_r(cran_like_url = "https://cran.r-project.org",
-                              app_root_path = tmp,
-                              mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz",
-                              permission_to_install = TRUE)
-
+installed_r <- suppressWarnings({
+  electricShine::install_r(cran_like_url = "https://cran.r-project.org",
+                           app_root_path = tmp,
+                           mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz",
+                           permission_to_install = TRUE)
+})
 
 installed_app <- suppressWarnings({ 
   electricShine::install_user_app(library_path =file.path(dirname(installed_r), "library"),
@@ -37,52 +38,52 @@ installed_app <- suppressWarnings({
 })
 
 expected_pkgs <- sort(c("base",
-                   "BH",
-                   "boot",
-                   "class",
-                   "cluster",
-                   "codetools",
-                   "compiler",
-                   "crayon",
-                   "datasets",
-                   "demoApp",
-                   "digest",
-                   "fastmap",
-                   "foreign",
-                   "graphics",
-                   "grDevices",
-                   "grid",
-                   "htmltools",
-                   "httpuv",
-                   "jsonlite",
-                   "KernSmooth",
-                   "later",
-                   "lattice",
-                   "magrittr",
-                   "MASS",
-                   "Matrix",
-                   "methods",
-                   "mgcv",
-                   "mime",
-                   "nlme",
-                   "nnet",
-                   "parallel",
-                   "promises",
-                   "R6",
-                   "Rcpp",
-                   "rlang",
-                   "rpart",
-                   "shiny",
-                   "sourcetools",
-                   "spatial",
-                   "splines",
-                   "stats",
-                   "stats4",
-                   "survival",
-                   "tcltk",
-                   "tools",
-                   "utils",
-                   "xtable"))
+                        "BH",
+                        "boot",
+                        "class",
+                        "cluster",
+                        "codetools",
+                        "compiler",
+                        "crayon",
+                        "datasets",
+                        "demoApp",
+                        "digest",
+                        "fastmap",
+                        "foreign",
+                        "graphics",
+                        "grDevices",
+                        "grid",
+                        "htmltools",
+                        "httpuv",
+                        "jsonlite",
+                        "KernSmooth",
+                        "later",
+                        "lattice",
+                        "magrittr",
+                        "MASS",
+                        "Matrix",
+                        "methods",
+                        "mgcv",
+                        "mime",
+                        "nlme",
+                        "nnet",
+                        "parallel",
+                        "promises",
+                        "R6",
+                        "Rcpp",
+                        "rlang",
+                        "rpart",
+                        "shiny",
+                        "sourcetools",
+                        "spatial",
+                        "splines",
+                        "stats",
+                        "stats4",
+                        "survival",
+                        "tcltk",
+                        "tools",
+                        "utils",
+                        "xtable"))
 
 returned_pkgs <- list.files(file.path(dirname(installed_r), "library"))
 
@@ -114,29 +115,30 @@ nodejs_version <- "10.16.0"
 getnode <- electricShine::install_nodejs(node_url = "https://nodejs.org/dist/",
                                          nodejs_path = temp,
                                          force_install = FALSE,
-                                         nodejs_version = nodejs_version)
+                                         nodejs_version = nodejs_version,
+                                         permission_to_install  = TRUE)
 
 
 # Check "check_node/npm_works" --------------------------------------------
 
 test_that(".check_node_works provides message", {
   
-  expect_message(.check_node_works(node_top_dir = getnode,
-                                   expected_version = nodejs_version))
+  expect_message(electricShine:::.check_node_works(node_top_dir = getnode,
+                                                   expected_version = nodejs_version))
   
 })
 
 test_that(".check_npm_works provides message", {
   
-  expect_message(.check_npm_works(node_top_dir = getnode))
+  expect_message(electricShine:::.check_npm_works(node_top_dir = getnode))
   
 })
 
 suppressMessages({
-  node_exists <- .check_node_works(node_top_dir = tempdir(),
-                                   expected_version = nodejs_version)
+  node_exists <- electricShine:::.check_node_works(node_top_dir = tempdir(),
+                                                   expected_version = nodejs_version)
   
-  npm_exists <- .check_npm_works(node_top_dir = tempdir())
+  npm_exists <- electricShine:::.check_npm_works(node_top_dir = tempdir())
 })
 
 test_that(".check_node_works  gives false ", {
@@ -150,10 +152,10 @@ test_that(".check_npm_works gives false", {
 })
 
 suppressMessages({
-  node_exists <- .check_node_works(node_top_dir = getnode,
-                                   expected_version = nodejs_version)
+  node_exists <- electricShine:::.check_node_works(node_top_dir = getnode,
+                                                   expected_version = nodejs_version)
   
-  npm_exists <- .check_npm_works(node_top_dir = getnode)
+  npm_exists <- electricShine:::.check_npm_works(node_top_dir = getnode)
 })
 
 
@@ -183,24 +185,25 @@ buildPath <- temp
 dir.create(temp)
 MRANdate <- as.character(Sys.Date() - 3)
 
-
-electricShine::buildElectricApp(app_name = "Test_App",
-                                product_name = "test prod name",
-                                short_description = "test desc",
-                                semantic_version = "1.0.0",
-                                build_path = buildPath,
-                                mran_date = NULL,
-                                cran_like_url = "https://cran.r-project.org",
-                                function_name = "run_app",
-                                git_host = NULL,
-                                git_repo = NULL,
-                                local_package_path = system.file("demoApp", 
-                                                                 package = "electricShine"),
-                                package_install_opts = list(type = "binary"),
-                                run_build = TRUE,
-                                nodejs_path = getnode,
-                                nodejs_version = nodejs_version)
-
+suppressWarnings({
+  electricShine::buildElectricApp(app_name = "Test_App",
+                                  product_name = "test prod name",
+                                  short_description = "test desc",
+                                  semantic_version = "1.0.0",
+                                  build_path = buildPath,
+                                  mran_date = NULL,
+                                  cran_like_url = "https://cran.r-project.org",
+                                  function_name = "run_app",
+                                  git_host = NULL,
+                                  git_repo = NULL,
+                                  local_package_path = system.file("demoApp", 
+                                                                   package = "electricShine"),
+                                  package_install_opts = list(type = "binary"),
+                                  run_build = TRUE,
+                                  nodejs_path = getnode,
+                                  nodejs_version = nodejs_version,
+                                  permission = TRUE)
+})
 
 
 

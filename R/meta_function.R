@@ -23,6 +23,7 @@
 #' @param cran_like_url url to cran-like repository 
 #' @param nodejs_path path to nodejs
 #' @param nodejs_version nodejs version to install
+#' @param permission automatically grant permission to install nodejs and R 
 #'
 #' @export
 #'
@@ -40,7 +41,8 @@ buildElectricApp <- function(app_name = NULL,
                              package_install_opts = NULL,
                              run_build = TRUE,
                              nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
-                             nodejs_version = "v10.16.0"){
+                             nodejs_version = "v10.16.0",
+                             permission = FALSE){
   
   
   
@@ -88,10 +90,16 @@ buildElectricApp <- function(app_name = NULL,
   app_root_path <- file.path(build_path,
                              app_name)
   
+  if (!isTRUE(permission)) {
+  
   permission_to_install_r <- .prompt_install_r(app_root_path)
   permission_to_install_nodejs <- .prompt_install_nodejs(nodejs_path)
   
-  
+  } else {
+    permission_to_install_r <- TRUE
+    permission_to_install_nodejs <- TRUE
+    
+  }
   # Determine Operating System ----------------------------------------------
   
   os <- electricShine::get_os()  

@@ -10,7 +10,8 @@ buildElectricApp(app_name = NULL, product_name = "product_name",
   function_name = NULL, git_host = NULL, git_repo = NULL,
   local_package_path = NULL, package_install_opts = NULL,
   run_build = TRUE, nodejs_path = file.path(system.file(package =
-  "electricShine"), "nodejs"), nodejs_version = "v10.16.0")
+  "electricShine"), "nodejs"), nodejs_version = "v10.16.0",
+  permission = FALSE)
 }
 \arguments{
 \item{app_name}{This will be the name of the executable. It's a uniform type identifier (UTI)
@@ -50,6 +51,8 @@ Can also use notation for commits/branch (i.e. "chasemc/demoapp@d81fff0).}
 \item{nodejs_path}{path to nodejs}
 
 \item{nodejs_version}{nodejs version to install}
+
+\item{permission}{automatically grant permission to install nodejs and R}
 }
 \description{
 Meta-function
