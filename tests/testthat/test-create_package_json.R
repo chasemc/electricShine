@@ -13,14 +13,14 @@ if(file.exists(file.path(temp, "package.json"))) {
 
 
 test_that("run_shiny returns message", {
-  expect_message(electricShine::create_package_json(appName = "MyApp",
-                                                    semanticVersion = "0.0.0",
-                                                    path = temp,
-                                                    iconPath = NULL,
+  expect_message(electricShine::create_package_json(app_name = "MyApp",
+                                                    description = "description",
+                                                    semantic_version = "0.0.0",
+                                                    app_root_path = temp,
                                                     repository = "",
                                                     author = "",
-                                                    copyrightYear = "",
-                                                    copyrightName = "",
+                                                    copyright_year = "",
+                                                    copyright_name = "",
                                                     website = "",
                                                     license = "",
                                                     deps = NULL))

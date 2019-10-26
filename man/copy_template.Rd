@@ -2,16 +2,16 @@
 % Please edit documentation in R/copy_template.R
 \name{copy_template}
 \alias{copy_template}
-\title{Copy Electron boilerplate into appPath}
+\title{Copy Electron boilerplate into app_root_path}
 \usage{
-copy_template(appPath)
+copy_template(app_root_path)
 }
 \arguments{
-\item{appPath}{directory of new Electron app}
+\item{app_root_path}{directory of new Electron app}
 }
 \value{
 none
 }
 \description{
-Copy Electron boilerplate into appPath
+Copy Electron boilerplate into app_root_path
 }

@@ -11,40 +11,42 @@
 write_text <- function(text,
                        filename,
                        path){
-
-  path <- base::file.path(path, filename)
-
+  
+  path <- base::file.path(path,
+                          filename)
+  
+  path <- normalizePath(path, 
+                        winslash = "/", 
+                        mustWork = FALSE)
+  
   base::writeLines(text,
                    path)
-
+  
   if (file.exists(path)) {
     base::message(glue::glue("Successfully created {path}"))
   } else {
     base::warning(glue::glue("Did not create {path}"))
-
   }
+  
 }
 
 
 #' Create an output folder
 #'
-#' @param path path where output folder gonna be
-#' @param name name of the output folder about to be created
+#' @param app_root_path path where output folder gonna be
 #'
 #' @return if folder name already exists, show error and do nothing;
-#'         if folder name doesn't exist, create a new file
 #' @export
 #'
-create_folder <- function(path, name){
-  appPath <- file.path(path, name)
-
-  if (file.exists(appPath)) {
-    #print("stop")
-    stop(glue::glue("{appPath} already exists, choose a path that doesn't already contain a directory named '{name}'"))
+create_folder <- function(app_root_path){
+  
+  name <- base::basename(app_root_path)
+  
+  if (file.exists(app_root_path)) {
+    stop(glue::glue("electricShine::create_folder(app_root_path, name) already exists, choose a path that doesn't already contain a directory named '{name}'"))
   } else {
-    #print("create")
-    dir.create(appPath)
+    dir.create(app_root_path)
   }
+  
 }
-
 

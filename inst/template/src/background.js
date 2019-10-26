@@ -1,5 +1,8 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron');
+const {
+  app,
+  BrowserWindow
+} = require('electron');
 import jetpack from "fs-jetpack";
 
 
@@ -8,7 +11,7 @@ const url = require('url');
 const child = require('child_process');
 const MACOS = "darwin";
 const WINDOWS = "win32";
-const desktop = path.join(require('os').homedir(), 'Desktop').split('\\').join('/');
+const fs = require('fs');
 
 // Logto:
 //Linux: ~/.config/<app name>/log.log
@@ -17,9 +20,6 @@ const desktop = path.join(require('os').homedir(), 'Desktop').split('\\').join('
 const log = require('electron-log');
 log.info('Application Started');
 
-var killStr = "";
-var appPath = path.join(__dirname, "app.R" );
-var execPath = "RScript";
 
 
 //Find and bind an open port
@@ -33,106 +33,121 @@ srv.listen(0, function() {
 });
 
 
-
-if(process.platform == WINDOWS){
-  appPath = appPath.replace(/\\/g, "\\\\");
-  execPath = path.join(__dirname, "R_win", "bin", "RScript.exe" );
-} else if(process.platform == MACOS){
-  var macAbsolutePath = path.join(__dirname, "R_mac");
-  var env_path = macAbsolutePath+((process.env.PATH)?":"+process.env.PATH:"");
-  var env_libs_site = macAbsolutePath+"/library"+((process.env.R_LIBS_SITE)?":"+process.env.R_LIBS_SITE:"");
-  process.env.PATH = env_path;
-  process.env.R_LIBS_SITE = env_libs_site;
-  process.env.NODE_R_HOME = macAbsolutePath;
-  
-  execPath = path.join(__dirname, "R_mac", "bin", "R" );
-} else {
-  console.log("not on windows or macos?");
-  throw new Error("not on windows or macos?");
+// folder above "bin/RScript"
+if (process.platform == WINDOWS) {
+  var rresources = path.join(app.getAppPath(), 'app', 'r_lang');
 }
 
-console.log(process.env);
 
-const childProcess = child.spawn(execPath, ['--vanilla -e', '.libPaths(normalizePath(as.list(Sys.getenv())$R_HOME)); <?<R_SHINY_FUNCTION>?>(port = '+srv.address().port+')']);
+if (process.platform == MACOS) {
+  var rver = fs.readdirSync(path.join(app.getAppPath(), 'app', 'r_lang', "Library", "Frameworks", "R.framework", "Versions")).filter(fn => fn.match(/\d+\.(?:\d+|x)(?:\.\d+|x){0,1}/g));
+  var rresources = path.join(app.getAppPath(), 'app', 'r_lang', "Library", "Frameworks", "R.framework", "Versions", rver.toString(), 'Resources');
+
+}
+
+
+//Set environment variables for R
+//Necessary for letting R know where it is and ensure we're not using another R 
+process.env.NODE_R_HOME = rresources;
+//Necessary for setting the R package library R uses
+process.env.R_LIBS_SITE = path.join(rresources, "library");
+
+//Variable of where the R executable is
+//Unfortunately on MacOS paths are hardcoded into 
+//Rscript but it's in binary so have to use R instead
+const NODER = path.join(rresources, "bin", "R");
+
+const childProcess = child.spawn(NODER, ['-e', '<?<R_SHINY_FUNCTION>?>(port = ' + srv.address().port + ')']);
+
+// Log outputs from the R process
 childProcess.stdout.on('data', (data) => {
- log.warn(`stdout:${data}`);
+  log.warn(`stdout:${data}`);
 });
 childProcess.stderr.on('data', (data) => {
- log.error(`stderr:${data}`);
+  log.error(`stderr:${data}`);
+});
+childProcess.on('exit', (code) => {
+  console.log(`Child exited with code ${code}`);
 });
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-function createWindow () {
+function createWindow() {
   // Create the browser window.
   //  mainWindow = new BrowserWindow({webPreferences:{nodeIntegration:false},width: 800, height: 600})
   //  console.log(process.cwd())
   console.log('create-window');
 
 
-    let loading = new BrowserWindow({show: false, frame: false});
-    //let loading = new BrowserWindow()
-    console.log(new Date().toISOString()+'::showing loading');
-    // Spin loader  (Chase TODO: This is leftover, go through it with base64enc::base64decode() then rawToChar())
-    loading.loadURL("data:text/html;charset=utf-8;base64,PGh0bWw+DQo8c3R5bGU+DQpib2R5ew0KICBwYWRkaW5nOiAxZW07DQogIGNvbG9yOiAjNzc3Ow0KICB0ZXh0LWFsaWduOiBjZW50ZXI7DQogIGZvbnQtZmFtaWx5OiAiR2lsbCBzYW5zIiwgc2Fucy1zZXJpZjsNCiAgd2lkdGg6IDgwJTsNCiAgbWFyZ2luOiAwIGF1dG87DQp9DQpoMXsNCiAgbWFyZ2luOiAxZW0gMDsNCiAgYm9yZGVyLWJvdHRvbTogMXB4IGRhc2hlZDsNCiAgcGFkZGluZy1ib3R0b206IDFlbTsNCiAgZm9udC13ZWlnaHQ6IGxpZ2h0ZXI7DQp9DQpwew0KICBmb250LXN0eWxlOiBpdGFsaWM7DQp9DQoubG9hZGVyew0KICBtYXJnaW46IDAgMCAyZW07DQogIGhlaWdodDogMTAwcHg7DQogIHdpZHRoOiAyMCU7DQogIHRleHQtYWxpZ246IGNlbnRlcjsNCiAgcGFkZGluZzogMWVtOw0KICBtYXJnaW46IDAgYXV0byAxZW07DQogIGRpc3BsYXk6IGlubGluZS1ibG9jazsNCiAgdmVydGljYWwtYWxpZ246IHRvcDsNCn0NCg0KLyoNCiAgU2V0IHRoZSBjb2xvciBvZiB0aGUgaWNvbg0KKi8NCnN2ZyBwYXRoLA0Kc3ZnIHJlY3R7DQogIGZpbGw6ICNGRjY3MDA7DQp9DQo8L3N0eWxlPg0KPGJvZHk+PCEtLSAzICAtLT4NCjxkaXYgY2xhc3M9ImxvYWRlciBsb2FkZXItLXN0eWxlMyIgdGl0bGU9IjIiPg0KICA8c3ZnIHZlcnNpb249IjEuMSIgaWQ9ImxvYWRlci0xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCiAgICAgd2lkdGg9IjgwcHgiIGhlaWdodD0iODBweCIgdmlld0JveD0iMCAwIDUwIDUwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MCA1MDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KICA8cGF0aCBmaWxsPSIjMDAwIiBkPSJNNDMuOTM1LDI1LjE0NWMwLTEwLjMxOC04LjM2NC0xOC42ODMtMTguNjgzLTE4LjY4M2MtMTAuMzE4LDAtMTguNjgzLDguMzY1LTE4LjY4MywxOC42ODNoNC4wNjhjMC04LjA3MSw2LjU0My0xNC42MTUsMTQuNjE1LTE0LjYxNWM4LjA3MiwwLDE0LjYxNSw2LjU0MywxNC42MTUsMTQuNjE1SDQzLjkzNXoiPg0KICAgIDxhbmltYXRlVHJhbnNmb3JtIGF0dHJpYnV0ZVR5cGU9InhtbCINCiAgICAgIGF0dHJpYnV0ZU5hbWU9InRyYW5zZm9ybSINCiAgICAgIHR5cGU9InJvdGF0ZSINCiAgICAgIGZyb209IjAgMjUgMjUiDQogICAgICB0bz0iMzYwIDI1IDI1Ig0KICAgICAgZHVyPSIwLjZzIg0KICAgICAgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiLz4NCiAgICA8L3BhdGg+DQogIDwvc3ZnPg0KPC9kaXY+DQo8L2JvZHk+DQo8L2h0bWw+");
+  let mainWindow = new BrowserWindow({
+    webPreferences: {
+      nodeIntegration: false
+    },
+    show: false,
+    width: 800,
+    height: 600,
+    title: ""
+  });
 
-    loading.once('show', () => {
-      console.log(new Date().toISOString()+'::show loading');
-      mainWindow = new BrowserWindow({webPreferences:{nodeIntegration:false}, show:false, width: 800, height: 600, title:""});
+// reload every 3s until app is actually connected
+  var reloadTime = 3000
+  var iterations = 10
 
-      mainWindow.webContents.once('dom-ready', () => {
-        console.log(new Date().toISOString()+'::mainWindow loaded');
-        setTimeout( () => {
-          mainWindow.show();
-          if(process.platform == WINDOWS){
-            mainWindow.reload();
-          }
-          loading.hide();
-          loading.close();
+  var i = 1; 
+  function myLoop() { //  create a loop function
+    setTimeout(function() { //  call a 3s setTimeout when the loop is called
+      mainWindow.webContents.executeJavaScript('window.Shiny.shinyapp.isConnected()', true)
+        .catch(function(result) {
+          console.log(result) // Will be the JSON object from the fetch call
 
-        }, 9000);
+          mainWindow.loadURL('http://127.0.0.1:' + srv.address().port);
 
-      });
-	  
-	  
-      console.log(srv.address().port);
-      // long loading html
-      mainWindow.loadURL('http://127.0.0.1:'+srv.address().port);
-      
-      mainWindow.webContents.on('did-finish-load', function() {
-        console.log(new Date().toISOString()+'::did-finish-load');
-      });
+        })
+      i++;
+      //  increment the counter
+      if (i < iterations) { //  if the counter < 10, call the loop function
+        myLoop(); //  ..  again which will trigger another 
+      } //  ..  setTimeout()
+    }, reloadTime)
+  }
 
-      mainWindow.webContents.on('did-start-load', function() {
-        console.log(new Date().toISOString()+'::did-start-load');
-      });
+  myLoop()
 
-      mainWindow.webContents.on('did-stop-load', function() {
-        console.log(new Date().toISOString()+'::did-stop-load');
-      });
-      mainWindow.webContents.on('dom-ready', function() {
-        console.log(new Date().toISOString()+'::dom-ready');
-      });
+  mainWindow.loadURL('http://127.0.0.1:' + srv.address().port);
 
-      // Emitted when the window is closed.
-      mainWindow.on('closed', function () {
-        console.log(new Date().toISOString()+'::mainWindow.closed()');
-        cleanUpApplication();
-      });
-    });
 
-    loading.show();
+  mainWindow.webContents.on('did-finish-load', function() {
+    console.log(new Date().toISOString() + '::did-finish-load');
+  });
 
+  mainWindow.webContents.on('did-start-load', function() {
+    console.log(new Date().toISOString() + '::did-start-load');
+  });
+
+  mainWindow.webContents.on('did-stop-load', function() {
+    console.log(new Date().toISOString() + '::did-stop-load');
+  });
+  mainWindow.webContents.on('dom-ready', function() {
+    console.log(new Date().toISOString() + '::dom-ready');
+  });
+
+  // Emitted when the window is closed.
+  mainWindow.on('closed', function() {
+    console.log(new Date().toISOString() + '::mainWindow.closed()');
+    cleanUpApplication();
+  });
+
+  mainWindow.show();
 }
 
 
-function cleanUpApplication(){
+function cleanUpApplication() {
 
   app.quit();
-  
-  if(childProcess){
+
+  if (childProcess) {
     childProcess.kill();
   }
 }
@@ -142,7 +157,7 @@ function cleanUpApplication(){
 app.on('ready', createWindow);
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function () {
+app.on('window-all-closed', function() {
   console.log('EVENT::window-all-closed');
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
@@ -150,7 +165,7 @@ app.on('window-all-closed', function () {
 
 });
 
-app.on('activate', function () {
+app.on('activate', function() {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
@@ -158,5 +173,125 @@ app.on('activate', function () {
   }
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+
+// The things below haven't yet been implemented
+
+
+
+//MIT License
+//
+//Copyright (c) 2016 Joseph T. Lapp
+//
+//Permission is hereby granted, free of charge, to any person obtaining a copy of this software and //associated documentation files (the "Software"), to deal in the Software without restriction, including //without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell //copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the //following conditions:
+//
+//The above copyright notice and this permission notice shall be included in all copies or substantial //portions of the Software.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT //LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO //EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR //THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//This module has its origin in code by  @CanyonCasa at  http://stackoverflow.com/a/21947851/650894, but the //module was significantly rewritten to resolve issues raised by @Banjocat at http://stackoverflow.com///questions/14031763/doing-a-cleanup-action-just-before-node-js-exits#comment68567869_21947851. It has //also been extended for greater configurability.
+
+
+//// CONSTANTS ////////////////////////////////////////////////////////////////
+
+var DEFAULT_MESSAGES = {
+  ctrl_C: '[ctrl-C]',
+  uncaughtException: 'Uncaught exception...'
+};
+
+//// CONFIGURATION ////////////////////////////////////////////////////////////
+
+var cleanupHandlers = null; // array of cleanup handlers to call
+var messages = null; // messages to write to stderr
+
+var sigintHandler; // POSIX signal handlers
+var sighupHandler;
+var sigquitHandler;
+var sigtermHandler;
+
+//// HANDLERS /////////////////////////////////////////////////////////////////
+
+function signalHandler(signal) {
+  var exit = true;
+  cleanupHandlers.forEach(function(cleanup) {
+    if (cleanup(null, signal) === false)
+      exit = false;
+  });
+  if (exit) {
+    if (signal === 'SIGINT' && messages && messages.ctrl_C !== '')
+      process.stderr.write(messages.ctrl_C + "\n");
+    uninstall(); // don't cleanup again
+    // necessary to communicate the signal to the parent process
+    process.kill(process.pid, signal);
+  }
+}
+
+function exceptionHandler(e) {
+  if (messages && messages.uncaughtException !== '')
+    process.stderr.write(messages.uncaughtException + "\n");
+  process.stderr.write(e.stack + "\n");
+  process.exit(1); // will call exitHandler() for cleanup
+}
+
+function exitHandler(exitCode, signal) {
+  cleanupHandlers.forEach(function(cleanup) {
+    cleanup(exitCode, signal);
+  });
+}
+
+//// MAIN /////////////////////////////////////////////////////////////////////
+
+function install(cleanupHandler, stderrMessages) {
+  if (cleanupHandler) {
+    if (typeof cleanupHandler === 'object') {
+      stderrMessages = cleanupHandler;
+      cleanupHandler = null;
+    }
+  } else if (!stderrMessages)
+    stderrMessages = DEFAULT_MESSAGES;
+
+  if (stderrMessages) {
+    if (messages === null)
+      messages = {
+        ctrl_C: '',
+        uncaughtException: ''
+      };
+    if (typeof stderrMessages.ctrl_C === 'string')
+      messages.ctrl_C = stderrMessages.ctrl_C;
+    if (typeof stderrMessages.uncaughtException === 'string')
+      messages.uncaughtException = stderrMessages.uncaughtException;
+  }
+
+  if (cleanupHandlers === null) {
+    cleanupHandlers = []; // establish before installing handlers
+
+    sigintHandler = signalHandler.bind(this, 'SIGINT');
+    sighupHandler = signalHandler.bind(this, 'SIGHUP');
+    sigquitHandler = signalHandler.bind(this, 'SIGQUIT');
+    sigtermHandler = signalHandler.bind(this, 'SIGTERM');
+
+    process.on('SIGINT', sigintHandler);
+    process.on('SIGHUP', sighupHandler);
+    process.on('SIGQUIT', sigquitHandler);
+    process.on('SIGTERM', sigtermHandler);
+    process.on('uncaughtException', exceptionHandler);
+    process.on('exit', exitHandler);
+
+    cleanupHandlers.push(cleanupHandler || noCleanup);
+  } else if (cleanupHandler)
+    cleanupHandlers.push(cleanupHandler);
+}
+
+function uninstall() {
+  if (cleanupHandlers !== null) {
+    process.removeListener('SIGINT', sigintHandler);
+    process.removeListener('SIGHUP', sighupHandler);
+    process.removeListener('SIGQUIT', sigquitHandler);
+    process.removeListener('SIGTERM', sigtermHandler);
+    process.removeListener('uncaughtException', exceptionHandler);
+    process.removeListener('exit', exitHandler);
+    cleanupHandlers = null; // null only after uninstalling
+  }
+}
+
+function noCleanup() {
+  return true; // signals will always terminate process
+}

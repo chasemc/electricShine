@@ -23,7 +23,7 @@ Imports:
     openssl
 RoxygenNote: 6.1.1
 Suggests: 
-    testthat,
+    testthat (>= 2.1.0),
     covr,
     knitr,
     rmarkdown
