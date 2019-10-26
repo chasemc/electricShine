@@ -5,7 +5,6 @@
 # electricShine  <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 
-#NOTE: This version is about to be replaced
 
 
 # Purpose
