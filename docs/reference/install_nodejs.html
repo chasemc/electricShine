@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a directory for creating the new app and copy template of files — create_build_directory • electricShine</title>
+<title>Install Node.js — install_nodejs • electricShine</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,8 +42,8 @@
 
 
 
-<meta property="og:title" content="Create a directory for creating the new app and copy template of files — create_build_directory" />
-<meta property="og:description" content="Create a directory for creating the new app and copy template of files" />
+<meta property="og:title" content="Install Node.js — install_nodejs" />
+<meta property="og:description" content="Install Node.js" />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -125,50 +125,48 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a directory for creating the new app and copy template of files</h1>
-    <small class="dont-index">Source: <a href='https://github.com/chasemc/electricShine/blob/master/R/create_build_directory.R'><code>R/create_build_directory.R</code></a></small>
-    <div class="hidden name"><code>create_build_directory.Rd</code></div>
+    <h1>Install Node.js</h1>
+    <small class="dont-index">Source: <a href='https://github.com/chasemc/electricShine/blob/master/R/install_nodejs.R'><code>R/install_nodejs.R</code></a></small>
+    <div class="hidden name"><code>install_nodejs.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create a directory for creating the new app and copy template of files</p>
+    <p>Install Node.js</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_build_directory</span>(<span class='no'>appName</span>, <span class='no'>description</span>, <span class='no'>productName</span>, <span class='no'>semanticVersion</span>,
-  <span class='no'>appPath</span>, <span class='no'>functionName</span>)</pre>
+    <pre class="usage"><span class='fu'>install_nodejs</span>(<span class='kw'>node_url</span> <span class='kw'>=</span> <span class='st'>"https://nodejs.org/dist"</span>,
+  <span class='kw'>nodejs_path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"electricShine"</span>),
+  <span class='st'>"nodejs"</span>), <span class='kw'>force_install</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>nodejs_version</span> <span class='kw'>=</span> <span class='st'>"v10.16.0"</span>,
+  <span class='kw'>permission_to_install</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>appName</th>
-      <td><p>name of app</p></td>
+      <th>node_url</th>
+      <td><p>path to node.js.org</p></td>
     </tr>
     <tr>
-      <th>description</th>
-      <td><p>short description of app</p></td>
+      <th>nodejs_path</th>
+      <td><p>parent folder of node.exe (~nodejs_path/node.exe)</p></td>
     </tr>
     <tr>
-      <th>productName</th>
-      <td><p>product name</p></td>
+      <th>force_install</th>
+      <td><p>try and install even if nodejs exists  (TRUE/FALSE)</p></td>
     </tr>
     <tr>
-      <th>semanticVersion</th>
-      <td><p>version number: see https://semver.org/ for details on how to use version numbers</p></td>
+      <th>nodejs_version</th>
+      <td><p>version of node.js (eg "v10.16.0")</p></td>
     </tr>
     <tr>
-      <th>appPath</th>
-      <td><p>path to new electron app top directory</p></td>
-    </tr>
-    <tr>
-      <th>functionName</th>
-      <td><p>the function name in your package that starts the shiny app</p></td>
+      <th>permission_to_install</th>
+      <td><p>whether to skip .prompt_install_nodejs()</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>nothing, creates a directory</p>
+    <p>installed or checked nodejs_path</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

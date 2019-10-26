@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a directory for creating the new app and copy template of files — create_build_directory • electricShine</title>
+<title>Change fixed paths to make R portable on Mac — modify_mac_r • electricShine</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,8 +42,8 @@
 
 
 
-<meta property="og:title" content="Create a directory for creating the new app and copy template of files — create_build_directory" />
-<meta property="og:description" content="Create a directory for creating the new app and copy template of files" />
+<meta property="og:title" content="Change fixed paths to make R portable on Mac — modify_mac_r" />
+<meta property="og:description" content="Change fixed paths to make R portable on Mac" />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -125,50 +125,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a directory for creating the new app and copy template of files</h1>
-    <small class="dont-index">Source: <a href='https://github.com/chasemc/electricShine/blob/master/R/create_build_directory.R'><code>R/create_build_directory.R</code></a></small>
-    <div class="hidden name"><code>create_build_directory.Rd</code></div>
+    <h1>Change fixed paths to make R portable on Mac</h1>
+    <small class="dont-index">Source: <a href='https://github.com/chasemc/electricShine/blob/master/R/make_r_portable_mac.R'><code>R/make_r_portable_mac.R</code></a></small>
+    <div class="hidden name"><code>modify_mac_r.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create a directory for creating the new app and copy template of files</p>
+    <p>Change fixed paths to make R portable on Mac</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_build_directory</span>(<span class='no'>appName</span>, <span class='no'>description</span>, <span class='no'>productName</span>, <span class='no'>semanticVersion</span>,
-  <span class='no'>appPath</span>, <span class='no'>functionName</span>)</pre>
+    <pre class="usage"><span class='fu'>modify_mac_r</span>(<span class='no'>r_executable_path</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>appName</th>
-      <td><p>name of app</p></td>
-    </tr>
-    <tr>
-      <th>description</th>
-      <td><p>short description of app</p></td>
-    </tr>
-    <tr>
-      <th>productName</th>
-      <td><p>product name</p></td>
-    </tr>
-    <tr>
-      <th>semanticVersion</th>
-      <td><p>version number: see https://semver.org/ for details on how to use version numbers</p></td>
-    </tr>
-    <tr>
-      <th>appPath</th>
-      <td><p>path to new electron app top directory</p></td>
-    </tr>
-    <tr>
-      <th>functionName</th>
-      <td><p>the function name in your package that starts the shiny app</p></td>
+      <th>r_executable_path</th>
+      <td><p>path to ~bin/R</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>nothing, creates a directory</p>
+    <p>NA, modifies file</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
