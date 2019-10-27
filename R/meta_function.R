@@ -1,7 +1,7 @@
 #' Meta-function
 #'
 #' @param build_path Path where th bbuild files will be created, preferably points to an empty directory.
-#'     Must not contain a folder with the name as what you put for buildElectricApp(app_name).
+#'     Must not contain a folder with the name as what you put for electrify(app_name).
 #' @param app_name This will be the name of the executable. It's a uniform type identifier (UTI)
 #'    that contains only alphanumeric (A-Z,a-z,0-9), hyphen (-), and period (.) characters.
 #'    see https://www.electron.build/configuration/configuration 
@@ -27,7 +27,7 @@
 #'
 #' @export
 #'
-buildElectricApp <- function(app_name = NULL,
+electrify <- function(app_name = NULL,
                              product_name = "product_name",
                              short_description = NULL,
                              semantic_version = NULL,
@@ -61,17 +61,17 @@ buildElectricApp <- function(app_name = NULL,
                           local_package_path = local_package_path)
   
   if (is.null(app_name)) {
-    stop("electricShine::buildElectricApp() requires you to provide an 'app_name' argument specifying
+    stop("electricShine::electrify() requires you to provide an 'app_name' argument specifying
          the shiny app/package name.")
   }
   
   if (is.null(semantic_version)) {
-    stop("electricShine::buildElectricApp() requires you to specify a 'semantic_version' argument.
+    stop("electricShine::electrify() requires you to specify a 'semantic_version' argument.
            (e.g. electricShine::electricShine(semantic_version = '1.0.0') )")
   }
   
   if (is.null(function_name)) {
-    stop("electricShine::buildElectricApp() requires you to specify a 'function_name' argument.
+    stop("electricShine::electrify() requires you to specify a 'function_name' argument.
          function_name should be the name of the function that starts your package's shiny app.
          e.g. is you have the function myPackage::start_shiny(), provide 'start_shiny'")
   }
@@ -83,7 +83,7 @@ buildElectricApp <- function(app_name = NULL,
   
   if (!is.null(package_install_opts)) { 
     if (!is.list(package_install_opts)) {
-      stop("package_install_opts in buildElectricApp() must be a list of arguments.")
+      stop("package_install_opts in electrify() must be a list of arguments.")
     }
   }
   

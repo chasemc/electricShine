@@ -17,9 +17,9 @@ eval = FALSE
 
 
 ### Introduction
-The easiest way to get started building your app is with the `buildElectricApp()` function. This is a "metafunction" that calls the other functions of electricShine in the order that the package was intended to build apps. 
+The easiest way to get started building your app is with the `electrify()` function. This is a "metafunction" that calls the other functions of electricShine in the order that the package was intended to build apps. 
 
-If you want more control (e.g. icons haven't yet been implemented)...until a more thorough vignette is written, you can use source code of `buildElectricApp()` as a guide to step through the build process.
+If you want more control (e.g. icons haven't yet been implemented)...until a more thorough vignette is written, you can use source code of `electrify()` as a guide to step through the build process.
 
 
 ### Getting Started
@@ -27,7 +27,7 @@ If you want more control (e.g. icons haven't yet been implemented)...until a mor
 
 #### The metafunction
 
-`buildElectricApp()` has the following arguments (default values are listed):
+`electrify()` has the following arguments (default values are listed):
 
 ```{r}
 appName = "My_Package"
@@ -91,7 +91,7 @@ run_app <- function(port = NULL) {
 
 #### The build
 
-By running the `electricShine::buildElectricApp()` function your R session will start doing the following things:
+By running the `electricShine::electrify()` function your R session will start doing the following things:
 
 - Install nodejs into your electricShine package folder.
 - Download R from the MRAN date you provided
@@ -102,22 +102,20 @@ This will take some time depending on your internet speed, and computer. The bui
 
 ### The results
 
-In the directory your specified in `buildPath`, you will find a new folder named what you chose for `appName`. Directly inside you will find the raw electron build. Your new electron `.exe` can be found in `buildPath/appName/dist`, where `appName` is what you assigned `buildElectricApp(appName = )`. 
+In the directory your specified in `buildPath`, you will find a new folder named what you chose for `appName`. Directly inside you will find the raw electron build. Your new electron `.exe` can be found in `buildPath/appName/dist`, where `appName` is what you assigned `electrify(appName = )`. 
 
 
 Advanced: If you want to test the electron app without installing. You can open cmd.exe and `cd` to `buildPath/appName` and if you have nodejs installed and in your `PATH`, use the command `npm start` to initiate the app. 
 
-Advanced: If you want to make changes before creating the exe- run the `electricShine::buildElectricApp()` with `build = FALSE` and make your changes within `buildPath/appName`. When you're ready to build the installer run the following, using the same `buildPath` and `appName` as in `electricShine::buildElectricApp()`.
+Advanced: If you want to make changes before creating the exe- run the `electricShine::electrify()` with `build = FALSE` and make your changes within `buildPath/appName`. When you're ready to build the installer run the following, using the same `buildPath` and `appName` as in `electricShine::electrify()`.
 
 ```{r}
-appPath <- file.path(buildPath, appName)
-
-electricShine::runBuild(nodePath = NULL,
-                        npmPath = NULL,
-                        appPath = appPath,
-                        node = file.path(system.file(package = "electricShine"), "nodejs"))
+electricShine::run_build_release(nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
+                                 app_path = file.path(buildPath, appName),
+                                 nodejs_version = "12.13.0")
 ```
 
+You can also run `npm release` from the app's directory.
 
 
 

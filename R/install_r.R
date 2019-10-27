@@ -21,7 +21,7 @@ install_r <- function(cran_like_url = NULL,
   }
   
   if (permission_to_install == FALSE) {
-    message("R is bundled into the electricShine app. buildElectricApp() requires this to be accepted, 
+    message("R is bundled into the electricShine app. electrify() requires this to be accepted, 
             otherwise steps to build the app must be run individually.")
   } else {
     

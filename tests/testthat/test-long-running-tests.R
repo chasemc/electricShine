@@ -187,7 +187,7 @@
 # MRANdate <- as.character(Sys.Date() - 3)
 # 
 # suppressWarnings({
-#   electricShine::buildElectricApp(app_name = "Test_App",
+#   electricShine::electrify(app_name = "Test_App",
 #                                   product_name = "test prod name",
 #                                   short_description = "test desc",
 #                                   semantic_version = "1.0.0",

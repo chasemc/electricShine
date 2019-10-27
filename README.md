@@ -78,7 +78,7 @@ An example app structured for use with `{electricShine}` can be found at https:/
 ```{r}
 buildPath <- tempdir()
 
-electricShine::buildElectricApp(app_name = "My_App",
+electricShine::electrify(app_name = "My_App",
                                 short_description = "My demo application",
                                 semantic_version = "1.0.0",
                                 build_path = buildPath,
