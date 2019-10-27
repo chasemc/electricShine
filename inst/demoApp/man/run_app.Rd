@@ -2,17 +2,13 @@
 % Please edit documentation in R/run_app.R
 \name{run_app}
 \alias{run_app}
-\title{run_app}
+\title{Run the Shiny Application}
 \usage{
-run_app(port = NULL)
+run_app(options = list())
 }
 \arguments{
-\item{port}{The TCP port that the application should listen on
-if NULL, a random one is assigned}
-}
-\value{
-NA
+\item{options}{optional, described in ?shiny::shinyApp}
 }
 \description{
-run_app
+Run the Shiny Application
 }
