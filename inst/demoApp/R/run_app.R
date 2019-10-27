@@ -1,26 +1,12 @@
-#' run_app
+#' Run the Shiny Application
 #'
-#' @param port The TCP port that the application should listen on
-#' if NULL, a random one is assigned
+#' @param options optional, described in ?shiny::shinyApp
+#' @param ... arguments to pass to golem_opts
 #'
-#' @return NA
 #' @export
-#'
-
-run_app <- function(port = NULL) {
-  
-  if (is.null(port)) {
-    shiny::shinyApp(ui = demoApp::app_ui(),
-                    server = demoApp::app_server)
-  } else {
-    port <- try(as.integer(port))
-    if (is.integer(port) && port > 0L) {
-      shiny::shinyApp(ui = demoApp::app_ui(),
-                      server = demoApp::app_server,
-                      options = list(port = port))
-    }
-  }
+run_app <- function(options = list()) {
+  shinyApp(ui = app_ui,
+           server = app_server,
+           options = options) 
   
 }
-  
-  

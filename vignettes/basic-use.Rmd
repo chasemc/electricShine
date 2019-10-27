@@ -7,8 +7,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
   ---
   
-```{r, include = FALSE}
-knitr::opts_chunk$set(
+  ```{r, include = FALSE}
+  knitr::opts_chunk$set(
 collapse = TRUE,
 comment = "#>",
 eval = FALSE
@@ -26,63 +26,27 @@ If you want more control (e.g. icons haven't yet been implemented)...until a mor
 
 
 #### The metafunction
+Unless you are customizing the nodejs code, you should only ever have to interact with one function:
 
-`electrify()` has the following arguments (default values are listed):
+`electricShine::electrify()`
+
+### The `run_app()`
+
+Your package must have a function that starts your Shiny app.  
+
+- The name of this function is specified through the `functionName` argumnet of `electrify()`:
+  - e.g. `electricShine::electrify(functionName='run_app')`
+
+
+The function must have an `options` argument to pass to to `shiny::shinyApp()` (example below).
+To modify the example: Replace the two `app_ui` with your package's `app_ui` function name. Replace the two `app_server` with your package's `app_server` function name. 
+
 
 ```{r}
-appName = "My_Package"
-productName = "productName"
-semanticVersion = "0.0.0"
-buildPath = NULL
-MRANdate = Sys.Date() - 3
-functionName = NULL
-githubRepo = NULL
-localPath = NULL
-only64 = FALSE
-packageName = NULL
-```
-
-
-
-- `appName` will be what users see (e.g. shortcut name)
-
-- `buildPath` is the directory your app will be built into (where you will find the `exe`, etc.)
-
-- `MRANdate` This determines your R and package versions. Must be a date in the format `YYYY-MM-DD`.
-For now, you must manually any non-CRAN packages manually
-
-- `only64`, whether your app is only 64bit (determines how much the R-installation is trimmed)
-
-- `packageName`	can be empty if Github repo/base path is same as your shiny package name
-
-
-One of the following, but not both must be provided:
-
-- `githubRepo` 	GitHub username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP')
-
-- `localPath` path to your shiny-app package (should be installable through `install.packages()`)
-
-Your app must have a function to start the app.  
-
-- `functionName` this is the name of the function (e.g. `run_app`)
-
-
-This function needs to be able to accomodate recieving a TCP port and so I have provided an example below.  Replace the four `packageName`'s below with the name of your shiny-app package. Replace the two `app_ui` with your package's `app_ui` function name. Replace the two `app_server` with your package's `app_server` function name. The `packageName::app_ui()` should retain the `()`; and the `packageName::app_server` has no `()`.
-
-```{r}
-run_app <- function(port = NULL) {
-  
-  if (is.null(port)) {
-    shiny::shinyApp(ui = packageName::app_ui(),
-                    server = packageName::app_server)
-  } else {
-    port <- try(as.integer(port))
-    if (is.integer(port) && port > 0L) {
-      shiny::shinyApp(ui = packageName::app_ui(),
-                      server = packageName::app_server,
-                      options = list(port = port))
-    }
-  }
+run_app <- function(options = list()) {
+  shinyApp(ui = app_ui,
+           server = app_server,
+           options = options) 
   
 }
 ```
@@ -95,10 +59,10 @@ By running the `electricShine::electrify()` function your R session will start d
 
 - Install nodejs into your electricShine package folder.
 - Download R from the MRAN date you provided
-- Download the js dependencies (electron, etc) from npm (npm is like CRAN)
+- Download the js dependencies (electron, etc) from npm (npm is like CRAN) if they aren't already installed/found.
 - Begin the build of your app
 
-This will take some time depending on your internet speed, and computer. The build step is the longest and can take minutes (seems to be IO-limited so a fast hard drive will work best).
+This will take some time depending on your internet speed, and computer. The build step is the longest and can take minutes (seems to be IO-limited so a fast hard drive will work best). An internet connection is required.
 
 ### The results
 

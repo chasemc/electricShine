@@ -1,6 +1,6 @@
 #' Meta-function
 #'
-#' @param build_path Path where th bbuild files will be created, preferably points to an empty directory.
+#' @param build_path Path where the build files will be created, preferably points to an empty directory.
 #'     Must not contain a folder with the name as what you put for electrify(app_name).
 #' @param app_name This will be the name of the executable. It's a uniform type identifier (UTI)
 #'    that contains only alphanumeric (A-Z,a-z,0-9), hyphen (-), and period (.) characters.
@@ -28,21 +28,21 @@
 #' @export
 #'
 electrify <- function(app_name = NULL,
-                             product_name = "product_name",
-                             short_description = NULL,
-                             semantic_version = NULL,
-                             build_path = NULL,
-                             mran_date = NULL,
-                             cran_like_url = NULL,
-                             function_name = NULL,
-                             git_host = NULL,
-                             git_repo = NULL,
-                             local_package_path = NULL,
-                             package_install_opts = NULL,
-                             run_build = TRUE,
-                             nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
-                             nodejs_version = "v10.16.0",
-                             permission = FALSE){
+                      product_name = "product_name",
+                      short_description = NULL,
+                      semantic_version = NULL,
+                      build_path = NULL,
+                      mran_date = NULL,
+                      cran_like_url = NULL,
+                      function_name = NULL,
+                      git_host = NULL,
+                      git_repo = NULL,
+                      local_package_path = NULL,
+                      package_install_opts = NULL,
+                      run_build = TRUE,
+                      nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
+                      nodejs_version = "v10.16.0",
+                      permission = FALSE){
   
   
   
@@ -91,10 +91,10 @@ electrify <- function(app_name = NULL,
                              app_name)
   
   if (!isTRUE(permission)) {
-  
-  permission_to_install_r <- .prompt_install_r(app_root_path)
-  permission_to_install_nodejs <- .prompt_install_nodejs(nodejs_path)
-  
+    
+    permission_to_install_r <- .prompt_install_r(app_root_path)
+    permission_to_install_nodejs <- .prompt_install_nodejs(nodejs_path)
+    
   } else {
     permission_to_install_r <- TRUE
     permission_to_install_nodejs <- TRUE

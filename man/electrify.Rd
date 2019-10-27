@@ -28,7 +28,7 @@ https://www.electron.build/configuration/configuration}
 \item{semantic_version}{semantic version of your app, as character (not numeric!);
 See https://semver.org/ for more info on semantic versioning.}
 
-\item{build_path}{Path where th bbuild files will be created, preferably points to an empty directory.
+\item{build_path}{Path where the build files will be created, preferably points to an empty directory.
 Must not contain a folder with the name as what you put for electrify(app_name).}
 
 \item{mran_date}{MRAN snapshot date, formatted as 'YYYY-MM-DD'}
