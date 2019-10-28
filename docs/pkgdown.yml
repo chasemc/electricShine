@@ -3,4 +3,6 @@ pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
   basic-use: basic-use.html
+  github: github.html
+  local: local.html
 

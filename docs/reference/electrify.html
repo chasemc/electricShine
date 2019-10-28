@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prompt whether R can be installed or not — .prompt_install_r • electricShine</title>
+<title>Meta-function — electrify • electricShine</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,8 +42,8 @@
 
 
 
-<meta property="og:title" content="Prompt whether R can be installed or not — .prompt_install_r" />
-<meta property="og:description" content="Prompt whether R can be installed or not" />
+<meta property="og:title" content="Meta-function — electrify" />
+<meta property="og:description" content="Meta-function" />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -131,36 +131,107 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prompt whether R can be installed or not</h1>
-    <small class="dont-index">Source: <a href='https://github.com/chasemc/electricShine/blob/master/R/prompts.R'><code>R/prompts.R</code></a></small>
-    <div class="hidden name"><code>dot-prompt_install_r.Rd</code></div>
+    <h1>Meta-function</h1>
+    <small class="dont-index">Source: <a href='https://github.com/chasemc/electricShine/blob/master/R/meta_function.R'><code>R/meta_function.R</code></a></small>
+    <div class="hidden name"><code>electrify.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Prompt whether R can be installed or not</p>
+    <p>Meta-function</p>
     </div>
 
-    <pre class="usage"><span class='fu'>.prompt_install_r</span>(<span class='no'>app_root_path</span>)</pre>
+    <pre class="usage"><span class='fu'>electrify</span>(<span class='kw'>app_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>product_name</span> <span class='kw'>=</span> <span class='st'>"product_name"</span>,
+  <span class='kw'>short_description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>semantic_version</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>build_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>mran_date</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cran_like_url</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>function_name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>git_host</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>git_repo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>local_package_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>package_install_opts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>run_build</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>nodejs_path</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span>
+  <span class='st'>"electricShine"</span>), <span class='st'>"nodejs"</span>), <span class='kw'>nodejs_version</span> <span class='kw'>=</span> <span class='st'>"v10.16.0"</span>,
+  <span class='kw'>permission</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>app_root_path</th>
-      <td><p>project path</p></td>
+      <th>app_name</th>
+      <td><p>This will be the name of the executable. It's a uniform type identifier (UTI)
+that contains only alphanumeric (A-Z,a-z,0-9), hyphen (-), and period (.) characters.
+see https://www.electron.build/configuration/configuration 
+and https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html#//apple_ref/doc/uid/20001431-102070</p></td>
+    </tr>
+    <tr>
+      <th>product_name</th>
+      <td><p>String - allows you to specify a product name for your executable which
+contains spaces and other special characters not allowed in the name property.
+https://www.electron.build/configuration/configuration</p></td>
+    </tr>
+    <tr>
+      <th>short_description</th>
+      <td><p>short app description</p></td>
+    </tr>
+    <tr>
+      <th>semantic_version</th>
+      <td><p>semantic version of your app, as character (not numeric!);
+See https://semver.org/ for more info on semantic versioning.</p></td>
+    </tr>
+    <tr>
+      <th>build_path</th>
+      <td><p>Path where the build files will be created, preferably points to an empty directory.
+Must not contain a folder with the name as what you put for electrify(app_name).</p></td>
+    </tr>
+    <tr>
+      <th>mran_date</th>
+      <td><p>MRAN snapshot date, formatted as 'YYYY-MM-DD'</p></td>
+    </tr>
+    <tr>
+      <th>cran_like_url</th>
+      <td><p>url to cran-like repository</p></td>
+    </tr>
+    <tr>
+      <th>function_name</th>
+      <td><p>the function name in your package that starts the shiny app</p></td>
+    </tr>
+    <tr>
+      <th>git_host</th>
+      <td><p>one of c("github", "gitlab", "bitbucket")</p></td>
+    </tr>
+    <tr>
+      <th>git_repo</th>
+      <td><p>GitHub/Bitbucket/GitLab username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP'). 
+Can also use notation for commits/branch (i.e. "chasemc/demoapp@d81fff0).</p></td>
+    </tr>
+    <tr>
+      <th>local_package_path</th>
+      <td><p>path to local shiny-app package, if 'git_package' isn't used</p></td>
+    </tr>
+    <tr>
+      <th>package_install_opts</th>
+      <td><p>optional arguments passed to remotes::install_github, install_gitlab, install_bitbucket, or install_local</p></td>
+    </tr>
+    <tr>
+      <th>run_build</th>
+      <td><p>logical, whether to start the build process, helpful if you want to modify anthying before building</p></td>
+    </tr>
+    <tr>
+      <th>nodejs_path</th>
+      <td><p>path to nodejs</p></td>
+    </tr>
+    <tr>
+      <th>nodejs_version</th>
+      <td><p>nodejs version to install</p></td>
+    </tr>
+    <tr>
+      <th>permission</th>
+      <td><p>automatically grant permission to install nodejs and R</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>TRUE/FALSE</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
     </ul>
 
   </div>

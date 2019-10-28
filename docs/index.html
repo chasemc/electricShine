@@ -61,7 +61,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/basic-use.html">UNKNOWN TITLE</a>
+      <a href="articles/basic-use.html">General Overview</a>
+    </li>
+    <li>
+      <a href="articles/github.html">Create an app from a package on Github</a>
+    </li>
+    <li>
+      <a href="articles/local.html">Create an app from a local package</a>
     </li>
   </ul>
 </li>
@@ -122,46 +128,32 @@
 <a href="#getting-started" class="anchor"></a>Getting Started</h1>
 <p>Your shiny app should be built as an R package and should list all dependencies, as an R package would.</p>
 <p>A template for designing a shiny app as a package may be found here: <a href="https://github.com/ThinkR-open/shinytemplate" class="uri">https://github.com/ThinkR-open/shinytemplate</a></p>
-<p>Important: your package must contain a function that electricShine can use to start your app. This function must contain an argument <code>port</code> to be passed to <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shiny::shinyApp</a></code>. The easiest thing to do would be to modify the example below (change <code>demoApp</code> to your package name).</p>
-<pre class="{r}"><code># Example for an R package named `demoApp`:
-
-run_app &lt;- function(port = NULL) {
-  
-  if (is.null(port)) {
-    shiny::shinyApp(ui = demoApp::app_ui(),
-                    server = demoApp::app_server)
-  } else {
-    port &lt;- try(as.integer(port))
-    if (is.integer(port) &amp;&amp; port &gt; 0L) {
-      shiny::shinyApp(ui = demoApp::app_ui(),
-                      server = demoApp::app_server,
-                      options = list(port = port))
-    }
-  }
-  
+<p>Important: your package must contain a function that electricShine can use to start your app. This function must have an <code>options</code> argument to pass to to <code><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shiny::shinyApp()</a></code> (example below). To modify the example: Replace the <code>app_ui</code> with your package’s <code>app_ui</code> function name. Replace the <code>app_server</code> with your package’s <code>app_server</code> function name.</p>
+<pre class="{r}"><code>run_app &lt;- function(options = list()) {
+  shiny::shinyApp(ui = app_ui,
+                  server = app_server,
+                  options = options) 
 }
 </code></pre>
-<p>An example app structured for use with <code>{electricShine}</code> can be found at <a href="https://github.com/chasemc/demoApp" class="uri">https://github.com/chasemc/demoApp</a>; includes continuous deployment using AppVeyor.</p>
+<p>An example app structured for use with <code>{electricShine}</code> can be found at <a href="https://github.com/chasemc/electricShine/inst/demoApp" class="uri">https://github.com/chasemc/electricShine/inst/demoApp</a>; includes continuous deployment using AppVeyor.</p>
 </div>
 <div id="main-function" class="section level1">
 <h1 class="hasAnchor">
 <a href="#main-function" class="anchor"></a>Main Function</h1>
 <pre class="{r}"><code>buildPath &lt;- tempdir()
-MRANdate &lt;- as.character(Sys.Date() - 3)
 
-
-electricShine::electrify(
-app_name = "My_App",                  # This is what the app/desktop shortcuts will be named on installation.
-description = "My demo application", # Short description when installer is run, etc.
-package_name = "demoApp",             # The name of the R package that contains your shiny app.
-semantic_version = "1.0.0",           # You app's version
-build_path = buildPath,               # Where the app will build to on your computer.
-mran_date = MRANdate,                 # The MRAN snapshot date R and R packages will be downloaded from.
-function_name = "run_app",            # The function name in your app that starts your shiny app.
-github_repo = "chasemc/demoApp",      # GitHub of your R package
-local_path  = NULL                   # Alternate to GitHub you can use an R package at a local path
-
-)</code></pre>
+electricShine::electrify(app_name = "My_App",
+                         short_description = "My demo application",
+                         semantic_version = "1.0.0",
+                         build_path = buildPath,
+                         mran_date = NULL,
+                         cran_like_url = "https://cran.r-project.org",
+                         function_name = "run_app",
+                         git_host = "github",
+                         git_repo = "chasemc/demoApp@8426481",
+                         local_package_path = NULL,
+                         package_install_opts = list(type = "binary"),
+                         run_build = TRUE)</code></pre>
 <p>Please see the “Basic Use” vignette for further instructions.</p>
 </div>
 <div id="continuous-deployment-cd" class="section level1">
@@ -176,7 +168,6 @@ local_path  = NULL                   # Alternate to GitHub you can use an R pack
 <ul>
 <li><a href="https://github.com/chasemc/IDBacApp" class="uri">https://github.com/chasemc/IDBacApp</a></li>
 <li><a href="https://github.com/chasemc/demoApp" class="uri">https://github.com/chasemc/demoApp</a></li>
-<li><a href="https://github.com/chasemc/processView" class="uri">https://github.com/chasemc/processView</a></li>
 </ul>
 </div>
 
@@ -211,8 +202,7 @@ local_path  = NULL                   # Alternate to GitHub you can use an R pack
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://ci.appveyor.com/project/chasemc/electricshine/branch/master"><img src="https://ci.appveyor.com/api/projects/status/1l973ho8q4y03fnd/branch/master?svg=true" alt="Build status"></a></li>
-<li><a href="https://travis-ci.org/chasemc/electricShine"><img src="https://travis-ci.org/chasemc/electricShine.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://dev.azure.com/chasec288/electricShine/_build/latest?definitionId=4&amp;branchName=master"><embed src="https://dev.azure.com/chasec288/electricShine/_apis/build/status/chasemc.electricShine?branchName=master"></embed></a></li>
 </ul>
 </div>
 </div>

@@ -59,6 +59,7 @@ const NODER = path.join(rresources, "bin", "R");
 
 const childProcess = child.spawn(NODER, ['-e', '<?<R_SHINY_FUNCTION>?>(options = list(port = ' + srv.address().port + '))']);
 
+
 // Log outputs from the R process
 childProcess.stdout.on('data', (data) => {
   log.warn(`stdout:${data}`);
