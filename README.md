@@ -1,10 +1,8 @@
 [![Lifecycle:
-    experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![Build Status](https://dev.azure.com/chasec288/electricShine/_apis/build/status/chasemc.electricShine?branchName=master)](https://dev.azure.com/chasec288/electricShine/_build/latest?definitionId=4&branchName=master)
 
 # electricShine  <img src="man/figures/logo.png" align="right" alt="" width="120" />
-
-
 
 
 # Purpose
@@ -47,30 +45,22 @@ Your shiny app should be built as an R package and should list all dependencies,
 A template for designing a shiny app as a package may be found here: https://github.com/ThinkR-open/shinytemplate
 
 
-Important: your package must contain a function that electricShine can use to start your app. This function must contain an argument `port` to be passed to `shiny::shinyApp`. The easiest thing to do would be to modify the example below (change `demoApp` to your package name). 
-```{r}
-# Example for an R package named `demoApp`:
+Important: your package must contain a function that electricShine can use to start your app.
+This function must have an `options` argument to pass to to `shiny::shinyApp()` (example below).
+To modify the example: Replace the `app_ui` with your package's `app_ui` function name. Replace the  `app_server` with your package's `app_server` function name. 
 
-run_app <- function(port = NULL) {
-  
-  if (is.null(port)) {
-    shiny::shinyApp(ui = demoApp::app_ui(),
-                    server = demoApp::app_server)
-  } else {
-    port <- try(as.integer(port))
-    if (is.integer(port) && port > 0L) {
-      shiny::shinyApp(ui = demoApp::app_ui(),
-                      server = demoApp::app_server,
-                      options = list(port = port))
-    }
-  }
-  
+
+```{r}
+run_app <- function(options = list()) {
+  shiny::shinyApp(ui = app_ui,
+                  server = app_server,
+                  options = options) 
 }
 
 ```
 
 
-An example app structured for use with `{electricShine}` can be found at https://github.com/chasemc/demoApp; includes continuous deployment using AppVeyor.
+An example app structured for use with `{electricShine}` can be found at https://github.com/chasemc/electricShine/inst/demoApp; includes continuous deployment using AppVeyor.
 
 
 # Main Function
@@ -79,22 +69,21 @@ An example app structured for use with `{electricShine}` can be found at https:/
 buildPath <- tempdir()
 
 electricShine::electrify(app_name = "My_App",
-                                short_description = "My demo application",
-                                semantic_version = "1.0.0",
-                                build_path = buildPath,
-                                mran_date = NULL,
-                                cran_like_url = "https://cran.r-project.org",
-                                function_name = "run_app",
-                                git_host = NULL,
-                                git_repo = NULL,
-                                local_package_path = system.file("demoApp", 
-                                                                 package = "electricShine"),
-                                package_install_opts = list(type = "binary"),
-                                run_build = TRUE)
+                         short_description = "My demo application",
+                         semantic_version = "1.0.0",
+                         build_path = buildPath,
+                         mran_date = NULL,
+                         cran_like_url = "https://cran.r-project.org",
+                         function_name = "run_app",
+                         git_host = "github",
+                         git_repo = "chasemc/demoApp@8426481",
+                         local_package_path = NULL,
+                         package_install_opts = list(type = "binary"),
+                         run_build = TRUE)
 ```
 Please see the "Basic Use" vignette for further instructions.
 
-  
+
 # Continuous Deployment (CD)
 
 One of the main reasons I wrote this package was to allow easy CD, and `{electricShine}` is currently compatible with CD. I hope to write more on this later.
@@ -105,5 +94,4 @@ One of the main reasons I wrote this package was to allow easy CD, and `{electri
 
 - https://github.com/chasemc/IDBacApp
 - https://github.com/chasemc/demoApp
-- https://github.com/chasemc/processView
 

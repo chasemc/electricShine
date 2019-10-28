@@ -1,13 +1,13 @@
 ---
-title: "Basic Use"
+title: "General Overview"
 output: rmarkdown::html_vignette
 vignette: >
-%\VignetteIndexEntry{Basic Use}
+  %\VignetteIndexEntry{Basic Use}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  ---
+---
   
-  ```{r, include = FALSE}
+```{r, include = FALSE}
   knitr::opts_chunk$set(
 collapse = TRUE,
 comment = "#>",
@@ -39,7 +39,7 @@ Your package must have a function that starts your Shiny app.
 
 
 The function must have an `options` argument to pass to to `shiny::shinyApp()` (example below).
-To modify the example: Replace the two `app_ui` with your package's `app_ui` function name. Replace the two `app_server` with your package's `app_server` function name. 
+To modify the example: Replace the `app_ui` with your package's `app_ui` function name. Replace the  `app_server` with your package's `app_server` function name. 
 
 
 ```{r}

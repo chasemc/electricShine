@@ -11,7 +11,7 @@
   # Either 'cran_like_url' or 'local_package_path_path' must be set
   if (is.null(c(cran_like_url, mran_date))) {
     base::stop("electricShine requires you to specify either a 'cran_like_url' or 'mran_date' argument specifying
-         the shiny app/package to be turned into an Electron app") 
+         the shiny app/package to be turned into an Electron app. The url for CRAN is: 'https://cran.r-project.org'") 
   }
   
   # Ensure that 'cran_like_url' and 'mran_date' aren't set at the same time.

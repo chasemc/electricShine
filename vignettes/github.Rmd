@@ -1,0 +1,45 @@
+---
+title: "Create an app from a package on Github"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{App from Github Repo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(electricShine)
+```
+
+If your Shiny app package is hosted on github you can install using `git_host = "github"`.
+
+The `git_repo`  argumnt is used the same as the `repo` argumentfor `remotes::install_github()`
+
+In the example below, we install the `demoApp` repository from my accoun `chasemc` at git commit `8426481`.
+
+All other arguments for `remotes::install_github()` can be provided as a list using the argument `package_install_opts`. In the example below we set the equivalent of `remotes::install_github(type=binary)` so that we only install binary packages from CRAN even if there is a newer source version. We also set the equivalent of  `remotes::install_github(dependencies = c("Depends", "Imports"))`. 
+
+```{r}
+buildPath <- tempdir()
+
+electricShine::electrify(app_name = "My_App",
+                         short_description = "My demo application",
+                         semantic_version = "1.0.0",
+                         build_path = buildPath,
+                         function_name = "run_app",
+                         git_host = "github",
+                         git_repo = "chasemc/demoApp@8426481",
+                         package_install_opts = list(type = "binary",
+                                                     dependencies = c("Depends", 
+                                                                      "Imports")
+                                                     ),
+                         cran_like_url = "https://cran.r-project.org"
+                         )
+```

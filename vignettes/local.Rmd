@@ -1,0 +1,36 @@
+---
+title: "Create an app from a local package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Create an app from a local package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+  
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+collapse = TRUE,
+comment = "#>"
+)
+```
+
+```{r setup}
+library(electricShine)
+```
+
+
+```{r}
+buildPath <- tempdir()
+
+my_package <-  system.file("demoApp", package = "electricShine")
+
+electricShine::electrify(app_name = "My_App2",
+                         short_description = "My demo application",
+                         semantic_version = "1.0.0",
+                         build_path = buildPath,
+                         cran_like_url = "https://cran.r-project.org",
+                         function_name = "run_app",
+                         local_package_path = my_package,
+                         package_install_opts = list(type = "binary"))
+```
+

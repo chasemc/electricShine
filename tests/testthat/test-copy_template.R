@@ -11,7 +11,7 @@ electricShine::copy_template(a)
 
 a <- sort(list.files(a, recursive = T))
 
-expected <- sort(c("app/app.R",
+expected <- sort(c(
               "build/start.js",
               "build/webpack.app.config.js",
               "build/webpack.base.config.js",
