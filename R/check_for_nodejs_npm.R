@@ -19,7 +19,8 @@
   os <- electricShine::get_os()
   
   node_path <- normalizePath(node_top_dir,
-                             "/")
+                             "/",
+                             mustWork = FALSE)
   
   if (os == "win") {
     
@@ -127,7 +128,6 @@
                        error = function(e) FALSE, 
                        warning = function(e) FALSE)
     
-    # TODO Write a etter check for npm response
     if(isFALSE(result)) { 
       
       message(glue::glue("npm executable was found but seems not to be functional."))
