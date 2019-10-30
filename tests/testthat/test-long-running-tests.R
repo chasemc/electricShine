@@ -324,18 +324,13 @@ test_that("install_r works", {
 
 
 
-
-
-
-
-  electricShine::install_user_app(library_path =file.path(dirname(installed_r), "library"),
+installed_app <- electricShine::install_user_app(library_path =file.path(dirname(installed_r), "library"),
                                   repo_location = "github",
                                   repo = "chasemc/electricShine",
                                   repos = repos,
                                   package_install_opts = list(type = "binary",
                                                               subdir = "inst/demoApp",
                                                               args = "--no-test-load"))
-  
   
   
 expected_pkgs <- sort(c("base",
@@ -473,95 +468,95 @@ test_that(".check_npm_works ", {
 
 
 
-
-# Metafunction tests ------------------------------------------------------
-temp <- file.path(tempdir(),
-                  "space path",
-                  "Test_Apps")
-buildPath <- temp
-dir.create(temp)
-MRANdate <- as.character(Sys.Date() - 3)
-
-
-  electricShine::electrify(app_name = "Test_App",
-                           product_name = "test prod name",
-                           short_description = "test desc",
-                           semantic_version = "1.0.0",
-                           build_path = buildPath,
-                           mran_date = NULL,
-                           cran_like_url = "https://cran.r-project.org",
-                           function_name = "run_app",
-                           git_host = NULL,
-                           git_repo = NULL,
-                           local_package_path = system.file("demoApp",
-                                                            package = "electricShine"),
-                           package_install_opts = list(type = "binary"),
-                           run_build = TRUE,
-                           nodejs_path = getnode,
-                           nodejs_version = nodejs_version,
-                           permission = TRUE)
-
-
-
-
-a <- list.dirs(buildPath, recursive = F, full.names = F)
-
-test_that("metaFunction builds app dir", {
-  testthat::expect_length(grep("Test_App", a),
-                          1)
-})
-
-#----
-
-b <- file.path(buildPath, "Test_App")
-a <- list.dirs(b,
-               recursive = F,
-               full.names = F)
-expected <- c("app",
-              "build",
-              "config",
-              "dist",
-              "e2e",
-              "helpers",
-              "menu",
-              "node_modules",
-              "resources",
-              "src",
-              "temp")
-
-test_that("metaFunction scaffolds app build", {
-  testthat::expect_equal(a, expected)
-})
-
-#----
-
-b <- file.path(buildPath, "Test_App", "app")
-a <- list.files(b,
-                recursive = F,
-                full.names = F)
-expected <- c("background.js",
-              "background.js.map",
-              "loading.html",
-              "r_lang")
-
-test_that("metaFunction scaffolds app dir", {
-  testthat::expect_equal(sort(a),
-                         sort(expected))
-})
-
-
-#----
-
-
-b <- file.path(buildPath, "Test_App", "app", "r_lang", "bin", "Rscript.exe")
-b <- normalizePath(b, "/")
-b <- shQuote(b)
-w <- system(paste0(b, " -e 2+2"),
-            intern = T)
-
-test_that("metaFunction has working rcript.exe for windows", {
-  skip_on_os(c("mac","linux"))
-  testthat::expect_equal(w,
-                         "[1] 4")
-})
-
+# 
+# # Metafunction tests ------------------------------------------------------
+# temp <- file.path(tempdir(),
+#                   "space path",
+#                   "Test_Apps")
+# buildPath <- temp
+# dir.create(temp)
+# MRANdate <- as.character(Sys.Date() - 3)
+# 
+# 
+#   electricShine::electrify(app_name = "Test_App",
+#                            product_name = "test prod name",
+#                            short_description = "test desc",
+#                            semantic_version = "1.0.0",
+#                            build_path = buildPath,
+#                            mran_date = NULL,
+#                            cran_like_url = "https://cran.r-project.org",
+#                            function_name = "run_app",
+#                            git_host = NULL,
+#                            git_repo = NULL,
+#                            local_package_path = system.file("demoApp",
+#                                                             package = "electricShine"),
+#                            package_install_opts = list(type = "binary"),
+#                            run_build = TRUE,
+#                            nodejs_path = getnode,
+#                            nodejs_version = nodejs_version,
+#                            permission = TRUE)
+# 
+# 
+# 
+# 
+# a <- list.dirs(buildPath, recursive = F, full.names = F)
+# 
+# test_that("metaFunction builds app dir", {
+#   testthat::expect_length(grep("Test_App", a),
+#                           1)
+# })
+# 
+# #----
+# 
+# b <- file.path(buildPath, "Test_App")
+# a <- list.dirs(b,
+#                recursive = F,
+#                full.names = F)
+# expected <- c("app",
+#               "build",
+#               "config",
+#               "dist",
+#               "e2e",
+#               "helpers",
+#               "menu",
+#               "node_modules",
+#               "resources",
+#               "src",
+#               "temp")
+# 
+# test_that("metaFunction scaffolds app build", {
+#   testthat::expect_equal(a, expected)
+# })
+# 
+# #----
+# 
+# b <- file.path(buildPath, "Test_App", "app")
+# a <- list.files(b,
+#                 recursive = F,
+#                 full.names = F)
+# expected <- c("background.js",
+#               "background.js.map",
+#               "loading.html",
+#               "r_lang")
+# 
+# test_that("metaFunction scaffolds app dir", {
+#   testthat::expect_equal(sort(a),
+#                          sort(expected))
+# })
+# 
+# 
+# #----
+# 
+# 
+# b <- file.path(buildPath, "Test_App", "app", "r_lang", "bin", "Rscript.exe")
+# b <- normalizePath(b, "/")
+# b <- shQuote(b)
+# w <- system(paste0(b, " -e 2+2"),
+#             intern = T)
+# 
+# test_that("metaFunction has working rcript.exe for windows", {
+#   skip_on_os(c("mac","linux"))
+#   testthat::expect_equal(w,
+#                          "[1] 4")
+# })
+# 
