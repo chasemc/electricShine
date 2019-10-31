@@ -4,15 +4,20 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 # electricShine  <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
+## Installation
+```
+# install.packages("devtools")
+devtools::install_github("tidyverse/dplyr")
+```
 
-# Purpose
+## Purpose
 
 Sometimes an R Shiny app is too resource-intensive, or otherwise resticted, to be deployed into the cloud. Along with this, it can be non-trivial for someone inexperienced with R, or programming in general, to install R and open your Shiny app. 
 
 For these reasons it is desireable to be able to create a Shiny app that can be opened like a "regular" computer application, preferably from a Desktop shortcut. This is the purpose of  `{electricShine}` and what it will do with your Shiny app.
 
 
-# High-Level Overview
+## High-Level Overview
 
 `{electricShine}` is based on [Electron](https://electronjs.org) which is a well-used and supported framework for creating desktop applications, usually using just javascript, html and css.
 
@@ -21,7 +26,7 @@ Repeatability of creating these desktop apps is a priority of `{electricShine}`,
 It currently only builds windows apps, but I'm investiging adding support for Mac and Linux as well. That is quite a bit harder because the R installation for Mac and Linux hard-codes paths into the installation and part of the benefit of `{electricShine}` is not relying on the system's version of R https://community.rstudio.com/t/is-r-on-mac-portable/36642/8 
 
 
-# Security
+## Security
 
 It is your responsibility to make sure you are not causing malicious activity through your shiny app.
 Below is an excerpt from https://electronjs.org/docs/tutorial/security and I **highly** recommend you go to the link and read the rest.
@@ -38,7 +43,7 @@ Below is an excerpt from https://electronjs.org/docs/tutorial/security and I **h
 
 
 
-# Getting Started
+## Getting Started
 
 Your shiny app should be built as an R package and should list all dependencies, as an R package would. 
 
@@ -63,7 +68,7 @@ run_app <- function(options = list()) {
 An example app structured for use with `{electricShine}` can be found at https://github.com/chasemc/electricShine/inst/demoApp; includes continuous deployment using AppVeyor.
 
 
-# Main Function
+## Main Function
 
 ```{r}
 buildPath <- tempdir()
@@ -84,13 +89,13 @@ electricShine::electrify(app_name = "My_App",
 Please see the "Basic Use" vignette for further instructions.
 
 
-# Continuous Deployment (CD)
+## Continuous Deployment (CD)
 
 One of the main reasons I wrote this package was to allow easy CD, and `{electricShine}` is currently compatible with CD. I hope to write more on this later.
 
 
 
-# Packages/Shiny Apps Using `{electricShine}`
+## Packages/Shiny Apps Using `{electricShine}`
 
 - https://github.com/chasemc/IDBacApp
 - https://github.com/chasemc/demoApp
