@@ -25,10 +25,6 @@
 
 steps:
   - bash: |
-      Rscript -e "cov <- covr::azure()"
-      Rscript -e "cov <- covr::azure()"
+      Rscript -e "cov <- covr::codecov()"
     displayName: 'Run code coverage'
   - task: PublishCodeCoverageResults@1
-    inputs:
-      codeCoverageTool: 'Cobertura'
-      summaryFileLocation: 'coverage.xml'
