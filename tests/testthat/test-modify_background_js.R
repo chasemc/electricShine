@@ -26,8 +26,8 @@ modify_background_js(background_js_path = background_js_path,
                      function_name = "apprunner", 
                      r_path = "a")
 
-a <- readLines(background_js_path)[[60]]
-a2 <- "const childProcess = child.spawn(NODER, ['-e', 'testcheck::apprunner(options = list(port = ' + srv.address().port + '))']);"
+a <- readLines(background_js_path)[[156]]
+a2 <- "    ['-e', 'testcheck::apprunner(options = list(port = ' + srv.address().port + '))'], {"
 
 test_that("multiplication works", {
   expect_identical(a, a2)

@@ -99,6 +99,6 @@ jobs:
       - template: pkg-workflow.yml
         parameters:
           args: "c('--no-manual', '--no-multiarch')"
-          coverage: false
+          coverage: true
           cache: false
 
