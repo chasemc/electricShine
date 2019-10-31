@@ -1,4 +1,4 @@
-if (electricShine::get_os() != unix) {
+if (electricShine::get_os() != "unix") {
   
   context("test-long_running_tests")
   
