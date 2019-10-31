@@ -12,7 +12,7 @@
   "chai": "4.2.0",
   "css-loader": "3.2.0",
   "electron": "7.0.0",
-  "electron-builder": "21.2.0",
+  "electron-builder": "22.1.0",
   "electron-mocha": "8.1.2",
   "friendly-errors-webpack-plugin": "1.7.0",
   "mocha": "6.2.2",
