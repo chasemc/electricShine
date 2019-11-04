@@ -1,5 +1,5 @@
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+Maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Build Status](https://dev.azure.com/chasec288/electricShine/_apis/build/status/chasemc.electricShine?branchName=master)](https://dev.azure.com/chasec288/electricShine/_build/latest?definitionId=4&branchName=master)
 
 # electricShine  <img src="man/figures/logo.png" align="right" alt="" width="120" />
