@@ -5,8 +5,8 @@
   "execa": "3.3.0"
   },
   "devDependencies": {
-  "@babel/core": "7.7.2",
-  "@babel/preset-env": "7.7.1",
+  "@babel/core": "7.7.4",
+  "@babel/preset-env": "7.7.4",
   "babel-loader": "8.0.6",
   "babel-plugin-transform-object-rest-spread": "6.26.0",
   "chai": "4.2.0",
