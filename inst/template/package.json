@@ -2,16 +2,16 @@
  "dependencies": {
   "fs-jetpack": "2.2.3",
   "electron-log": "4.0.0",
-  "execa": "3.4.0"
+  "execa": "4.0.0"
   },
   "devDependencies": {
-  "@babel/core": "7.7.5",
-  "@babel/preset-env": "7.7.6",
+  "@babel/core": "7.7.7",
+  "@babel/preset-env": "7.7.7",
   "babel-loader": "8.0.6",
   "babel-plugin-transform-object-rest-spread": "6.26.0",
   "chai": "4.2.0",
   "css-loader": "3.4.1",
-  "electron": "7.1.5",
+  "electron": "7.1.8",
   "electron-builder": "22.2.0",
   "electron-mocha": "8.1.2",
   "friendly-errors-webpack-plugin": "1.7.0",
@@ -19,7 +19,7 @@
   "source-map-support": "0.5.16",
   "spectron": "9.0.0",
   "style-loader": "1.0.2",
-  "webpack": "4.41.3",
+  "webpack": "4.41.5",
   "webpack-cli": "3.3.10",
   "webpack-merge": "4.2.2",
   "webpack-node-externals": "1.7.2"
