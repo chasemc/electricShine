@@ -26,4 +26,5 @@ steps:
   - bash: |
       echo 'options(repos = "$(CRAN)", Ncpus = 2, crayon.enabled = TRUE)' > ~/.Rprofile
       mkdir -p $(R_LIBS_USER)
+      echo $(R_LIBS_USER)
     displayName: "Setting up R library"
