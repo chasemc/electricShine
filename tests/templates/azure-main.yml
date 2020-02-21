@@ -87,18 +87,18 @@ jobs:
           coverage: ${{parameters.coverage}}
 
 
-  - job: 'Windows'
-    variables:
-      CRAN: ${{parameters.CRAN}}
-      R_LIBS_USER: ${{parameters.R_LIBS_USER}}
-      ${{ insert }}: ${{ parameters.env }}
-    pool:
-      vmImage: 'windows-2019'
-    steps:
-      - template: r-setup-windows.yml
-      - template: pkg-workflow.yml
-        parameters:
-          args: "c('--no-manual', '--no-multiarch')"
-          coverage: true
-          cache: false
+#  - job: 'Windows'
+#    variables:
+#      CRAN: ${{parameters.CRAN}}
+#      R_LIBS_USER: ${{parameters.R_LIBS_USER}}
+#      ${{ insert }}: ${{ parameters.env }}
+#    pool:
+#      vmImage: 'windows-2019'
+#    steps:
+#      - template: r-setup-windows.yml
+#      - template: pkg-workflow.yml
+#        parameters:
+#          args: "c('--no-manual', '--no-multiarch')"
+#          coverage: true
+#          cache: false
 
