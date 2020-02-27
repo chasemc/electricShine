@@ -23,7 +23,7 @@ if (electricShine::get_os() != "unix") {
   
   installed_r <-  electricShine::install_r(cran_like_url = "https://cran.r-project.org",
                                            app_root_path = tmp,
-                                           mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz",
+                                           mac_url = "https://mac.r-project.org/el-capitan/R-devel/R-devel-el-capitan-sa-x86_64.tar.gz",
                                            permission_to_install = TRUE)
   
   
