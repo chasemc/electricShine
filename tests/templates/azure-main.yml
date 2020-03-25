@@ -3,17 +3,17 @@
 # MIT License
 #
 # Copyright (c) 2019 Jim Hester
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -42,10 +42,6 @@ jobs:
       vmImage: 'Ubuntu-16.04'
     strategy:
       matrix:
-        R-3.2:
-          containerImage: rstudio/r-base:3.2-xenial
-        R-3.3:
-          containerImage: rstudio/r-base:3.3-xenial
         R-3.4:
           containerImage: rstudio/r-base:3.4-xenial
         R-3.5:
