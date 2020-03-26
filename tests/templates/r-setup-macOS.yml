@@ -24,7 +24,7 @@
 
 steps:
   - script: |
-      curl -fLo /tmp/R.pkg "$(CRAN)/bin/macosx/R-latest.pkg"
+      curl -fLo /tmp/R.pkg "$(CRAN)/bin/bin/macosx/el-capitan/base/R-latest.pkg"
       sudo installer -pkg "/tmp/R.pkg" -target /
       rm /tmp/R.pkg
     displayName: 'Installing R'
