@@ -56,13 +56,13 @@ jobs:
           coverage: false
 
 
-  - job: 'macMojave'
+  - job: 'macCatalina'
     variables:
       CRAN: ${{parameters.CRAN}}
       R_LIBS_USER: ${{parameters.R_LIBS_USER}}
       ${{ insert }}: ${{ parameters.env }}
     pool:
-      vmImage: 'macOS-10.13'
+      vmImage: 'macOS-10.15'
     steps:
       - template: r-setup-macOS.yml
       - template: pkg-workflow.yml
