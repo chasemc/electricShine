@@ -6,8 +6,8 @@ Maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www
 
 ## Installation
 ```
-# install.packages("devtools")
-devtools::install_github("tidyverse/dplyr")
+# install.packages("remotes")
+remotes::install_github("chasemc/electricShine
 ```
 
 ## Purpose
