@@ -7,7 +7,7 @@ Maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www
 ## Installation
 ```
 # install.packages("remotes")
-remotes::install_github("chasemc/electricShine
+remotes::install_github("chasemc/electricShine")
 ```
 
 ## Purpose
