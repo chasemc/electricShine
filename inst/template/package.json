@@ -16,7 +16,7 @@
   "electron-mocha": "8.2.0",
   "friendly-errors-webpack-plugin": "1.7.0",
   "mocha": "7.1.1",
-  "source-map-support": "0.5.17",
+  "source-map-support": "0.5.18",
   "spectron": "9.0.0",
   "style-loader": "1.1.4",
   "webpack": "4.43.0",
