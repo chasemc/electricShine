@@ -15,7 +15,7 @@
   "electron-builder": "22.6.0",
   "electron-mocha": "8.2.0",
   "friendly-errors-webpack-plugin": "1.7.0",
-  "mocha": "7.1.1",
+  "mocha": "7.1.2",
   "source-map-support": "0.5.19",
   "spectron": "9.0.0",
   "style-loader": "1.2.1",
