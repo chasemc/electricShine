@@ -4,14 +4,26 @@
 \alias{electrify}
 \title{Meta-function}
 \usage{
-electrify(app_name = NULL, product_name = "product_name",
-  short_description = NULL, semantic_version = NULL,
-  build_path = NULL, mran_date = NULL, cran_like_url = NULL,
-  function_name = NULL, git_host = NULL, git_repo = NULL,
-  local_package_path = NULL, package_install_opts = NULL,
-  run_build = TRUE, nodejs_path = file.path(system.file(package =
-  "electricShine"), "nodejs"), nodejs_version = "v10.16.0",
-  permission = FALSE)
+electrify(
+  app_name = NULL,
+  product_name = "product_name",
+  short_description = NULL,
+  semantic_version = NULL,
+  build_path = NULL,
+  mran_date = NULL,
+  cran_like_url = NULL,
+  function_name = NULL,
+  git_host = NULL,
+  git_repo = NULL,
+  local_package_path = NULL,
+  package_install_opts = NULL,
+  run_build = TRUE,
+  nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
+  nodejs_version = "v12.16.2",
+  permission = FALSE,
+ 
+    mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz"
+)
 }
 \arguments{
 \item{app_name}{This will be the name of the executable. It's a uniform type identifier (UTI)
@@ -53,6 +65,8 @@ Can also use notation for commits/branch (i.e. "chasemc/demoapp@d81fff0).}
 \item{nodejs_version}{nodejs version to install}
 
 \item{permission}{automatically grant permission to install nodejs and R}
+
+\item{mac_url}{url to mac OS tar.gz}
 }
 \description{
 Meta-function

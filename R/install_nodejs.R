@@ -12,7 +12,7 @@
 install_nodejs <- function(node_url = "https://nodejs.org/dist",
                            nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
                            force_install = FALSE,
-                           nodejs_version = "v10.16.0",
+                           nodejs_version = "v12.16.2",
                            permission_to_install  = FALSE){
   
   

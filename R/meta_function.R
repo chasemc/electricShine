@@ -42,7 +42,7 @@ electrify <- function(app_name = NULL,
                       package_install_opts = NULL,
                       run_build = TRUE,
                       nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
-                      nodejs_version = "v10.16.0",
+                      nodejs_version = "v12.16.2",
                       permission = FALSE,
                       mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz"){
   
