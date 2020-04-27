@@ -24,6 +24,7 @@
 #' @param nodejs_path path to nodejs
 #' @param nodejs_version nodejs version to install
 #' @param permission automatically grant permission to install nodejs and R 
+#' @param mac_url url to mac OS tar.gz 
 #'
 #' @export
 #'
@@ -42,7 +43,8 @@ electrify <- function(app_name = NULL,
                       run_build = TRUE,
                       nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
                       nodejs_version = "v10.16.0",
-                      permission = FALSE){
+                      permission = FALSE,
+                      mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz"){
   
   
   
@@ -123,7 +125,7 @@ electrify <- function(app_name = NULL,
   # Download and Install R --------------------------------------------------
   electricShine::install_r(cran_like_url = cran_like_url,
                            app_root_path = app_root_path,
-                           mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz",
+                           mac_url = mac_url,
                            permission_to_install = permission_to_install_r)
   
   # Trim R's size -----------------------------------------------------------
