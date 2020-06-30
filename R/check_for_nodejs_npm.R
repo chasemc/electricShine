@@ -103,9 +103,6 @@
                             "/", 
                             mustWork = FALSE)
   
-  npm_path <- file.path(npm_path,
-                        "npm")  
-  
   npm_exists <- file.exists(npm_path)
   
   if (!npm_exists) {
@@ -118,10 +115,13 @@
     
     # Check that the npm version is the same as what we expect
     
+    npm_path <- file.path(npm_path,
+                          "node")  
+    
     quoted_npm_path <- shQuote(npm_path)
     
     command <- paste0(quoted_npm_path, 
-                      " -v")
+                      "npm -v")
     
     result <- tryCatch(system(command,
                               intern = T),
