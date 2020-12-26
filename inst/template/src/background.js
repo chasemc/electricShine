@@ -153,7 +153,7 @@ const tryStartWebserver = async (attempt, progressCallback, onErrorStartup,
   let shinyProcessAlreadyDead = false
 
   rShinyProcess = execa(NODER,
-    ['-e', '<?<R_SHINY_FUNCTION>?>(options = list(port = ' + srv.address().port + '))'], {
+    ['-vanilla -e', '<?<R_SHINY_FUNCTION>?>(options = list(port = ' + srv.address().port + '))'], {
       env: {
         //Necessary for letting R know where it is and ensure we're not using another R 
         'WITHIN_ELECTRON': 'T', // can be used within an app to implement specific behaviour

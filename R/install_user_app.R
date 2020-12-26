@@ -234,7 +234,8 @@ system_install_pkgs <- function(rscript_path){
   
   if (identical(os, "win")) {
     system2(rscript_path,
-            paste0("-e ",
+            paste0("-vanilla ",
+                   "-e ",
                    "electricShine::install_package()"),
             wait = TRUE,
             stdout = "")
@@ -242,7 +243,8 @@ system_install_pkgs <- function(rscript_path){
   
   if (identical(os, "mac")) {
     system2(rscript_path,
-            paste0("-e ",
+            paste0("-vanilla ",
+                   "-e ",
                    "'",
                    "electricShine::install_package()",
                    "'"),
