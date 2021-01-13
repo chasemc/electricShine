@@ -10,7 +10,7 @@
   "babel-loader": "8.2.2",
   "babel-plugin-transform-object-rest-spread": "6.26.0",
   "chai": "4.2.0",
-  "css-loader": "3.6.0",
+  "css-loader": "5.0.1",
   "electron": "9.4.1",
   "electron-builder": "22.9.1",
   "electron-mocha": "9.3.3",
