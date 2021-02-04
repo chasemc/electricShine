@@ -9,7 +9,7 @@
   "@babel/preset-env": "7.12.11",
   "babel-loader": "8.2.2",
   "babel-plugin-transform-object-rest-spread": "6.26.0",
-  "chai": "4.2.0",
+  "chai": "4.3.0",
   "css-loader": "3.6.0",
   "electron": "9.4.1",
   "electron-builder": "22.9.1",
