@@ -57,19 +57,6 @@ conda_exec_path <- function(miniconda_installation_path){
 
 }
 
-check_conda_version <- function(conda_path){
-  if (!file.exists(conda_path)){
-    stop(paste0("Couldn't find: ", conda_path))
-  }
-  res <- system2(conda_path, "-V", stdout = T)
-
-  if (grepl("conda", res)){
-    return(res)
-  } else {
-    stop("Something went wrong detecting conda")
-
-  }
-}
 
 
 conda_create_env <- function(conda_path){
