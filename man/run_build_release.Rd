@@ -4,8 +4,11 @@
 \alias{run_build_release}
 \title{Create an electron-builder release}
 \usage{
-run_build_release(nodejs_path = file.path(system.file(package =
-  "electricShine"), "nodejs"), app_path, nodejs_version)
+run_build_release(
+  nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
+  app_path,
+  nodejs_version
+)
 }
 \arguments{
 \item{nodejs_path}{parent folder of node.exe (~nodejs_path/node.exe)}

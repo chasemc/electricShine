@@ -4,9 +4,13 @@
 \alias{install_user_app}
 \title{Install shiny app package and dependencies}
 \usage{
-install_user_app(library_path = NULL, repo_location = "github",
-  repo = "chasemc/IDBacApp", repos = cran_like_url,
-  package_install_opts = NULL)
+install_user_app(
+  library_path = NULL,
+  repo_location = "github",
+  repo = "chasemc/IDBacApp",
+  repos = cran_like_url,
+  package_install_opts = NULL
+)
 }
 \arguments{
 \item{library_path}{path to the new Electron app's R's library folder}
@@ -29,24 +33,24 @@ Install shiny app package and dependencies
 
 \dontrun{
 
-install_user_app(repo_location = "github", 
+install_user_app(repo_location = "github",
                  repo = "chasemc/demoApp@d81fff0")
-                 
-install_user_app(repo_location = "github", 
+
+install_user_app(repo_location = "github",
                  repo = "chasemc/demoApp@d81fff0",
-                 auth_token = "my_secret_token")                  
-                 
-install_user_app(repo_location = "bitbucket", 
+                 auth_token = "my_secret_token")
+
+install_user_app(repo_location = "bitbucket",
                  repo = "chasemc/demoApp",
-                 auth_user = bitbucket_user(), 
-                 password = bitbucket_password())        
-                 
-install_user_app(repo_location = "gitlab", 
+                 auth_user = bitbucket_user(),
+                 password = bitbucket_password())
+
+install_user_app(repo_location = "gitlab",
                  repo = "chasemc/demoApp",
-                 auth_token = "my_secret_token")   
-install_user_app(repo_location = "local", 
+                 auth_token = "my_secret_token")
+install_user_app(repo_location = "local",
                  repo = "C:/Users/chase/demoApp",
-                 build_vignettes = TRUE)                                      
+                 build_vignettes = TRUE)
 }
 
 }

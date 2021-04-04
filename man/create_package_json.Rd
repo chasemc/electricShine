@@ -4,10 +4,19 @@
 \alias{create_package_json}
 \title{Create the package.json file for npm}
 \usage{
-create_package_json(app_name = "MyApp", description = "description",
-  semantic_version = "0.0.0", app_root_path = NULL, repository = "",
-  author = "", copyright_year = "", copyright_name = "",
-  website = "", license = "", deps = NULL)
+create_package_json(
+  app_name = "MyApp",
+  description = "description",
+  semantic_version = "0.0.0",
+  app_root_path = NULL,
+  repository = "",
+  author = "",
+  copyright_year = "",
+  copyright_name = "",
+  website = "",
+  license = "",
+  deps = NULL
+)
 }
 \arguments{
 \item{app_name}{name of your app. This is what end-users will see/call an app}

@@ -1,30 +1,20 @@
-conda_install <- function(conda_path, conda_env="eshine", lib, repo=FALSE){
-  if (!file.exists(conda_path)){
-    stop(paste0("Couldn't find: ", conda_path))
-  }
-  if (repo) {
-    system2(conda_path,
-            c("install",
-              paste0("-n ", conda_env),
-              paste0("-c ", repo),
-              lib,
-              "-y"),
-            stdout = "")
-  } else {
-    system2(conda_path,
-            c("install",
-              paste0("-n ", conda_env),
-              lib,
-              "-y"),
-            stdout = "")
-  }
-}
-
-
-install_r_packages <- function(package, repo="https://cran.r-project.org",miniconda_installation_path, env_name = "eshine"){
+#' Install R package within conda
+#'
+#' @inheritParams conda_params
+#'
+#' @param r_package_name name of package to install
+#' @param repo cran-like repo to install from
+#'
+#' @return
+#' @export
+#'
+install_r_packages <- function(r_package_name,
+                               repo="https://cran.r-project.org",
+                               conda_top_dir,
+                               conda_env = "eshine"){
 
   script <- paste0("install.packages('",
-                   package,
+                   r_package_name,
                    "',",
                    "repos='",
                    repo,
@@ -34,25 +24,23 @@ install_r_packages <- function(package, repo="https://cran.r-project.org",minico
   script <-  paste0("Rscript -e ",
                     shQuote(script, type = "cmd"))
 
-
-
   script <- paste0("source ",
                    shQuote(
-                     file.path(miniconda_installation_path,
+                     file.path(conda_top_dir,
                                "bin",
                                "activate")
                    ),
                    " ",
                    shQuote(
-                     file.path(miniconda_installation_path,
+                     file.path(conda_top_dir,
                                "envs",
-                               env_name)
+                               conda_env)
                    ),
                    " && ",
                    script,
                    " && ",
                    shQuote(
-                     file.path(miniconda_installation_path,
+                     file.path(conda_top_dir,
                                "bin",
                                "deactivate")
                    )
@@ -62,22 +50,60 @@ install_r_packages <- function(package, repo="https://cran.r-project.org",minico
 
 
 
-install_r_remotes <- function(package, repo="https://cran.r-project.org", env_path){
+#' Install {remotes} R package
+#'
+#' @inheritParams conda_params
+#'
+#' @return
+#' @export
+#'
+install_r_remotes <- function(conda_top_dir,
+                              r_package_repo="https://cran.r-project.org",
+                              conda_env = "eshine"){
 
-  rscript_path <- file.path(env_path,
-                            "bin",
-                            "R")
-
-  script <- paste0("install.packages('",
-                   "remotes",
-                   "',",
-                   "repos='",
-                   repo,
-                   "')")
-
-  script <-  paste0("-e ",
-                    shQuote(script))
-  system2(rscript_path,
-          # env = c("CONDA_BUILD_SYSROOT"="$(xcrun --show-sdk-path)"),
-          script)
+  install_r_packages(r_package_name = "remotes",
+                     r_package_repo = r_package_repo,
+                     conda_top_dir = conda_top_dir,
+                     conda_env = conda_env)
 }
+
+
+
+#' Currently broken, installs to local r need to fix env-vars like in previous release
+#'
+#' @inheritParams conda_params
+#' @param repo_location {remotes} package function, one of c("github", "gitlab", "bitbucket", "local")
+#' @param repo e.g. if repo_location is github: "chasemc/demoApp" ; if repo_location is local: "C:/Users/chase/demoApp"
+#' @param dependencies_repo cran-like repo to install R package dependencies from
+#' @param package_install_opts optional arguments passed to remotes::install_github, install_gitlab, install_bitbucket, or install_local
+#'
+#' @return
+#' @export
+#'
+install_remote_package <- function(conda_top_dir,
+                                   conda_env = "eshine",
+                                   repo_location = "github",
+                                   repo = "chasemc/demoapp",
+                                   dependencies_repo = "https://cran.r-project.org",
+                                   package_install_opts = NULL){
+
+
+  remotes_code <- paste0("install_", repo_location)
+
+  repo <- as.list(repo)
+
+  passthr <- c(repo, repos = dependencies_repo,
+               c(package_install_opts,
+                 list(force = TRUE)
+               ))
+
+  remotes_code <- getFromNamespace(remotes_code,
+                                   ns = "remotes")
+
+  z <- do.call(remotes_code, passthr)
+
+
+}
+
+
+
