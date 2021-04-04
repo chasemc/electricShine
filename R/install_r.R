@@ -9,7 +9,7 @@
 #'
 install_r <- function(cran_like_url = NULL,
                       app_root_path,
-                      mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz",
+                      mac_url = "https://mac.r-project.org/high-sierra/R-4.0-branch/x86_64/R-4.0-branch.tar.gz",
                       permission_to_install  = FALSE){
   
   
