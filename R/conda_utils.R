@@ -29,7 +29,6 @@ find_conda_program <- function(conda_top_dir){
 #'
 check_conda <- function(conda_path){
   if (!file.exists(conda_path)) {
-    stop(paste0("Couldn't find: ", conda_path))
   }
   res <- system2(conda_path, "-V", stdout = T)
 
