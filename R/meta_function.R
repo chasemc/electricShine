@@ -12,10 +12,8 @@
 #' @param semantic_version semantic version of your app, as character (not numeric!);
 #'     See https://semver.org/ for more info on semantic versioning.
 #' @param mran_date MRAN snapshot date, formatted as 'YYYY-MM-DD'
-#' @param git_host one of c("github", "gitlab", "bitbucket")
-#' @param git_repo GitHub/Bitbucket/GitLab username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP').
-#'     Can also use notation for commits/branch (i.e. "chasemc/demoapp@@d81fff0).
-#' @param local_package_path path to local shiny-app package, if 'git_package' isn't used
+#' @param package_location one of c("local", "github", "gitlab", "bitbucket")
+#' @param package_path path to local shiny-app package. If 'git_host' isn't used, use host/repo (e.g. chasemc/electricShine)
 #' @param package_install_opts optional arguments passed to remotes::install_github, install_gitlab, install_bitbucket, or install_local
 #' @param function_name the function name in your package that starts the shiny app
 #' @param run_build logical, whether to start the build process, helpful if you want to modify anthying before building
@@ -25,6 +23,9 @@
 #' @param nodejs_version nodejs version to install
 #' @param permission automatically grant permission to install nodejs and R
 #' @param mac_url url to mac OS tar.gz
+#'
+#' @inheritParams download_miniconda3
+#' @inheritParams install_miniconda3
 #'
 #' @export
 #'
@@ -44,8 +45,20 @@ electrify <- function(app_name = NULL,
                       nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
                       nodejs_version = "v12.16.2",
                       permission = FALSE,
-                      mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz"){
+                      mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz",
+                      conda_env = "ehsine",
+                      r_version = NULL){
 
+  if (is.null(r_version)) {
+    r_ver <- paste0(R.Version()$major, ".", R.Version()$minor)
+    message(paste0("Using ",
+                   R.version.string,
+                   "\n",
+                   " This may cause issues if dependencies were set to
+                   download from a static cran-like repository like MRAN.\
+                   Consider setting an R version with the 'r_version' variable"
+    ))
+  }
   # Check and fail early ---------------------------------------------------
 
   .check_arch()
@@ -98,10 +111,6 @@ electrify <- function(app_name = NULL,
     permission_to_install_nodejs <- TRUE
   }
 
-  # Determine Operating System ----------------------------------------------
-
-  os <- electricShine::get_os()
-
   # Set cran_like_url -------------------------------------------------------
 
   # If MRAN date provided, construct MRAN url. Else, pass through cran_like_url.
@@ -115,18 +124,62 @@ electrify <- function(app_name = NULL,
 
   # Copy Electron template into app_root_path -------------------------------------
 
-   electricShine::copy_template(app_root_path)
+  electricShine::copy_template(app_root_path)
+
+
+  # Download miniconda ------------------------------------------------------
+
+  os <- electricShine::get_os()
+  # default installation is in tempdir()
+  miniconda_install_script_path <- download_miniconda3(os = os,
+                                                       ...)
+
+  # Install miniconda -------------------------------------------------------
+
+  # default installation is in tempdir()
+
+  conda_top_dir <- install_miniconda3(miniconda_install_script_path = miniconda_install_script_path,
+                                      ...)
+
+  # Create a new conda environment ------------------------------------------
+
+  # This environment is what will be packaged for distribution
+  conda_create_env(conda_top_dir = conda_top_dir,
+                   conda_env = conda_env)
+
 
   # Download and Install R --------------------------------------------------
 
-   electricShine::install_r(cran_like_url = cran_like_url,
-                           app_root_path = app_root_path,
-                           mac_url = mac_url,
-                           permission_to_install = permission_to_install_r)
+  conda_install_r(conda_path,
+                  conda_env = conda_env,
+                  conda_repo = "conda-forge",
+                  r_version = r_version)
 
-  # Trim R's size -----------------------------------------------------------
+  # Install {remotes} R package ---------------------------------------------
 
-   electricShine::trim_r(app_root_path = app_root_path)
+  install_r_remotes(conda_top_dir = conda_top_dir,
+                    r_package_repo = cran_like_url,
+                    conda_env = conda_env)
+
+
+  install_remote_package(conda_top_dir = conda_top_dir,
+                         conda_env = "eshine",
+                         repo_location = "github",
+                         repo = package_path,
+                         dependencies_repo = cran_like_url,
+                         package_install_opts = NULL)
+
+
+
+
+
+
+
+
+
+
+
+
 
   # Find Electron app's R's library folder ----------------------------------
 
@@ -166,17 +219,6 @@ electrify <- function(app_name = NULL,
                                                         repos = cran_like_url,
                                                         package_install_opts = package_install_opts)
   }
-
-
-  if (!is.null(local_package_path)) {
-
-    my_package_name <- electricShine::install_user_app(library_path = library_path ,
-                                                       repo_location = "local",
-                                                       repo = local_package_path,
-                                                       repos = cran_like_url,
-                                                       package_install_opts = package_install_opts)
-  }
-
 
 
   # Transfer icons if present -----------------------------------------------

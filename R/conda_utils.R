@@ -22,10 +22,9 @@ find_conda_program <- function(conda_top_dir){
 
 #' Check that conda works
 #'
-#' @param conda_path path to conda executable
+#' @inheritParams conda_params
 #'
 #' @return
-#' @export
 #'
 check_conda <- function(conda_path){
   if (!file.exists(conda_path)) {
@@ -39,3 +38,26 @@ check_conda <- function(conda_path){
 
   }
 }
+
+
+
+#' Create a new conda environment
+#'
+#' @inheritParams conda_params
+#'
+#' @return
+#' @export
+#'
+#' @examples
+conda_create_env <- function(conda_top_dir, conda_env){
+
+  conda_path <- find_conda_program(conda_top_dir)
+
+  system2(conda_path,
+          c("create",
+            paste0("-n ", conda_env),
+            "-y"),
+          stdout = "")
+}
+
+

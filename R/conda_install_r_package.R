@@ -87,6 +87,26 @@ install_remote_package <- function(conda_top_dir,
                                    dependencies_repo = "https://cran.r-project.org",
                                    package_install_opts = NULL){
 
+  accepted_sites <- c("github", "gitlab", "bitbucket", "local")
+
+  if (length(repo_location) != 1L) {
+    stop("install_user_app(repo_location) must be character vector of length 1")
+  }
+
+  if (!repo_location %in% accepted_sites) {
+    stop(paste0("install_user_app(repo_location) must be one of:\n", accepted_sites))
+  }
+
+  if (!nchar(repo) > 0) {
+    # TODO: Maybe make this a regex?
+    stop("install_user_app(repo) must be character with > 0 characters")
+  }
+
+  if (!is.null(package_install_opts)) {
+    if (!is.list(package_install_opts)) {
+      stop("package_install_opts  must be a list of arguments.")
+    }
+  }
 
   remotes_code <- paste0("install_", repo_location)
 

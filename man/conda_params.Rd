@@ -16,6 +16,8 @@ conda_params(conda_top_dir, conda_env, conda_package, conda_repo)
 \item{conda_repo}{conda repository package will be installed from}
 
 \item{r_package_repo}{cran-like repo to install R packages from}
+
+\item{conda_path}{path to conda executable}
 }
 \value{
 

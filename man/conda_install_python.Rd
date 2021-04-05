@@ -18,7 +18,7 @@ conda_install_python(
 
 \item{conda_env}{conda environment name}
 
-\item{python_version}{semantic version of python to install (e.g. 3.7)}
+\item{python_version}{semantic version of python to install (e.g. "3.7")}
 }
 \value{
 

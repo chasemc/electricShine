@@ -28,7 +28,7 @@ electrify(
 \arguments{
 \item{app_name}{This will be the name of the executable. It's a uniform type identifier (UTI)
 that contains only alphanumeric (A-Z,a-z,0-9), hyphen (-), and period (.) characters.
-see https://www.electron.build/configuration/configuration 
+see https://www.electron.build/configuration/configuration
 and https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html#//apple_ref/doc/uid/20001431-102070}
 
 \item{product_name}{String - allows you to specify a product name for your executable which
@@ -51,7 +51,7 @@ Must not contain a folder with the name as what you put for electrify(app_name).
 
 \item{git_host}{one of c("github", "gitlab", "bitbucket")}
 
-\item{git_repo}{GitHub/Bitbucket/GitLab username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP'). 
+\item{git_repo}{GitHub/Bitbucket/GitLab username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP').
 Can also use notation for commits/branch (i.e. "chasemc/demoapp@d81fff0).}
 
 \item{local_package_path}{path to local shiny-app package, if 'git_package' isn't used}
