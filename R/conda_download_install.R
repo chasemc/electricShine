@@ -61,6 +61,10 @@ install_miniconda3 <- function(miniconda_install_script_path,
   if (is.null(miniconda_installation_path)){
     temp <- tempdir()
     temp <- file.path(temp, "conda_top_dir")
+    temp <- normalizePath(temp,
+                          winslash = "/",
+                          mustWork = FALSE # previous command adds extra slash so not true path (at least on mac)
+                          )
     dir.create(temp)
     miniconda_installation_path <- temp
   }
@@ -74,6 +78,10 @@ install_miniconda3 <- function(miniconda_install_script_path,
   miniconda_installation_path <- c("miniconda_top_directory" = miniconda_installation_path)
   return(miniconda_installation_path)
 }
+
+
+
+
 
 
 

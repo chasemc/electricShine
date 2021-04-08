@@ -6,7 +6,7 @@
 \usage{
 install_r_packages(
   r_package_name,
-  repo = "https://cran.r-project.org",
+  r_package_repo = "https://cran.r-project.org",
   conda_top_dir,
   conda_env = "eshine"
 )
@@ -14,7 +14,7 @@ install_r_packages(
 \arguments{
 \item{r_package_name}{name of package to install}
 
-\item{repo}{cran-like repo to install from}
+\item{r_package_repo}{cran-like repo to install R packages from}
 
 \item{conda_top_dir}{path to miniconda}
 

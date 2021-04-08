@@ -5,24 +5,26 @@
 \title{Meta-function}
 \usage{
 electrify(
-  app_name = NULL,
+  app_name = "example_app",
   product_name = "product_name",
   short_description = NULL,
   semantic_version = NULL,
-  build_path = NULL,
+  build_path = "/Users/chase/Documents/eshine_temp",
   mran_date = NULL,
-  cran_like_url = NULL,
+  cran_like_url = "https://cran.r-project.org",
   function_name = NULL,
-  git_host = NULL,
-  git_repo = NULL,
-  local_package_path = NULL,
-  package_install_opts = NULL,
+  shiny_package_location = "github",
+  shiny_package_path = "chasemc/demoapp",
+  shiny_package_install_opts = NULL,
   run_build = TRUE,
   nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
   nodejs_version = "v12.16.2",
   permission = FALSE,
  
-    mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz"
+    mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz",
+  conda_env = "ehsine",
+  r_version = NULL,
+  ...
 )
 }
 \arguments{
@@ -49,15 +51,6 @@ Must not contain a folder with the name as what you put for electrify(app_name).
 
 \item{function_name}{the function name in your package that starts the shiny app}
 
-\item{git_host}{one of c("github", "gitlab", "bitbucket")}
-
-\item{git_repo}{GitHub/Bitbucket/GitLab username/repo of your the shiny-app package (e.g. 'chasemc/demoAPP').
-Can also use notation for commits/branch (i.e. "chasemc/demoapp@d81fff0).}
-
-\item{local_package_path}{path to local shiny-app package, if 'git_package' isn't used}
-
-\item{package_install_opts}{optional arguments passed to remotes::install_github, install_gitlab, install_bitbucket, or install_local}
-
 \item{run_build}{logical, whether to start the build process, helpful if you want to modify anthying before building}
 
 \item{nodejs_path}{path to nodejs}
@@ -67,6 +60,12 @@ Can also use notation for commits/branch (i.e. "chasemc/demoapp@d81fff0).}
 \item{permission}{automatically grant permission to install nodejs and R}
 
 \item{mac_url}{url to mac OS tar.gz}
+
+\item{package_location}{one of c("local", "github", "gitlab", "bitbucket")}
+
+\item{package_path}{path to local shiny-app package. If 'git_host' isn't used, use host/repo (e.g. chasemc/electricShine)}
+
+\item{package_install_opts}{optional arguments passed to remotes::install_github, install_gitlab, install_bitbucket, or install_local}
 }
 \description{
 Meta-function

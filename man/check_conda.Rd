@@ -6,9 +6,6 @@
 \usage{
 check_conda(conda_path)
 }
-\arguments{
-\item{conda_path}{path to conda executable}
-}
 \value{
 
 }

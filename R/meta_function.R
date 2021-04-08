@@ -29,25 +29,25 @@
 #'
 #' @export
 #'
-electrify <- function(app_name = NULL,
+electrify <- function(app_name = "example_app",
                       product_name = "product_name",
                       short_description = NULL,
                       semantic_version = NULL,
-                      build_path = NULL,
+                      build_path = "/Users/chase/Documents/eshine_temp",
                       mran_date = NULL,
-                      cran_like_url = NULL,
+                      cran_like_url="https://cran.r-project.org",
                       function_name = NULL,
-                      git_host = NULL,
-                      git_repo = NULL,
-                      local_package_path = NULL,
-                      package_install_opts = NULL,
+                      shiny_package_location = "github",
+                      shiny_package_path = "chasemc/demoapp",
+                      shiny_package_install_opts = NULL,
                       run_build = TRUE,
                       nodejs_path = file.path(system.file(package = "electricShine"), "nodejs"),
                       nodejs_version = "v12.16.2",
                       permission = FALSE,
                       mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz",
                       conda_env = "ehsine",
-                      r_version = NULL){
+                      r_version = NULL,
+                      ...){
 
   if (is.null(r_version)) {
     r_ver <- paste0(R.Version()$major, ".", R.Version()$minor)
@@ -101,15 +101,15 @@ electrify <- function(app_name = NULL,
   app_root_path <- file.path(build_path,
                              app_name)
 
-  if (!isTRUE(permission)) {
+  # TODO: replace with permission to download/install/use miniconda
+  #if (!isTRUE(permission)) {
+  #  permission_to_install_r <- .prompt_install_r(app_root_path)
+  #  permission_to_install_nodejs <- .prompt_install_nodejs(nodejs_path)
 
-    permission_to_install_r <- .prompt_install_r(app_root_path)
-    permission_to_install_nodejs <- .prompt_install_nodejs(nodejs_path)
-
-  } else {
-    permission_to_install_r <- TRUE
-    permission_to_install_nodejs <- TRUE
-  }
+  #} else {
+  #  permission_to_install_r <- TRUE
+  #  permission_to_install_nodejs <- TRUE
+  #}
 
   # Set cran_like_url -------------------------------------------------------
 
@@ -140,6 +140,11 @@ electrify <- function(app_name = NULL,
 
   conda_top_dir <- install_miniconda3(miniconda_install_script_path = miniconda_install_script_path,
                                       ...)
+  # In some cases conda complains about not being up to date
+  # seems related to https://github.com/conda/conda/issues/7165 which is supposedly resolved
+  # but seems not be
+  conda_update(conda_top_dir = conda_top_dir)
+
 
   # Create a new conda environment ------------------------------------------
 
@@ -150,10 +155,10 @@ electrify <- function(app_name = NULL,
 
   # Download and Install R --------------------------------------------------
 
-  conda_install_r(conda_path,
+  conda_install_r(conda_top_dir = conda_top_dir,
                   conda_env = conda_env,
                   conda_repo = "conda-forge",
-                  r_version = r_version)
+                  ...)
 
   # Install {remotes} R package ---------------------------------------------
 
@@ -162,20 +167,17 @@ electrify <- function(app_name = NULL,
                     conda_env = conda_env)
 
 
+  # Install the shiny app R package -----------------------------------------
+
   install_remote_package(conda_top_dir = conda_top_dir,
-                         conda_env = "eshine",
-                         repo_location = "github",
-                         repo = package_path,
+                         conda_env = conda_env,
+                         repo_location = shiny_package_location,
+                         repo = shiny_package_path,
                          dependencies_repo = cran_like_url,
-                         package_install_opts = NULL)
+                         package_install_opts = shiny_package_install_opts)
 
 
-
-
-
-
-
-
+  #WIP
 
 
 

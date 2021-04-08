@@ -4,7 +4,13 @@
 \alias{conda_params}
 \title{Conda parameter documentation}
 \usage{
-conda_params(conda_top_dir, conda_env, conda_package, conda_repo)
+conda_params(
+  conda_top_dir,
+  conda_env,
+  conda_package,
+  conda_repo,
+  r_package_repo
+)
 }
 \arguments{
 \item{conda_top_dir}{path to miniconda}
@@ -16,8 +22,6 @@ conda_params(conda_top_dir, conda_env, conda_package, conda_repo)
 \item{conda_repo}{conda repository package will be installed from}
 
 \item{r_package_repo}{cran-like repo to install R packages from}
-
-\item{conda_path}{path to conda executable}
 }
 \value{
 

@@ -1,4 +1,4 @@
-/*Some parts of this have been rewritten and/or replaced with 
+/*Some parts of this have been rewritten and/or replaced with
 code from https://github.com/dirkschumacher/r-shiny-electron
 MIT License
 
@@ -69,8 +69,9 @@ srv.listen(0, function() {
 let NODER = null
 // folder above "bin/RScript"
 if (process.platform == WINDOWS) {
+  // https://www.electronjs.org/docs/api/app#appgetapppath
   var rResources = path.join(app.getAppPath(), 'app', 'r_lang');
-  //Unfortunately on MacOS paths are hardcoded into 
+  //Unfortunately on MacOS paths are hardcoded into
   //Rscript but it's in binary so have to use R instead
   NODER = path.join(rResources, "bin", "x64", "Rterm.exe");
 }
@@ -78,7 +79,7 @@ if (process.platform == WINDOWS) {
 if (process.platform == MACOS) {
   var rVer = fs.readdirSync(path.join(app.getAppPath(), 'app', 'r_lang', "Library", "Frameworks", "R.framework", "Versions")).filter(fn => fn.match(/\d+\.(?:\d+|x)(?:\.\d+|x){0,1}/g));
   var rResources = path.join(app.getAppPath(), 'app', 'r_lang', "Library", "Frameworks", "R.framework", "Versions", rVer.toString(), 'Resources');
-  //Unfortunately on MacOS paths are hardcoded into 
+  //Unfortunately on MacOS paths are hardcoded into
   //Rscript but it's in binary so have to use R instead
 
   NODER = path.join(rResources, "bin", "R");
@@ -153,9 +154,10 @@ const tryStartWebserver = async (attempt, progressCallback, onErrorStartup,
   let shinyProcessAlreadyDead = false
 
   rShinyProcess = execa(NODER,
+  // TODO: This should be called from within conda environment
     ['-vanilla -e', '<?<R_SHINY_FUNCTION>?>(options = list(port = ' + srv.address().port + '))'], {
       env: {
-        //Necessary for letting R know where it is and ensure we're not using another R 
+        //Necessary for letting R know where it is and ensure we're not using another R
         'WITHIN_ELECTRON': 'T', // can be used within an app to implement specific behaviour
         'RHOME': rResources,
         'R_HOME_DIR': rResources,
@@ -196,7 +198,7 @@ const tryStartWebserver = async (attempt, progressCallback, onErrorStartup,
 
           })
 
-      } 
+      }
     } catch (e) {
 
     }
@@ -296,7 +298,7 @@ app.on('ready', async () => {
 
   await tryStartWebserver(0, progressCallback, onErrorStartup, onErrorLater, (url) => {
 
- 
+
 
   })
 
