@@ -17,8 +17,8 @@ download_miniconda3 <- function(os, minconda_version ="latest", minconda_tempdir
   os  <- switch(os,
                 win = "Windows",
                 mac = "MacOSX",
-                lin = "Linux",
-                stop('os must be "win", "mac", or "lin"'))
+                unix = "Linux",
+                stop('os must be "win", "mac", or "unix"'))
 
   if (minconda_version == "latest") {
     minconda_version <- "latest"
