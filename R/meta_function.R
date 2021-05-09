@@ -45,7 +45,7 @@ electrify <- function(app_name = "example_app",
                       nodejs_version = "v12.16.2",
                       permission = FALSE,
                       mac_url = "https://mac.r-project.org/el-capitan/R-3.6-branch/R-3.6-branch-el-capitan-sa-x86_64.tar.gz",
-                      conda_env = "ehsine",
+                      conda_env = "eshine",
                       r_version = NULL,
                       ...){
 
