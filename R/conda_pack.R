@@ -27,9 +27,9 @@ conda_install_pack <- function(conda_top_dir,
 #'
 conda_pack <- function(conda_top_dir,
                        conda_env="eshine",
+                       conda_pack_env="conda-pack",
                        outdir){
 
-  conda_path <- find_conda_program(conda_top_dir)
 
   env_path <- file.path(conda_top_dir,
                         "envs",
@@ -38,10 +38,28 @@ conda_pack <- function(conda_top_dir,
   outpath <- file.path(outdir,
                        paste0(conda_env, ".tar.gz"))
 
-    system2(conda_path,
-            c("pack",
-              paste0("-p ", env_path),
-              paste0("-o ", outpath)
-              ),
-            stdout = "")
+
+  script <- paste0("source ",
+                   shQuote(
+                     file.path(conda_top_dir,
+                               "bin",
+                               "activate")
+                   ),
+                   " ",
+                   shQuote(
+                     file.path(conda_top_dir,
+                               "envs",
+                               conda_pack_env)
+                   ),
+                   " && ",
+                   paste0("conda-pack",
+                     paste0(" -p ", env_path),
+                     paste0(" -o ", outpath),
+                     paste0(" --dest-prefix ", "pub_conda")
+
+                   )
+  )
+
+    system(
+            script)
 }

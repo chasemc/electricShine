@@ -54,9 +54,7 @@ electrify <- function(app_name = "example_app",
     message(paste0("Using ",
                    R.version.string,
                    "\n",
-                   " This may cause issues if dependencies were set to
-                   download from a static cran-like repository like MRAN.\
-                   Consider setting an R version with the 'r_version' variable"
+                   " This may cause issues if dependencies were set to\ download from a static cran-like repository like MRAN.\nConsider setting an R version with the 'r_version' argument"
     ))
   }
   # Check and fail early ---------------------------------------------------
@@ -159,6 +157,16 @@ electrify <- function(app_name = "example_app",
                   conda_repo = "conda-forge",
                   ...)
 
+# Download and install conda pack -----------------------------------------
+
+  conda_pack_env <- "conda-pack"
+  conda_create_env(conda_top_dir = conda_top_dir,
+                   conda_env = conda_pack_env)
+
+  conda_install_pack(conda_top_dir = conda_top_dir,
+                     conda_env = conda_pack_env,
+                     conda_repo = "conda-forge")
+
   # Install {remotes} R package ---------------------------------------------
 
   install_r_remotes(conda_top_dir = conda_top_dir,
@@ -175,8 +183,35 @@ electrify <- function(app_name = "example_app",
                          dependencies_repo = cran_like_url,
                          package_install_opts = shiny_package_install_opts)
 
+
+  install_remote_package(conda_top_dir = conda_top_dir,
+                         conda_env = conda_env,
+                         repo_location = shiny_package_location,
+                         repo = shiny_package_path,
+                         dependencies_repo = cran_like_url,
+                         package_install_opts = shiny_package_install_opts)
+
+
+
+
+    conda_pack_dir <- normalizePath(tempdir())
+
+  conda_pack(conda_top_dir = conda_top_dir,
+             conda_env = conda_env,
+             conda_pack_env="conda-pack",
+             outdir = conda_pack_dir)
+
+  conda_pack_gz <- file.path(conda_pack_dir, paste0(conda_env, ".tar.gz"))
+  conda_pack_gz <- normalizePath(conda_pack_gz, mustWork = F)
+
+  conda_build_pack <- file.path(build_path,app_name,"build", "pub_conda")
+  dir.create(conda_build_pack, recursive = T)
+
+  untar(tarfile = conda_pack_gz, exdir = conda_build_pack)
+
+
 }
-  #WIP
+#WIP
 
 
 

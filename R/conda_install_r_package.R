@@ -44,6 +44,7 @@ install_r_packages <- function(r_package_name,
                                "deactivate")
                    )
   )
+  cat(script)
   system(script)
 }
 
