@@ -1,5 +1,5 @@
 [![Lifecycle:Dormant](https://img.shields.io/badge/Lifecycle-Dormant-ff7f2a)](<Redirect-URL>)
-Note: this project is currently dormant and non-functional, and while I have worked on redevelopments in another repo off and on for some time, I am low on the amount of unpaid work I can devote to this. As I mentioned, I have completely reworked most of the non-javascript portions somewhere else, so, if someone experieneced in nodejs/javascript has time to contribute, the project could be revitalized sooner.
+Note: this project is currently dormant and non-functional, and while I have worked on redevelopments in another repo off and on for some time, I am low on the amount of unpaid work I can devote to this. As I mentioned, I have completely reworked most of the non-javascript portions somewhere else, so, if someone *experieneced* in Node.js/javascript has time to contribute, the project could be revitalized sooner (look at the R code and email me if you are able to help). Would be open to a hackathon if enough people wanted to help
 
 [![Build Status](https://dev.azure.com/chasec288/electricShine/_apis/build/status/chasemc.electricShine?branchName=master)](https://dev.azure.com/chasec288/electricShine/_build/latest?definitionId=4&branchName=master)
 
