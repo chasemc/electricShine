@@ -11,7 +11,7 @@
   "babel-plugin-transform-object-rest-spread": "6.26.0",
   "chai": "4.2.0",
   "css-loader": "5.0.1",
-  "electron": "11.1.1",
+  "electron": "22.3.21",
   "electron-builder": "22.9.1",
   "electron-mocha": "10.0.0",
   "friendly-errors-webpack-plugin": "1.7.0",
